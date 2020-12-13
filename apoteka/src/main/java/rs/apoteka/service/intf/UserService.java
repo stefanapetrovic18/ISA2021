@@ -13,9 +13,14 @@ public interface UserService {
     List<User> findValidatedAndEnabled();
 
     User getOne(Long id);
+
     User findByUsername(String username);
+
     User create(RegistrationRequest request) throws Exception;
+
     JWTResponse login(LoginRequest request);
+
     User update(User user) throws Exception;
+
     Boolean delete(Long id);
 }

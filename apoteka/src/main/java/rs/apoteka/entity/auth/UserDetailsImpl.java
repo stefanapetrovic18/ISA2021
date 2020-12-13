@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
-
+    public Collection<? extends GrantedAuthority> authorities;
     private Long id;
     private String username; //TODO: email validacija
     @JsonIgnore
@@ -22,11 +22,8 @@ public class UserDetailsImpl implements UserDetails {
     private String city;
     private String country;
     private String phone; //TODO: regex
-
     private Boolean enabled;
     private Boolean validated;
-
-    public Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl() {
     }

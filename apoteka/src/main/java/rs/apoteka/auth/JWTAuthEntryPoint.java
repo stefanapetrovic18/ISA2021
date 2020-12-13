@@ -14,9 +14,10 @@ import java.io.IOException;
 @Component
 public class JWTAuthEntryPoint implements AuthenticationEntryPoint {
     private static final Logger logger = LoggerFactory.getLogger(JWTAuthEntryPoint.class);
+
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        logger.error("Greska pri autorizaciji. Poruka: {}", e.getMessage());
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Greska -> Neautorizovan!");
+        logger.error("Auth error! Message: {}", e.getMessage());
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "ERROR -> Unauthorised!");
     }
 }

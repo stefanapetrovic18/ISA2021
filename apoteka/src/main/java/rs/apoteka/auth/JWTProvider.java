@@ -32,21 +32,23 @@ public class JWTProvider {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
+
     public boolean validateToken(String jwt) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt);
             return true;
         } catch (MalformedJwtException e) {
-            logger.error("Nevalidan JWT -> Poruka: {}", e.getMessage());
+            logger.error("JWT invalid -> Message: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
-            logger.error("JWT istekao -> Poruka: {}", e.getMessage());
+            logger.error("JWT expired -> Message: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {
-            logger.error("JWT nije podrzan -> Poruka: {}", e.getMessage());
+            logger.error("JWT unsupported -> Message: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
-            logger.error("JWT string potrazivanja je prazan -> Poruka: {}", e.getMessage());
+            logger.error("JWT claims string is empty -> Message: {}", e.getMessage());
         }
         return false;
     }
+
     public String getUsernameFromToken(String jwt) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt).getBody().getSubject();
     }

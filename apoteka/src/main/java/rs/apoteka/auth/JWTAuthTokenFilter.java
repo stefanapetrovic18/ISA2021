@@ -22,6 +22,7 @@ public class JWTAuthTokenFilter extends OncePerRequestFilter {
     JWTProvider provider;
     @Autowired
     UserDetailsServiceImpl userDetailsService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -34,10 +35,11 @@ public class JWTAuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
-            logger.error("Nemoguce autentifikovati -> Poruka: {}", e.getMessage());
+            logger.error("Can not set user authentication! -> Message: {}", e.getMessage());
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
     private String getJwt(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {

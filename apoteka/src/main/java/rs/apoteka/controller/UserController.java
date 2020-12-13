@@ -16,6 +16,7 @@ import rs.apoteka.service.intf.UserService;
 public class UserController {
     @Autowired
     UserService userService;
+
     @PostMapping(value = "/register")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) throws Exception {
         User user = userService.create(request);
@@ -24,7 +25,8 @@ public class UserController {
         }
         return new ResponseEntity<>("Registracija uspešna! Proverite vaš email za potvrdu registracije.", HttpStatus.OK);
     }
-    @GetMapping(value = "/login")
+
+    @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) throws Exception {
         JWTResponse response = userService.login(request);
         if (response == null) {

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByValidatedTrueAndEnabledTrue();
+
     User findByUsername(String username);
+
     Boolean existsByUsername(String username);
 }

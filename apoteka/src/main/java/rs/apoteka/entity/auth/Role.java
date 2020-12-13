@@ -14,6 +14,9 @@ public class Role {
     @NaturalId
     private RoleType name;
 
+    public Role() {
+    }
+
     public Role(RoleType name) {
         this.name = name;
     }

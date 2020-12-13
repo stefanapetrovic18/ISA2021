@@ -9,7 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.apoteka.auth.JWTProvider;
 import rs.apoteka.auth.JWTResponse;
-import rs.apoteka.entity.auth.*;
+import rs.apoteka.entity.auth.LoginRequest;
+import rs.apoteka.entity.auth.RegistrationRequest;
+import rs.apoteka.entity.auth.User;
+import rs.apoteka.entity.auth.UserDetailsImpl;
 import rs.apoteka.repository.RoleRepository;
 import rs.apoteka.repository.UserRepository;
 import rs.apoteka.service.intf.UserService;
@@ -26,10 +29,12 @@ public class UserServiceImpl implements UserService {
     AuthenticationManager authenticationManager;
     @Autowired
     JWTProvider provider;
+
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
     @Override
     public List<User> findValidatedAndEnabled() {
         return userRepository.findByValidatedTrueAndEnabledTrue();

@@ -40,6 +40,9 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    public User() {
+    }
+
     public User(RegistrationRequest request) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         this.username = request.getUsername();
@@ -52,7 +55,9 @@ public class User {
         this.phone = request.getPhone();
         this.enabled = true;
         this.validated = false;
-        this.roles = new HashSet<>(){{add(new Role(RoleType.ROLE_PATIENT));}};
+        this.roles = new HashSet<>() {{
+            add(new Role(RoleType.ROLE_PATIENT));
+        }};
     }
 
     public User(Long id, String username, String password, String forename, String surname, String address, String city, String country, String phone, Boolean enabled, Boolean validated, Set<Role> roles) {
