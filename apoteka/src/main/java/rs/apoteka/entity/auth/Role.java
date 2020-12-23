@@ -10,8 +10,8 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated
-    @NaturalId
+    @Enumerated(EnumType.STRING)
+    @Column
     private RoleType name;
 
     public Role() {

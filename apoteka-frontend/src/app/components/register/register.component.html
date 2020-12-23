@@ -1,0 +1,45 @@
+<h3 mat-dialog-title>REGISTRACIJA</h3>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Email adresa</mat-label>
+    <input matInput placeholder="Email adresa" type="email" [(ngModel)]="request.username" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Šifra</mat-label>
+    <input matInput placeholder="Šifra" type="password" [(ngModel)]="request.password" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Ponovi šifru</mat-label>
+    <input matInput placeholder="Ponovi šifru" type="password" [(ngModel)]="repeatPassword" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Ime</mat-label>
+    <input matInput placeholder="Ime" type="text" [(ngModel)]="request.forename" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Prezime</mat-label>
+    <input matInput placeholder="Prezime" type="text" [(ngModel)]="request.surname" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input matInput placeholder="Adresa" type="text" [(ngModel)]="request.address" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Mesto</mat-label>
+    <input matInput placeholder="Mesto" type="text" [(ngModel)]="request.city" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Država</mat-label>
+    <input matInput placeholder="Država" type="text" [(ngModel)]="request.country" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Broj telefona</mat-label>
+    <input matInput placeholder="Broj telefona" type="text" [(ngModel)]="request.phone" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button
+    *ngIf="request.username !== undefined && request.password !== undefined && request.password.length > 8 && request.forename !== undefined && request.surname !== undefined && request.password === repeatPassword"
+    mat-button mat-flat-button matTooltip="Registruj se" color="primary" (click)="register()">REGISTRUJ SE</button>
+  <button mat-button mat-flat-button matTooltip="Otkaži" color="accent" (click)="cancel()">OTKAŽI</button>
+</div>
