@@ -4,15 +4,18 @@ import org.hibernate.annotations.NaturalId;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Email
     @NaturalId
     @Column(unique = true, nullable = false)
     private String username;

@@ -1,6 +1,9 @@
 package rs.apoteka.entity.auth;
 
+import javax.validation.constraints.Email;
+
 public class LoginRequest {
+    @Email
     private String username;
     private String password;
 

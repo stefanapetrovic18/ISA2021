@@ -1,7 +1,10 @@
 package rs.apoteka.entity.auth;
 
+import javax.validation.constraints.Email;
+
 public class RegistrationRequest {
-    private String username; //TODO: email validacija
+    @Email
+    private String username;
     private String password;
     private String forename;
     private String surname;
