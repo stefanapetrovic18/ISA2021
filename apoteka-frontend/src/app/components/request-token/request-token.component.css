@@ -1,0 +1,6 @@
+.rt-component {
+  display: grid;
+  margin: auto;
+  width: 100%;
+  justify-items: center;
+}

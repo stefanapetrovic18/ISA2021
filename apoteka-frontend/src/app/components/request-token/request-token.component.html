@@ -1,0 +1,14 @@
+<div class="rt-component">
+  <h3 mat-dialog-title>LINK ZA POTVRDU REGISTRACIJE</h3>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Email adresa</mat-label>
+      <input matInput placeholder="Email adresa" type="email" [(ngModel)]="email" />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button *ngIf="email !== undefined"
+      mat-button mat-flat-button matTooltip="Potvrdi zahtev za link za potvrdu registracije" color="primary" (click)="requestToken()">POTVRDI</button>
+    <button mat-button mat-flat-button matTooltip="Otkaži" color="accent" (click)="cancel()">OTKAŽI</button>
+  </div>
+</div>

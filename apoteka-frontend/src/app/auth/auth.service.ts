@@ -15,6 +15,8 @@ const httpOptions = {
 export class AuthService {
   private signinURL = 'http://localhost:8080/api/user/login';
   private signupURL = 'http://localhost:8080/api/user/register';
+  private requestTokenURL = 'http://localhost:8080/api/user/request-token?email=';
+  private confirmURL = 'http://localhost:8080/api/user/confirm?token=';
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +26,14 @@ export class AuthService {
 
   register(request: RegistrationRequest): Observable<any> {
     return this.http.post<any>(this.signupURL, request, httpOptions);
+  }
+
+  requestToken(email: string): Observable<any> {
+    return this.http.get<any>(this.requestTokenURL + email);
+  }
+
+  confirm(token: string): Observable<any> {
+    return this.http.get<any>(this.confirmURL + token);
   }
 
 }

@@ -9,3 +9,14 @@ app-login {
 app-register {
   display: table-caption;
 }
+
+app-request-token {
+  display: block;
+  margin: auto;
+  width: 300px;
+  padding-top: 100px;
+}
+
+button {
+  margin: 5px !important;
+}

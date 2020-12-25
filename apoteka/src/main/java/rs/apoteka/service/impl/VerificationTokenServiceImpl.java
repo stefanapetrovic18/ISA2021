@@ -68,10 +68,10 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
         email.setText("Postovani/a " + user.getForename() + ",\n\n" +
                 "Hvala vam što ste odabrali baš nas.\n\n" +
                 "Da biste potvrdili vašu registraciju, molimo vas da kliknete na link ispod.\n\n" +
-                "http://localhost:8080/api/user/confirm?token=" + token.getToken() + "\n\n" +
+                "http://localhost:4200/confirm?token=" + token.getToken() + "\n\n" +
                 "Link važi 24 sata od registracije." +
                 "Ukoliko vam je istekao, molimo vas da kliknete na link ispod kako biste dobili novi link.\n\n" +
-                "http://localhost:8080/api/user/request-token?email=" + user.getUsername() + "\n\n" +
+                "http://localhost:4200/request-token\n\n" +
                 "Srdačan pozdrav,\n\n" +
                 "ISA");
         mailSender.send(email);
