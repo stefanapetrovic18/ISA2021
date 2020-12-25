@@ -18,6 +18,8 @@ public interface UserService {
 
     User create(RegistrationRequest request) throws Exception;
 
+    Boolean confirm(String token) throws Exception;
+
     JWTResponse login(LoginRequest request);
 
     User update(User user) throws Exception;

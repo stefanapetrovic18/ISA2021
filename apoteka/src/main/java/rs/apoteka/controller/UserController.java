@@ -9,6 +9,9 @@ import rs.apoteka.entity.auth.LoginRequest;
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.service.intf.UserService;
+import rs.apoteka.service.intf.VerificationTokenService;
+
+import javax.validation.constraints.Email;
 
 @CrossOrigin
 @RestController
@@ -16,6 +19,8 @@ import rs.apoteka.service.intf.UserService;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    VerificationTokenService verificationTokenService;
 
     @PostMapping(value = "/register")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) throws Exception {
@@ -23,6 +28,7 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity<>("Neuspešna registracija!", HttpStatus.BAD_REQUEST);
         }
+        verificationTokenService.create(user);
         return new ResponseEntity<>("Registracija uspešna! Proverite vaš email za potvrdu registracije.", HttpStatus.OK);
     }
 
@@ -34,4 +40,20 @@ public class UserController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/confirm")
+    public ResponseEntity<String> confirm(@RequestParam String token) throws Exception {
+        Boolean confirm = userService.confirm(token);
+        if (!confirm) {
+            return new ResponseEntity<>("Došlo je do greške.", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Registracija je potvrđena.", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/request-token")
+    public ResponseEntity<?> requestToken(@RequestParam String email) throws Exception {
+        verificationTokenService.requestToken(email);
+        return new ResponseEntity<>("Zahtev je poslat. Molimo vas da proverite email kako biste potvrdili registraciju.", HttpStatus.OK);
+    }
+
 }
