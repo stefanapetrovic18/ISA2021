@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import rs.apoteka.auth.JWTAuthEntryPoint;
 import rs.apoteka.auth.JWTAuthTokenFilter;
-import rs.apoteka.service.impl.UserDetailsServiceImpl;
+import rs.apoteka.service.impl.auth.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity

@@ -1,4 +1,4 @@
-package rs.apoteka.service.impl;
+package rs.apoteka.service.impl.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

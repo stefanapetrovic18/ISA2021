@@ -1,4 +1,4 @@
-package rs.apoteka.repository;
+package rs.apoteka.repository.auth;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import rs.apoteka.entity.auth.Role;

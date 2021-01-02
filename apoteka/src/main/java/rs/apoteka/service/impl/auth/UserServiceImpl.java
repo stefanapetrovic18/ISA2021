@@ -1,4 +1,4 @@
-package rs.apoteka.service.impl;
+package rs.apoteka.service.impl.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,8 +12,8 @@ import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.*;
 import rs.apoteka.repository.auth.RoleRepository;
 import rs.apoteka.repository.auth.UserRepository;
-import rs.apoteka.service.intf.UserService;
-import rs.apoteka.service.intf.VerificationTokenService;
+import rs.apoteka.service.intf.auth.UserService;
+import rs.apoteka.service.intf.auth.VerificationTokenService;
 
 import java.util.Calendar;
 import java.util.List;

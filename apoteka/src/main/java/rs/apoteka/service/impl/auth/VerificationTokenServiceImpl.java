@@ -1,4 +1,4 @@
-package rs.apoteka.service.impl;
+package rs.apoteka.service.impl.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.auth.VerificationToken;
 import rs.apoteka.repository.auth.VerificationTokenRepository;
-import rs.apoteka.service.intf.UserService;
-import rs.apoteka.service.intf.VerificationTokenService;
+import rs.apoteka.service.intf.auth.UserService;
+import rs.apoteka.service.intf.auth.VerificationTokenService;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,11 +16,12 @@ import java.util.UUID;
 @Service
 public class VerificationTokenServiceImpl implements VerificationTokenService {
     @Autowired
+    JavaMailSender mailSender;
+    @Autowired
     private VerificationTokenRepository verificationTokenRepository;
     @Autowired
     private UserService userService;
-    @Autowired
-    JavaMailSender mailSender;
+
     @Override
     public List<VerificationToken> findAll() {
         return verificationTokenRepository.findAll();

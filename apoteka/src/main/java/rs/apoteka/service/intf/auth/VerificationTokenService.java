@@ -1,8 +1,5 @@
-package rs.apoteka.service.intf;
+package rs.apoteka.service.intf.auth;
 
-import rs.apoteka.auth.JWTResponse;
-import rs.apoteka.entity.auth.LoginRequest;
-import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.auth.VerificationToken;
 

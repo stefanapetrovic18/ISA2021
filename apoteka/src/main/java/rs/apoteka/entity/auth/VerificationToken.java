@@ -24,13 +24,6 @@ public class VerificationToken {
     @Column
     private Date expiryDate;
 
-    private Date calculateExpiryDate(int expiryTimeInMinutes) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Timestamp(calendar.getTime().getTime()));
-        calendar.add(Calendar.MINUTE, expiryTimeInMinutes);
-        return new Date(calendar.getTime().getTime());
-    }
-
     public VerificationToken() {
     }
 
@@ -42,6 +35,13 @@ public class VerificationToken {
 
     public static int getEXPIRATION() {
         return EXPIRATION;
+    }
+
+    private Date calculateExpiryDate(int expiryTimeInMinutes) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Timestamp(calendar.getTime().getTime()));
+        calendar.add(Calendar.MINUTE, expiryTimeInMinutes);
+        return new Date(calendar.getTime().getTime());
     }
 
     public Long getId() {

@@ -1,6 +1,5 @@
 package rs.apoteka.entity.business;
 
-import org.hibernate.annotations.ManyToAny;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;

@@ -7,6 +7,8 @@ import java.util.List;
 @Entity
 @Table
 public class Pricelist {
+    @OneToMany(mappedBy = "pricelist")
+    List<Item> items;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,6 +16,4 @@ public class Pricelist {
     private Date validFrom;
     @Column(nullable = false)
     private Date validUntil;
-    @OneToMany(mappedBy = "pricelist")
-    List<Item> items;
 }

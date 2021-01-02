@@ -1,4 +1,4 @@
-package rs.apoteka.controller;
+package rs.apoteka.controller.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,10 +8,8 @@ import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.LoginRequest;
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.User;
-import rs.apoteka.service.intf.UserService;
-import rs.apoteka.service.intf.VerificationTokenService;
-
-import javax.validation.constraints.Email;
+import rs.apoteka.service.intf.auth.UserService;
+import rs.apoteka.service.intf.auth.VerificationTokenService;
 
 @CrossOrigin
 @RestController

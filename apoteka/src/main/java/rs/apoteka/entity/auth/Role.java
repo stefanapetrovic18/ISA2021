@@ -1,7 +1,5 @@
 package rs.apoteka.entity.auth;
 
-import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
 
 @Entity
