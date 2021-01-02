@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.auth.VerificationToken;
-import rs.apoteka.repository.VerificationTokenRepository;
+import rs.apoteka.repository.auth.VerificationTokenRepository;
 import rs.apoteka.service.intf.UserService;
 import rs.apoteka.service.intf.VerificationTokenService;
 

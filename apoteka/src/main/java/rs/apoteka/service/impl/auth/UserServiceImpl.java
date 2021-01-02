@@ -1,8 +1,6 @@
 package rs.apoteka.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,14 +10,13 @@ import org.springframework.stereotype.Service;
 import rs.apoteka.auth.JWTProvider;
 import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.*;
-import rs.apoteka.repository.RoleRepository;
-import rs.apoteka.repository.UserRepository;
+import rs.apoteka.repository.auth.RoleRepository;
+import rs.apoteka.repository.auth.UserRepository;
 import rs.apoteka.service.intf.UserService;
 import rs.apoteka.service.intf.VerificationTokenService;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {

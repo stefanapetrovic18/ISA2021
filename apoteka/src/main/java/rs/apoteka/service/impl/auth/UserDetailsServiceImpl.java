@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.auth.UserDetailsImpl;
-import rs.apoteka.repository.UserRepository;
+import rs.apoteka.repository.auth.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
