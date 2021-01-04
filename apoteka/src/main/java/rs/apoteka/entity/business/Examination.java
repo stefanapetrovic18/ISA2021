@@ -29,4 +29,59 @@ public class Examination {
     private Integer duration;
     @Column(nullable = false)
     private Double price;
+
+    public Examination() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getExaminationDate() {
+        return examinationDate;
+    }
+
+    public void setExaminationDate(Date examinationDate) {
+        this.examinationDate = examinationDate;
+    }
+
+    public Dermatologist getDermatologist() {
+        return dermatologist;
+    }
+
+    public void setDermatologist(Dermatologist dermatologist) {
+        this.dermatologist = dermatologist;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 }

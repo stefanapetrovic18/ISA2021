@@ -10,9 +10,27 @@ import java.util.List;
 @Entity
 @Table
 public class Dermatologist extends User {
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "pharmacy", referencedColumnName = "id")
-    private Pharmacy pharmacy;
+    @ManyToMany
+    private List<Pharmacy> pharmacies;
     @OneToMany(mappedBy = "dermatologist", cascade = CascadeType.ALL)
     private List<Examination> appointments;
+
+    public Dermatologist() {
+    }
+
+    public List<Pharmacy> getPharmacies() {
+        return pharmacies;
+    }
+
+    public void setPharmacies(List<Pharmacy> pharmacies) {
+        this.pharmacies = pharmacies;
+    }
+
+    public List<Examination> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Examination> appointments) {
+        this.appointments = appointments;
+    }
 }

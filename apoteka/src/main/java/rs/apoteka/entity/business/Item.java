@@ -18,4 +18,43 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "pricelist", referencedColumnName = "id")
     private Pricelist pricelist;
+
+    public Item() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Medicine getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Pricelist getPricelist() {
+        return pricelist;
+    }
+
+    public void setPricelist(Pricelist pricelist) {
+        this.pricelist = pricelist;
+    }
 }

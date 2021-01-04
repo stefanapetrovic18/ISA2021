@@ -13,4 +13,15 @@ import java.util.List;
 public class PharmacyAdmin extends User {
     @ManyToMany
     private List<Pharmacy> pharmacies;
+
+    public PharmacyAdmin() {
+    }
+
+    public List<Pharmacy> getPharmacies() {
+        return pharmacies;
+    }
+
+    public void setPharmacies(List<Pharmacy> pharmacies) {
+        this.pharmacies = pharmacies;
+    }
 }

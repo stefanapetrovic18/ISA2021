@@ -19,4 +19,39 @@ public class Patient extends User {
     private List<Consultation> consultations;
     @ManyToMany
     private List<Medicine> allergies;
+
+    public Patient() {
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public List<Examination> getExaminations() {
+        return examinations;
+    }
+
+    public void setExaminations(List<Examination> examinations) {
+        this.examinations = examinations;
+    }
+
+    public List<Consultation> getConsultations() {
+        return consultations;
+    }
+
+    public void setConsultations(List<Consultation> consultations) {
+        this.consultations = consultations;
+    }
+
+    public List<Medicine> getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(List<Medicine> allergies) {
+        this.allergies = allergies;
+    }
 }

@@ -29,4 +29,59 @@ public class Consultation {
     private Integer duration;
     @Column(nullable = false)
     private Double price;
+
+    public Consultation() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getConsultationDate() {
+        return consultationDate;
+    }
+
+    public void setConsultationDate(Date consultationDate) {
+        this.consultationDate = consultationDate;
+    }
+
+    public Pharmacist getPharmacist() {
+        return pharmacist;
+    }
+
+    public void setPharmacist(Pharmacist pharmacist) {
+        this.pharmacist = pharmacist;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 }
