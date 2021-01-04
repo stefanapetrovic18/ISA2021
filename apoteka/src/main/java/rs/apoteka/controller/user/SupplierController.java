@@ -21,23 +21,23 @@ public class SupplierController {
         return new ResponseEntity<>(supplierService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "")
-    public ResponseEntity<Supplier> getOne(@RequestParam Long id) throws Exception {
+    @GetMapping(value = "/search")
+    public ResponseEntity<Supplier> getOne(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(supplierService.getOne(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<Supplier> create(@RequestBody Supplier supplier) throws Exception {
         return new ResponseEntity<>(supplierService.create(supplier), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/update")
+    @PostMapping(value = "/update")
     public ResponseEntity<Supplier> update(@RequestBody Supplier supplier) throws Exception {
         return new ResponseEntity<>(supplierService.update(supplier), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/delete")
-    public ResponseEntity<Boolean> delete(@RequestParam Long id) throws Exception {
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(supplierService.delete(id), HttpStatus.OK);
     }
 }

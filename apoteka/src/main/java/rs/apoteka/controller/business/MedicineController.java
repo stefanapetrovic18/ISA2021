@@ -21,23 +21,23 @@ public class MedicineController {
         return new ResponseEntity<>(medicineService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "")
-    public ResponseEntity<Medicine> getOne(@RequestParam Long id) throws Exception {
+    @GetMapping(value = "/search")
+    public ResponseEntity<Medicine> getOne(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(medicineService.getOne(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<Medicine> create(@RequestBody Medicine medicine) throws Exception {
         return new ResponseEntity<>(medicineService.create(medicine), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/update")
+    @PostMapping(value = "/update")
     public ResponseEntity<Medicine> update(@RequestBody Medicine medicine) throws Exception {
         return new ResponseEntity<>(medicineService.update(medicine), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/delete")
-    public ResponseEntity<Boolean> delete(@RequestParam Long id) throws Exception {
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(medicineService.delete(id), HttpStatus.OK);
     }
 }

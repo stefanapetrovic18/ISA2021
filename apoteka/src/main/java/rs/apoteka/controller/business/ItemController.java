@@ -21,23 +21,23 @@ public class ItemController {
         return new ResponseEntity<>(itemService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "")
-    public ResponseEntity<Item> getOne(@RequestParam Long id) throws Exception {
+    @GetMapping(value = "/search")
+    public ResponseEntity<Item> getOne(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(itemService.getOne(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<Item> create(@RequestBody Item item) throws Exception {
         return new ResponseEntity<>(itemService.create(item), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/update")
+    @PostMapping(value = "/update")
     public ResponseEntity<Item> update(@RequestBody Item item) throws Exception {
         return new ResponseEntity<>(itemService.update(item), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/delete")
-    public ResponseEntity<Boolean> delete(@RequestParam Long id) throws Exception {
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(itemService.delete(id), HttpStatus.OK);
     }
 }

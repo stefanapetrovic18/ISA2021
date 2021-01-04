@@ -21,23 +21,23 @@ public class PricelistController {
         return new ResponseEntity<>(pricelistService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "")
-    public ResponseEntity<Pricelist> getOne(@RequestParam Long id) throws Exception {
+    @GetMapping(value = "/search")
+    public ResponseEntity<Pricelist> getOne(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(pricelistService.getOne(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<Pricelist> create(@RequestBody Pricelist pricelist) throws Exception {
         return new ResponseEntity<>(pricelistService.create(pricelist), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/update")
+    @PostMapping(value = "/update")
     public ResponseEntity<Pricelist> update(@RequestBody Pricelist pricelist) throws Exception {
         return new ResponseEntity<>(pricelistService.update(pricelist), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/delete")
-    public ResponseEntity<Boolean> delete(@RequestParam Long id) throws Exception {
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(pricelistService.delete(id), HttpStatus.OK);
     }
 }

@@ -21,23 +21,23 @@ public class SystemAdminController {
         return new ResponseEntity<>(systemAdminService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "")
-    public ResponseEntity<SystemAdmin> getOne(@RequestParam Long id) throws Exception {
+    @GetMapping(value = "/search")
+    public ResponseEntity<SystemAdmin> getOne(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(systemAdminService.getOne(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<SystemAdmin> create(@RequestBody SystemAdmin systemAdmin) throws Exception {
         return new ResponseEntity<>(systemAdminService.create(systemAdmin), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/update")
+    @PostMapping(value = "/update")
     public ResponseEntity<SystemAdmin> update(@RequestBody SystemAdmin systemAdmin) throws Exception {
         return new ResponseEntity<>(systemAdminService.update(systemAdmin), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/delete")
-    public ResponseEntity<Boolean> delete(@RequestParam Long id) throws Exception {
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(systemAdminService.delete(id), HttpStatus.OK);
     }
 }
