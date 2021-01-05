@@ -15,7 +15,7 @@ public class Pharmacy {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pharmacy")
     private List<PharmacyAdmin> admins;
     @ManyToMany
     private List<Dermatologist> dermatologists;
