@@ -35,11 +35,13 @@ public class User {
     private String phone;
 
     @Column(nullable = false)
+    private Boolean passwordChanged;
+    @Column(nullable = false)
     private Boolean enabled;
     @Column(nullable = false)
     private Boolean validated;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
@@ -56,6 +58,7 @@ public class User {
         this.city = request.getCity();
         this.country = request.getCountry();
         this.phone = request.getPhone();
+        this.passwordChanged = false;
         this.enabled = true;
         this.validated = false;
         this.roles = new HashSet<>() {{
@@ -63,7 +66,7 @@ public class User {
         }};
     }
 
-    public User(Long id, String username, String password, String forename, String surname, String address, String city, String country, String phone, Boolean enabled, Boolean validated, Set<Role> roles) {
+    public User(Long id, String username, String password, String forename, String surname, String address, String city, String country, String phone, Boolean passwordChanged, Boolean enabled, Boolean validated, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -73,6 +76,7 @@ public class User {
         this.city = city;
         this.country = country;
         this.phone = phone;
+        this.passwordChanged = passwordChanged;
         this.enabled = enabled;
         this.validated = validated;
         this.roles = roles;
@@ -144,6 +148,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Boolean getPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(Boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
     }
 
     public Boolean getEnabled() {

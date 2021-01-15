@@ -12,6 +12,7 @@ import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.*;
 import rs.apoteka.repository.auth.RoleRepository;
 import rs.apoteka.repository.auth.UserRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.auth.VerificationTokenService;
 
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
     VerificationTokenService verificationTokenService;
     @Autowired
     AuthenticationManager authenticationManager;
+    @Autowired
+    AuthenticationService authenticationService;
     @Autowired
     JWTProvider provider;
 
@@ -93,6 +96,18 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return new JWTResponse(token, user.getUsername(), user.getAuthorities());
+    }
+
+    @Override
+    public String changePassword(PasswordChangeRequest request) throws Exception {
+        if (!request.getPassword().equals(request.getRepeatPassword())) {
+            return null;
+        }
+        User user = findByUsername(authenticationService.getUsername());
+        user.setPassword(new BCryptPasswordEncoder().encode(request.getPassword()));
+        user.setPasswordChanged(true);
+        User updated = update(user);
+        return "Uspešna promena šifre!";
     }
 
     @Override

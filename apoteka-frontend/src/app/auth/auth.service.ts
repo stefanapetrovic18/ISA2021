@@ -4,6 +4,7 @@ import { LoginRequest } from './login-request';
 import { Observable } from 'rxjs';
 import { JwtResponse } from './jwt-response';
 import { RegistrationRequest } from './registration-request';
+import { PasswordChangeRequest } from './password-change-request';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,6 +18,7 @@ export class AuthService {
   private signupURL = 'http://localhost:8080/api/user/register';
   private requestTokenURL = 'http://localhost:8080/api/user/request-token?email=';
   private confirmURL = 'http://localhost:8080/api/user/confirm?token=';
+  private changePasswordURL = 'http://localhost:8080/api/user/change-password';
 
   constructor(private http: HttpClient) { }
 
@@ -34,6 +36,10 @@ export class AuthService {
 
   confirm(token: string): Observable<any> {
     return this.http.get<any>(this.confirmURL + token);
+  }
+
+  changePassword(request: PasswordChangeRequest): Observable<any> {
+    return this.http.post<any>(this.changePasswordURL, request, httpOptions);
   }
 
 }

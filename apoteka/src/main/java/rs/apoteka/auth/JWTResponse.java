@@ -9,6 +9,7 @@ public class JWTResponse {
     private String type = "Bearer";
     private String username;
     private Collection<? extends GrantedAuthority> authorities;
+    private String redirectURL;
 
     public JWTResponse() {
     }
@@ -49,5 +50,13 @@ public class JWTResponse {
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
+    }
+
+    public String getRedirectURL() {
+        return redirectURL;
+    }
+
+    public void setRedirectURL(String redirectURL) {
+        this.redirectURL = redirectURL;
     }
 }

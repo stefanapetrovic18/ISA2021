@@ -5,6 +5,6 @@
   <span class="spacer"></span>
   <button mat-button mat-mat-flat-button matTooltip="Uloguj se" *ngIf="this.user === false" (click)="login()" background-color="primary" color="primary">ULOGUJ SE</button>
   <button mat-button mat-mat-flat-button matTooltip="Registruj se" *ngIf="this.user === false" (click)="register()" background-color="link">REGISTRUJ SE</button>
-  <button mat-button mat-mat-flat-button matTooltip="Log out" *ngIf="this.user === true" (click)="logout()" background-color="primary">SIGN OUT</button>
+  <button mat-button mat-mat-flat-button matTooltip="Log out" *ngIf="this.user === true" (click)="logout()" background-color="primary">IZLOGUJ SE</button>
 </mat-toolbar>
 <router-outlet></router-outlet>

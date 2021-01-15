@@ -20,11 +20,13 @@ export class AppComponent {
       data: new LoginRequest()
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.user = true;
       // location.reload();
     });
   }
   logout() {
     const dialogRef = this.token.signOut();
+    this.user = false;
     // location.reload();
   }
   register() {

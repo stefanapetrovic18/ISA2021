@@ -2,6 +2,7 @@ package rs.apoteka.service.intf.auth;
 
 import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.LoginRequest;
+import rs.apoteka.entity.auth.PasswordChangeRequest;
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.User;
 
@@ -21,6 +22,8 @@ public interface UserService {
     Boolean confirm(String token) throws Exception;
 
     JWTResponse login(LoginRequest request);
+
+    String changePassword(PasswordChangeRequest request) throws Exception;
 
     User update(User user) throws Exception;
 

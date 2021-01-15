@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -26,6 +26,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { RequestTokenComponent } from './components/request-token/request-token.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     LoginComponent,
     RegisterComponent,
     RequestTokenComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,13 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     MatCheckboxModule,
     MatButtonToggleModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
