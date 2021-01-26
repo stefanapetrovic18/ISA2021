@@ -1,5 +1,6 @@
 package rs.apoteka.entity.business;
 
+import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
@@ -25,9 +26,15 @@ public class Pharmacy {
     private List<Examination> examinations;
     @OneToMany(mappedBy = "pharmacy")
     private List<Consultation> consultations;
+    @OneToMany(mappedBy = "pharmacy")
+    private List<Promotion> promotions;
+    @ElementCollection(targetClass = User.class)
+    private List<User> subscriptions;
     // Inventar.
     @OneToOne
     private Pricelist pricelist;
+    @Column
+    private Double rating;
 
     public Pharmacy() {
     }
@@ -84,11 +91,35 @@ public class Pharmacy {
         this.consultations = consultations;
     }
 
+    public List<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<Promotion> promotions) {
+        this.promotions = promotions;
+    }
+
+    public List<User> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<User> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
     public Pricelist getPricelist() {
         return pricelist;
     }
 
     public void setPricelist(Pricelist pricelist) {
         this.pricelist = pricelist;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 }

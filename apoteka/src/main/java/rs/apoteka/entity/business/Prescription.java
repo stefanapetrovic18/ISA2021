@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import rs.apoteka.entity.user.Patient;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Prescription {
     private String code;
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private Date issueDate;
+    private LocalDateTime issueDate;
     @ManyToOne(optional = false)
     @JoinColumn(name = "pharmacy", referencedColumnName = "id")
     private Pharmacy pharmacy;
@@ -42,11 +43,11 @@ public class Prescription {
         this.code = code;
     }
 
-    public Date getIssueDate() {
+    public LocalDateTime getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDateTime issueDate) {
         this.issueDate = issueDate;
     }
 

@@ -2,56 +2,56 @@ package rs.apoteka.entity.business;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import rs.apoteka.entity.user.Patient;
-import rs.apoteka.entity.user.Pharmacist;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
-public class Consultation {
+public class Reservation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
+    private String reservationNumber;
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private LocalDateTime consultationDate;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "pharmacist", referencedColumnName = "id")
-    private Pharmacist pharmacist;
+    private LocalDateTime reservationDate;
     @ManyToOne(optional = false)
     @JoinColumn(name = "pharmacy", referencedColumnName = "id")
     private Pharmacy pharmacy;
     @ManyToOne(optional = false)
     @JoinColumn(name = "patient", referencedColumnName = "id")
     private Patient patient;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "medicine", referencedColumnName = "id")
+    private Medicine medicine;
     @Column(nullable = false)
-    private Integer duration;
-    @Column(nullable = false)
-    private Double price;
+    private Boolean collected;
 
-    public Consultation() {
+    public Reservation() {
     }
 
     public Long getId() {
         return id;
     }
 
-    public LocalDateTime getConsultationDate() {
-        return consultationDate;
+    public String getReservationNumber() {
+        return reservationNumber;
     }
 
-    public void setConsultationDate(LocalDateTime consultationDate) {
-        this.consultationDate = consultationDate;
+    public void setReservationNumber(String reservationNumber) {
+        this.reservationNumber = reservationNumber;
     }
 
-    public Pharmacist getPharmacist() {
-        return pharmacist;
+    public LocalDateTime getReservationDate() {
+        return reservationDate;
     }
 
-    public void setPharmacist(Pharmacist pharmacist) {
-        this.pharmacist = pharmacist;
+    public void setReservationDate(LocalDateTime reservationDate) {
+        this.reservationDate = reservationDate;
     }
 
     public Pharmacy getPharmacy() {
@@ -70,19 +70,19 @@ public class Consultation {
         this.patient = patient;
     }
 
-    public Integer getDuration() {
-        return duration;
+    public Medicine getMedicine() {
+        return medicine;
     }
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
     }
 
-    public Double getPrice() {
-        return price;
+    public Boolean getCollected() {
+        return collected;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setCollected(Boolean collected) {
+        this.collected = collected;
     }
 }

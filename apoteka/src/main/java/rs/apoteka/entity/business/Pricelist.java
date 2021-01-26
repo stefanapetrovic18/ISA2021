@@ -1,6 +1,7 @@
 package rs.apoteka.entity.business;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,9 +14,9 @@ public class Pricelist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private Date validFrom;
+    private LocalDateTime validFrom;
     @Column(nullable = false)
-    private Date validUntil;
+    private LocalDateTime validUntil;
 
     public Pricelist() {
     }
@@ -32,19 +33,19 @@ public class Pricelist {
         return id;
     }
 
-    public Date getValidFrom() {
+    public LocalDateTime getValidFrom() {
         return validFrom;
     }
 
-    public void setValidFrom(Date validFrom) {
+    public void setValidFrom(LocalDateTime validFrom) {
         this.validFrom = validFrom;
     }
 
-    public Date getValidUntil() {
+    public LocalDateTime getValidUntil() {
         return validUntil;
     }
 
-    public void setValidUntil(Date validUntil) {
+    public void setValidUntil(LocalDateTime validUntil) {
         this.validUntil = validUntil;
     }
 }

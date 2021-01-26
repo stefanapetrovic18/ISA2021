@@ -5,7 +5,7 @@ import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -15,7 +15,7 @@ public class Examination {
     private Long id;
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private Date examinationDate;
+    private LocalDateTime examinationDate;
     @ManyToOne(optional = false)
     @JoinColumn(name = "dermatologist", referencedColumnName = "id")
     private Dermatologist dermatologist;
@@ -29,6 +29,8 @@ public class Examination {
     private Integer duration;
     @Column(nullable = false)
     private Double price;
+    @Column(nullable = false)
+    private Boolean quickReservation;
 
     public Examination() {
     }
@@ -37,11 +39,11 @@ public class Examination {
         return id;
     }
 
-    public Date getExaminationDate() {
+    public LocalDateTime getExaminationDate() {
         return examinationDate;
     }
 
-    public void setExaminationDate(Date examinationDate) {
+    public void setExaminationDate(LocalDateTime examinationDate) {
         this.examinationDate = examinationDate;
     }
 
@@ -83,5 +85,13 @@ public class Examination {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Boolean getQuickReservation() {
+        return quickReservation;
+    }
+
+    public void setQuickReservation(Boolean quickReservation) {
+        this.quickReservation = quickReservation;
     }
 }
