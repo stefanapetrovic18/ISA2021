@@ -28,6 +28,7 @@ import { RequestTokenComponent } from './components/request-token/request-token.
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { ConsultationTableViewComponent } from './components/business/consultation/consultation-table-view/consultation-table-view.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,9 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     RegisterComponent,
     RequestTokenComponent,
     ConfirmComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+
+    ConsultationTableViewComponent
   ],
   imports: [
     BrowserModule,

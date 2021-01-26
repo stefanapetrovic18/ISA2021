@@ -1,0 +1,45 @@
+<mat-form-field *ngIf="dataSource">
+  <mat-label>Pretraga</mat-label>
+  <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Pretraga" #input>
+</mat-form-field>
+
+<button mat-raised-button (click)="filter()">FILTER</button>
+
+<button mat-raised-button (click)="add()">DODAJ</button>
+
+<mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
+
+  <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+    <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+    <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>
+  </ng-container>
+
+  <ng-container [matColumnDef]="'view'">
+    <mat-header-cell *matHeaderCellDef>Info</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-raised-button color="primary" (click)="view(element)">INFO</button>
+    </mat-cell>
+  </ng-container>
+  <ng-container [matColumnDef]="'edit'">
+    <mat-header-cell *matHeaderCellDef>Izmeni</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-raised-button color="accent" (click)="edit(element)">IZMENI</button>
+    </mat-cell>
+  </ng-container>
+  <ng-container [matColumnDef]="'delete'">
+    <mat-header-cell *matHeaderCellDef>Ukloni</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-raised-button color="warn" (click)="delete(element)">UKLONI</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  <mat-row *matNoDataRow>
+    <mat-cell colspan="4">Nijedan podatak ne odgovara unetom parametru.</mat-cell>
+  </mat-row>
+
+</mat-table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
