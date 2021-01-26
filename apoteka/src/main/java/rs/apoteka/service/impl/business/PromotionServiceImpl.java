@@ -25,12 +25,23 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public Promotion create(Promotion promotion) {
+        if (!checkDates(promotion)) {
+            return null;
+        }
+        // Posalji email.
         return promotionRepository.save(promotion);
     }
 
     @Override
     public Promotion update(Promotion promotion) {
+        if (!checkDates(promotion)) {
+            return null;
+        }
         return promotionRepository.save(promotion);
+    }
+
+    private Boolean checkDates(Promotion promotion) {
+        return promotion.getStartDate().isBefore(promotion.getEndDate());
     }
 
     @Override

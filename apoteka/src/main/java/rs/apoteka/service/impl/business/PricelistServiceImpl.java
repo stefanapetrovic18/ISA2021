@@ -25,12 +25,22 @@ public class PricelistServiceImpl implements PricelistService {
 
     @Override
     public Pricelist create(Pricelist pricelist) {
+        if (!checkDates(pricelist)) {
+            return null;
+        }
         return pricelistRepository.save(pricelist);
     }
 
     @Override
     public Pricelist update(Pricelist pricelist) {
+        if (!checkDates(pricelist)) {
+            return null;
+        }
         return pricelistRepository.save(pricelist);
+    }
+
+    private Boolean checkDates(Pricelist pricelist) {
+        return pricelist.getValidFrom().isBefore(pricelist.getValidUntil());
     }
 
     @Override

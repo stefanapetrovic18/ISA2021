@@ -25,6 +25,8 @@ public class WorkingHours {
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalTime shiftEnd;
+    @Column(nullable = false)
+    private Long employeeID;
 
     public WorkingHours() {
     }
@@ -63,5 +65,13 @@ public class WorkingHours {
 
     public void setShiftEnd(LocalTime shiftEnd) {
         this.shiftEnd = shiftEnd;
+    }
+
+    public Long getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(Long employeeID) {
+        this.employeeID = employeeID;
     }
 }

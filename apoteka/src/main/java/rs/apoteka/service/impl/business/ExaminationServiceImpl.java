@@ -55,13 +55,10 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     private Boolean appointmentCheck(Examination examination) {
-        if (duringWorkingHours(examination) &&
+       return duringWorkingHours(examination) &&
                 appointmentFree(examination) &&
                 !patientHasConsultation(examination) &&
-                !patientHasExamination(examination)) {
-            return true;
-        }
-        return false;
+                !patientHasExamination(examination);
     }
 
     private Boolean duringWorkingHours(Examination examination) {

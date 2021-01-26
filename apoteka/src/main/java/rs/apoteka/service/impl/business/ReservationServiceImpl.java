@@ -25,6 +25,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation create(Reservation reservation) {
+        reservation.setCollected(false);
         return reservationRepository.save(reservation);
     }
 

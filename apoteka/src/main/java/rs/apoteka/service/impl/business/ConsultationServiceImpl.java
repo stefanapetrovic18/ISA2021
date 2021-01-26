@@ -55,13 +55,10 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     private Boolean appointmentCheck(Consultation consultation) {
-        if (duringWorkingHours(consultation) &&
+        return duringWorkingHours(consultation) &&
                 appointmentFree(consultation) &&
                 !patientHasConsultation(consultation) &&
-                !patientHasExamination(consultation)) {
-            return true;
-        }
-        return false;
+                !patientHasExamination(consultation);
     }
 
     private Boolean duringWorkingHours(Consultation consultation) {

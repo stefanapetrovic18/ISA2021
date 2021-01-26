@@ -25,11 +25,19 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public Medicine create(Medicine medicine) {
+        if (medicine.getSubstitutes().contains(medicine)) {
+            // Sadrzi sebe u listi zamenskih lekova.
+            return null;
+        }
         return medicineRepository.save(medicine);
     }
 
     @Override
     public Medicine update(Medicine medicine) {
+        if (medicine.getSubstitutes().contains(medicine)) {
+            // Sadrzi sebe u listi zamenskih lekova.
+            return null;
+        }
         return medicineRepository.save(medicine);
     }
 

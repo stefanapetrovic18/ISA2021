@@ -25,12 +25,25 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public Prescription create(Prescription prescription) {
-        return prescriptionRepository.save(prescription);
+        Prescription presc = checkForAllergies(prescription);
+        return prescriptionRepository.save(presc);
     }
 
     @Override
     public Prescription update(Prescription prescription) {
-        return prescriptionRepository.save(prescription);
+        Prescription presc = checkForAllergies(prescription);
+        return prescriptionRepository.save(presc);
+    }
+
+    private Prescription checkForAllergies(Prescription prescription) {
+//        prescription.getMedicines().forEach(medicine -> {
+//            if (prescription.getPatient().getAllergies().contains(medicine)) {
+//                prescription.getMedicines().remove(medicine);
+//            }
+//        });
+        // Ukoliko je pacijent alergican na lek, ukloni ga iz recepta.
+        prescription.getMedicines().removeIf(medicine -> prescription.getPatient().getAllergies().contains(medicine));
+        return prescription;
     }
 
     @Override
