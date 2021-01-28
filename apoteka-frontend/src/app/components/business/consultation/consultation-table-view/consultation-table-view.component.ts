@@ -1,7 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { Consultation } from 'src/app/model/business/consultation';
+import { ConsultationService } from 'src/app/service/business/consultation.service';
+import { ConsultationAddComponent } from '../consultation-add/consultation-add.component';
+import { ConsultationDeleteComponent } from '../consultation-delete/consultation-delete.component';
+import { ConsultationEditComponent } from '../consultation-edit/consultation-edit.component';
+import { ConsultationViewComponent } from '../consultation-view/consultation-view.component';
 
 @Component({
   selector: 'app-consultation-table-view',
@@ -14,17 +22,21 @@ export class ConsultationTableViewComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource: MatTableDataSource<any>;
+  @Input() data: Consultation[];
   columns = ['x', 'y'];
-  displayedColumns = ['x', 'y', 'view', 'edit', 'delete'];
-  constructor() {}
+  actions = ['view', 'edit', 'delete'];
+  displayedColumns = [...this.columns, ...this.actions];
+  constructor(private consultationService: ConsultationService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    let data = [];
-    data.push({'x': 1, 'y': 2}, {'x': 2, 'y': 3});
-    this.dataSource = new MatTableDataSource(data);
-
-    console.log(this.dataSource);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.data !== undefined && this.data.length > 0) {
+      this.dataSource = new MatTableDataSource(this.data);
+      console.log(this.dataSource);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    } else {
+      window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+      // this.router.navigateByUrl('');
+    }
   }
 
   applyFilter(value: any) {
@@ -35,23 +47,33 @@ export class ConsultationTableViewComponent implements OnInit {
   }
 
   filter() {
-
+    // Kreiraj objekat za filtriranje i izbaci podatke iz tabele.
+    // Objekat sadrzi:
+    // - datum (gornja i donja granica)
+    // - cena (gornja i donja granica)
+    // - farmaceut (izbor)
   }
 
   add() {
-
+    this.dialog.open(ConsultationAddComponent);
   }
 
-  view(input: any) {
-
+  view(input: Consultation) {
+    this.dialog.open(ConsultationViewComponent, {
+      data: input
+    });
   }
 
-  edit(input: any) {
-
+  edit(input: Consultation) {
+    this.dialog.open(ConsultationEditComponent, {
+      data: input
+    });
   }
 
-  delete(input: any) {
-
+  delete(input: Consultation) {
+    this.dialog.open(ConsultationDeleteComponent, {
+      data: input
+    });
   }
 
 }

@@ -10,4 +10,5 @@ export class Examination {
   pharmacy: Pharmacy;
   duration: number;
   price: number;
+  quickReservation: boolean;
 }

@@ -12,30 +12,49 @@ const httpOptions = {
 })
 export class MedicineService {
 
+  private _data = new Observable<any>();
+
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/medicine/';
 
+  // HTTP zahtevi.
+
   public findAll(): Observable<Medicine[]> {
-    return this.http.get<Medicine[]>(this.URL);
+    this._data = this.http.get<Medicine[]>(this.URL);
+    return this._data;
   }
 
   public getOne(id: number): Observable<Medicine> {
     let params = new HttpParams().set('id', id.toString());
-    return this.http.get<Medicine>(this.URL + 'search', { params });
+    this._data = this.http.get<Medicine>(this.URL + 'search', { params });
+    return this._data;
   }
 
   public create(medicine: Medicine): Observable<Medicine> {
-    return this.http.post<Medicine>(this.URL + 'create', medicine, httpOptions);
+    this._data = this.http.post<Medicine>(this.URL + 'create', medicine, httpOptions);
+    return this._data;
   }
 
   public update(medicine: Medicine): Observable<Medicine> {
-    return this.http.post<Medicine>(this.URL + 'update', medicine, httpOptions);
+    this._data = this.http.post<Medicine>(this.URL + 'update', medicine, httpOptions);
+    return this._data;
   }
 
   public delete(id: number): Observable<boolean> {
     let params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this._data;
+  }
+
+  // Get/Set metode.
+
+  public get data() {
+    return this._data;
+  }
+
+  public setData(data: any) {
+    this._data = data;
   }
 
 }
