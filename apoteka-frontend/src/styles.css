@@ -20,3 +20,33 @@ app-request-token {
 button {
   margin: 5px !important;
 }
+
+.filter-button {
+  background-color: #546e7a;
+  color: white;
+}
+
+.edit-button {
+  background-color: #00838f;
+  color: white;
+}
+
+.add-button {
+  background-color: #00796b;
+  color: white;
+}
+
+.info-button {
+  background-color: #0277bd;
+  color: white;
+}
+
+.delete-button {
+  background-color: #d81b60;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #880e4f;
+  color: white;
+}

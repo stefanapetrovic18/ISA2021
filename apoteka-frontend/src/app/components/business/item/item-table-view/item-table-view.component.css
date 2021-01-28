@@ -1,0 +1,34 @@
+.table-container {
+  /* width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5); */
+}
+
+.table-header {
+  width: 100%;
+  display: inline-flex;
+}
+
+.action-buttons {
+  position: fixed;
+  right: 0px;
+  padding-right: 20px;
+
+}
+
+.search-input {
+  /* padding-left: 20px; */
+  width: 40%;
+}
+
+.page-content {
+  /* display: flex; */
+  /* height: 100%; */
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-sidenav {
+  padding: 20px;
+}

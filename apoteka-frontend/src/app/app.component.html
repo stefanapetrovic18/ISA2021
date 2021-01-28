@@ -1,10 +1,10 @@
-<mat-toolbar>
-  <mat-icon aria-hidden="false">local_pharmacy</mat-icon>
-  <span>Informacioni sistem apoteka</span>
-  <span class="spacer"></span>
-  <span class="spacer"></span>
-  <button mat-button mat-mat-flat-button matTooltip="Uloguj se" *ngIf="this.user === false" (click)="login()" background-color="primary" color="primary">ULOGUJ SE</button>
-  <button mat-button mat-mat-flat-button matTooltip="Registruj se" *ngIf="this.user === false" (click)="register()" background-color="link">REGISTRUJ SE</button>
-  <button mat-button mat-mat-flat-button matTooltip="Log out" *ngIf="this.user === true" (click)="logout()" background-color="primary">IZLOGUJ SE</button>
+<mat-toolbar class="header-toolbar">
+  <mat-icon class="app-icon" aria-hidden="false">local_pharmacy</mat-icon>
+  <span class="app-title">Informacioni sistem apoteka</span>
+  <div class="header-buttons">
+    <button mat-button mat-mat-flat-button matTooltip="Uloguj se" *ngIf="this.user === false" (click)="login()" background-color="primary" color="primary">ULOGUJ SE</button>
+    <button mat-button mat-mat-flat-button matTooltip="Registruj se" *ngIf="this.user === false" (click)="register()" background-color="link">REGISTRUJ SE</button>
+    <button mat-button mat-mat-flat-button matTooltip="Log out" *ngIf="this.user === true" (click)="logout()" background-color="primary">IZLOGUJ SE</button>
+  </div>
 </mat-toolbar>
 <router-outlet></router-outlet>

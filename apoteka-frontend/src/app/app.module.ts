@@ -24,6 +24,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { RequestTokenComponent } from './components/request-token/request-token.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
@@ -62,7 +63,8 @@ import { ConsultationTableViewComponent } from './components/business/consultati
     MatTooltipModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSidenavModule
   ],
   providers: [
     {
