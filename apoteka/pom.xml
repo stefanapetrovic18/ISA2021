@@ -69,12 +69,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.18.Final</version>
         </dependency>
-		<dependency>
-			<groupId>cz.habarta.typescript-generator</groupId>
-			<artifactId>typescript-generator-maven-plugin</artifactId>
-			<version>2.28.785</version>
-			<type>maven-plugin</type>
-		</dependency>
     </dependencies>
 
 	<build>
@@ -82,86 +76,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>cz.habarta.typescript-generator</groupId>
-				<artifactId>typescript-generator-maven-plugin</artifactId>
-				<version>2.28.785</version>
-				<executions>
-					<execution>
-						<id>generate</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<phase>process-classes</phase>
-					</execution>
-				</executions>
-				<configuration>
-					<jsonLibrary>jackson2</jsonLibrary>
-					<classes>
-						<class>rs.apoteka.entity.auth.LoginRequest</class>
-						<class>rs.apoteka.entity.auth.RegistrationRequest</class>
-						<class>rs.apoteka.entity.auth.Role</class>
-						<class>rs.apoteka.entity.auth.RoleType</class>
-						<class>rs.apoteka.entity.auth.User</class>
-						<class>rs.apoteka.entity.auth.UserDetailsImpl</class>
-						<class>rs.apoteka.entity.auth.VerificationToken</class>
-
-						<class>rs.apoteka.entity.business.Consultation</class>
-						<class>rs.apoteka.entity.business.Examination</class>
-						<class>rs.apoteka.entity.business.Item</class>
-						<class>rs.apoteka.entity.business.Medicine</class>
-						<class>rs.apoteka.entity.business.Pharmacy</class>
-						<class>rs.apoteka.entity.business.Prescription</class>
-						<class>rs.apoteka.entity.business.Pricelist</class>
-						<class>rs.apoteka.entity.business.Promotion</class>
-						<class>rs.apoteka.entity.business.Reservation</class>
-						<class>rs.apoteka.entity.business.WorkingHours</class>
-
-						<class>rs.apoteka.entity.user.Dermatologist</class>
-						<class>rs.apoteka.entity.user.Patient</class>
-						<class>rs.apoteka.entity.user.Pharmacist</class>
-						<class>rs.apoteka.entity.user.PharmacyAdmin</class>
-						<class>rs.apoteka.entity.user.Supplier</class>
-						<class>rs.apoteka.entity.user.SystemAdmin</class>
-
-					</classes>
-<!--					<mapClasses>-->
-<!--						asClasses-->
-<!--					</mapClasses>-->
-<!--					<customTypeMappings>-->
-<!--						<mapping>rs.apoteka.entity.auth.Role:Role</mapping>-->
-<!--						<mapping>rs.apoteka.entity.auth.RoleType:RoleType</mapping>-->
-<!--						<mapping>rs.apoteka.entity.auth.User:User</mapping>-->
-
-<!--						<mapping>rs.apoteka.entity.business.Consultation:Consultation</mapping>-->
-<!--						<mapping>rs.apoteka.entity.business.Examination:Examination</mapping>-->
-<!--						<mapping>rs.apoteka.entity.business.Item:Item</mapping>-->
-<!--						<mapping>rs.apoteka.entity.business.Medicine:Medicine</mapping>-->
-<!--						<mapping>rs.apoteka.entity.business.Pharmacy:Pharmacy</mapping>-->
-<!--						<mapping>rs.apoteka.entity.business.Prescription:Prescription</mapping>-->
-<!--						<mapping>rs.apoteka.entity.business.Pricelist:Pricelist</mapping>-->
-
-<!--						<mapping>rs.apoteka.entity.user.Dermatologist:Dermatologist</mapping>-->
-<!--						<mapping>rs.apoteka.entity.user.Patient:Patient</mapping>-->
-<!--						<mapping>rs.apoteka.entity.user.Pharmacist:Pharmacist</mapping>-->
-<!--						<mapping>rs.apoteka.entity.user.PharmacyAdmin:PharmacyAdmin</mapping>-->
-<!--						<mapping>rs.apoteka.entity.user.Supplier:Supplier</mapping>-->
-<!--						<mapping>rs.apoteka.entity.user.SystemAdmin:SystemAdmin</mapping>-->
-<!--					</customTypeMappings>-->
-<!--					<outputKind>module</outputKind>-->
-<!--					<outputFileType>implementationFile</outputFileType>-->
-<!--					<classPatterns>-->
-<!--						<pattern>rs.apoteka.entity.**</pattern>-->
-<!--					</classPatterns>-->
-					<outputKind>module</outputKind>
-					<outputFileType>implementationFile</outputFileType>
-					<mapEnum>asEnum</mapEnum>
-					<nonConstEnums>true</nonConstEnums>
-					<mapClasses>asClasses</mapClasses>
-					<mapDate>asDate</mapDate>
-					<stringQuotes>singleQuotes</stringQuotes>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
