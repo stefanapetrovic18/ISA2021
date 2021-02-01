@@ -11,6 +11,7 @@ import { PharmacyService } from 'src/app/service/business/pharmacy.service';
 export class PharmacyAddComponent implements OnInit {
 
   data = new Pharmacy();
+  output = new Pharmacy();
 
   constructor(private pharmacyService: PharmacyService, private dialogRef: MatDialogRef<PharmacyAddComponent>) { }
 
@@ -21,6 +22,7 @@ export class PharmacyAddComponent implements OnInit {
     this.pharmacyService.create(this.data).subscribe(
       data => {
         window.alert("Uspešno kreiranje!");
+        this.output = data;
         this.dialogRef.close();
       }, error => {
         window.alert("Neuspešno kreiranje ->" + error.message);

@@ -33,6 +33,7 @@ export class PharmacyService {
 
   public create(pharmacy: Pharmacy): Observable<Pharmacy> {
     this._data = this.http.post<Pharmacy>(this.URL + 'create', pharmacy, httpOptions);
+    console.log(this.data);
     return this._data;
   }
 

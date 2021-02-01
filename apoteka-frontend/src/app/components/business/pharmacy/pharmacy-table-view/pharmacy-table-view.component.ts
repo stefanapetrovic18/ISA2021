@@ -22,8 +22,8 @@ export class PharmacyTableViewComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource: MatTableDataSource<any>;
-  @Input() data: Pharmacy[];
-  columns = ['x', 'y'];
+  data: Pharmacy[];
+  columns = ['name', 'rating'];
   actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pharmacyService: PharmacyService, private router: Router, private dialog: MatDialog) {}
@@ -31,6 +31,7 @@ export class PharmacyTableViewComponent implements OnInit {
     this.pharmacyService.data.subscribe(
       data => {
         this.data = data;
+        console.log(data);
         if (this.data !== undefined && this.data.length > 0) {
           this.dataSource = new MatTableDataSource(this.data);
           console.log(this.dataSource);
@@ -44,7 +45,7 @@ export class PharmacyTableViewComponent implements OnInit {
         window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
         this.router.navigateByUrl('');
       }
-    )
+    );
   }
 
   applyFilter(value: any) {
@@ -63,7 +64,20 @@ export class PharmacyTableViewComponent implements OnInit {
   }
 
   add() {
-    this.dialog.open(PharmacyAddComponent);
+    const dialogRef = this.dialog.open(PharmacyAddComponent);
+    dialogRef.afterClosed().subscribe(
+      // result => {
+      //   console.log('RESULT: ', result);
+      //   if (result !== undefined) {
+      //     this.pharmacyService.data.subscribe(
+      //       data => {
+      //         console.log('DATA: ', data);
+      //       }
+      //     )
+      //   }
+      // }
+    )
+    this.ngOnInit();
   }
 
   view(input: Pharmacy) {
