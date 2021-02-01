@@ -1,3 +1,12 @@
-<p>
-  pharmacy-add works!
-</p>
+<h1 mat-dialog-title>Dodaj apoteku</h1>
+<div mat-dialog-content>
+  <p>Naziv</p>
+  <mat-form-field>
+    <mat-label>Naziv</mat-label>
+    <input matInput type="text" [(ngModel)]="data.name" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-raised-button class="add-button" [mat-dialog-close]="data">DODAJ</button>
+  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
+</div>

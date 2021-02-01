@@ -28,15 +28,23 @@ export class ItemTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private itemService: ItemService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    if (this.data !== undefined && this.data.length > 0) {
-      this.dataSource = new MatTableDataSource(this.data);
-      console.log(this.dataSource);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    } else {
-      window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-      this.router.navigateByUrl('');
-    }
+    this.itemService.data.subscribe(
+      data => {
+        this.data = data;
+        if (this.data !== undefined && this.data.length > 0) {
+          this.dataSource = new MatTableDataSource(this.data);
+          console.log(this.dataSource);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        } else {
+          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+          this.router.navigateByUrl('');
+        }
+      }, error => {
+        window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+        this.router.navigateByUrl('');
+      }
+    )
   }
 
   applyFilter(value: any) {
