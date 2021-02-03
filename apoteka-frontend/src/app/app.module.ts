@@ -79,6 +79,36 @@ import { WorkingHoursDeleteComponent } from './components/business/working-hours
 import { WorkingHoursEditComponent } from './components/business/working-hours/working-hours-edit/working-hours-edit.component';
 import { WorkingHoursTableViewComponent } from './components/business/working-hours/working-hours-table-view/working-hours-table-view.component';
 import { WorkingHoursViewComponent } from './components/business/working-hours/working-hours-view/working-hours-view.component';
+import { PatientAddComponent } from './components/user/patient/patient-add/patient-add.component';
+import { PatientDeleteComponent } from './components/user/patient/patient-delete/patient-delete.component';
+import { PatientEditComponent } from './components/user/patient/patient-edit/patient-edit.component';
+import { PatientTableViewComponent } from './components/user/patient/patient-table-view/patient-table-view.component';
+import { PatientViewComponent } from './components/user/patient/patient-view/patient-view.component';
+import { PharmacistAddComponent } from './components/user/pharmacist/pharmacist-add/pharmacist-add.component';
+import { PharmacistDeleteComponent } from './components/user/pharmacist/pharmacist-delete/pharmacist-delete.component';
+import { PharmacistEditComponent } from './components/user/pharmacist/pharmacist-edit/pharmacist-edit.component';
+import { PharmacistTableViewComponent } from './components/user/pharmacist/pharmacist-table-view/pharmacist-table-view.component';
+import { PharmacistViewComponent } from './components/user/pharmacist/pharmacist-view/pharmacist-view.component';
+import { PharmacyAdminAddComponent } from './components/user/pharmacy-admin/pharmacy-admin-add/pharmacy-admin-add.component';
+import { PharmacyAdminDeleteComponent } from './components/user/pharmacy-admin/pharmacy-admin-delete/pharmacy-admin-delete.component';
+import { PharmacyAdminEditComponent } from './components/user/pharmacy-admin/pharmacy-admin-edit/pharmacy-admin-edit.component';
+import { PharmacyAdminTableViewComponent } from './components/user/pharmacy-admin/pharmacy-admin-table-view/pharmacy-admin-table-view.component';
+import { PharmacyAdminViewComponent } from './components/user/pharmacy-admin/pharmacy-admin-view/pharmacy-admin-view.component';
+import { SupplierAddComponent } from './components/user/supplier/supplier-add/supplier-add.component';
+import { SupplierDeleteComponent } from './components/user/supplier/supplier-delete/supplier-delete.component';
+import { SupplierEditComponent } from './components/user/supplier/supplier-edit/supplier-edit.component';
+import { SupplierTableViewComponent } from './components/user/supplier/supplier-table-view/supplier-table-view.component';
+import { SupplierViewComponent } from './components/user/supplier/supplier-view/supplier-view.component';
+import { SystemAdminAddComponent } from './components/user/system-admin/system-admin-add/system-admin-add.component';
+import { SystemAdminDeleteComponent } from './components/user/system-admin/system-admin-delete/system-admin-delete.component';
+import { SystemAdminEditComponent } from './components/user/system-admin/system-admin-edit/system-admin-edit.component';
+import { SystemAdminTableViewComponent } from './components/user/system-admin/system-admin-table-view/system-admin-table-view.component';
+import { SystemAdminViewComponent } from './components/user/system-admin/system-admin-view/system-admin-view.component';
+import { DermatologistAddComponent } from './components/user/dermatologist/dermatologist-add/dermatologist-add.component';
+import { DermatologistDeleteComponent } from './components/user/dermatologist/dermatologist-delete/dermatologist-delete.component';
+import { DermatologistEditComponent } from './components/user/dermatologist/dermatologist-edit/dermatologist-edit.component';
+import { DermatologistTableViewComponent } from './components/user/dermatologist/dermatologist-table-view/dermatologist-table-view.component';
+import { DermatologistViewComponent } from './components/user/dermatologist/dermatologist-view/dermatologist-view.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +178,42 @@ import { WorkingHoursViewComponent } from './components/business/working-hours/w
     WorkingHoursEditComponent,
     WorkingHoursTableViewComponent,
     WorkingHoursViewComponent,
+
+    DermatologistAddComponent,
+    DermatologistDeleteComponent,
+    DermatologistEditComponent,
+    DermatologistTableViewComponent,
+    DermatologistViewComponent,
+
+    PatientAddComponent,
+    PatientDeleteComponent,
+    PatientEditComponent,
+    PatientTableViewComponent,
+    PatientViewComponent,
+
+    PharmacistAddComponent,
+    PharmacistDeleteComponent,
+    PharmacistEditComponent,
+    PharmacistTableViewComponent,
+    PharmacistViewComponent,
+
+    PharmacyAdminAddComponent,
+    PharmacyAdminDeleteComponent,
+    PharmacyAdminEditComponent,
+    PharmacyAdminTableViewComponent,
+    PharmacyAdminViewComponent,
+
+    SupplierAddComponent,
+    SupplierDeleteComponent,
+    SupplierEditComponent,
+    SupplierTableViewComponent,
+    SupplierViewComponent,
+
+    SystemAdminAddComponent,
+    SystemAdminDeleteComponent,
+    SystemAdminEditComponent,
+    SystemAdminTableViewComponent,
+    SystemAdminViewComponent,
 
 
   ],

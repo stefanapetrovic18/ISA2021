@@ -13,6 +13,12 @@ import { WorkingHoursTableViewComponent } from './components/business/working-ho
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { RequestTokenComponent } from './components/request-token/request-token.component';
+import { DermatologistTableViewComponent } from './components/user/dermatologist/dermatologist-table-view/dermatologist-table-view.component';
+import { PatientTableViewComponent } from './components/user/patient/patient-table-view/patient-table-view.component';
+import { PharmacistTableViewComponent } from './components/user/pharmacist/pharmacist-table-view/pharmacist-table-view.component';
+import { PharmacyAdminTableViewComponent } from './components/user/pharmacy-admin/pharmacy-admin-table-view/pharmacy-admin-table-view.component';
+import { SupplierTableViewComponent } from './components/user/supplier/supplier-table-view/supplier-table-view.component';
+import { SystemAdminTableViewComponent } from './components/user/system-admin/system-admin-table-view/system-admin-table-view.component';
 
 
 const routes: Routes = [
@@ -67,6 +73,30 @@ const routes: Routes = [
   {
     path: 'radni-sati',
     component: WorkingHoursTableViewComponent
+  },
+  {
+    path: 'dermatolog',
+    component: DermatologistTableViewComponent
+  },
+  {
+    path: 'pacijent',
+    component: PatientTableViewComponent
+  },
+  {
+    path: 'farmaceut',
+    component: PharmacistTableViewComponent
+  },
+  {
+    path: 'administrator-apoteke',
+    component: PharmacyAdminTableViewComponent
+  },
+  {
+    path: 'dobavljac',
+    component: SupplierTableViewComponent
+  },
+  {
+    path: 'administrator-sistema',
+    component: SystemAdminTableViewComponent
   }
 ];
 
