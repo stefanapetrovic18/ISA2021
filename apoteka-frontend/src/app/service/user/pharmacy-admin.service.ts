@@ -12,30 +12,49 @@ const httpOptions = {
 })
 export class PharmacyAdminService {
 
+  private _data = new Observable<any>();
+
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/pharmacy-admin/';
 
+  // HTTP zahtevi.
+
   public findAll(): Observable<PharmacyAdmin[]> {
-    return this.http.get<PharmacyAdmin[]>(this.URL);
+    this._data = this.http.get<PharmacyAdmin[]>(this.URL);
+    return this._data;
   }
 
   public getOne(id: number): Observable<PharmacyAdmin> {
     let params = new HttpParams().set('id', id.toString());
-    return this.http.get<PharmacyAdmin>(this.URL + 'search', { params });
+    this._data = this.http.get<PharmacyAdmin>(this.URL + 'search', { params });
+    return this._data;
   }
 
-  public create(pharmacyadmin: PharmacyAdmin): Observable<PharmacyAdmin> {
-    return this.http.post<PharmacyAdmin>(this.URL + 'create', pharmacyadmin, httpOptions);
+  public create(pharmacyAdmin: PharmacyAdmin): Observable<PharmacyAdmin> {
+    this._data = this.http.post<PharmacyAdmin>(this.URL + 'create', pharmacyAdmin, httpOptions);
+    return this._data;
   }
 
-  public update(pharmacyadmin: PharmacyAdmin): Observable<PharmacyAdmin> {
-    return this.http.post<PharmacyAdmin>(this.URL + 'update', pharmacyadmin, httpOptions);
+  public update(pharmacyAdmin: PharmacyAdmin): Observable<PharmacyAdmin> {
+    this._data = this.http.post<PharmacyAdmin>(this.URL + 'update', pharmacyAdmin, httpOptions);
+    return this._data;
   }
 
   public delete(id: number): Observable<boolean> {
     let params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this._data;
+  }
+
+  // Get/Set metode.
+
+  public get data() {
+    return this._data;
+  }
+
+  public setData(data: any) {
+    this._data = data;
   }
 
 }

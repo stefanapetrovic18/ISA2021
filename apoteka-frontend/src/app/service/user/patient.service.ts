@@ -12,30 +12,49 @@ const httpOptions = {
 })
 export class PatientService {
 
+  private _data = new Observable<any>();
+
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/patient/';
 
+  // HTTP zahtevi.
+
   public findAll(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(this.URL);
+    this._data = this.http.get<Patient[]>(this.URL);
+    return this._data;
   }
 
   public getOne(id: number): Observable<Patient> {
     let params = new HttpParams().set('id', id.toString());
-    return this.http.get<Patient>(this.URL + 'search', { params });
+    this._data = this.http.get<Patient>(this.URL + 'search', { params });
+    return this._data;
   }
 
   public create(patient: Patient): Observable<Patient> {
-    return this.http.post<Patient>(this.URL + 'create', patient, httpOptions);
+    this._data = this.http.post<Patient>(this.URL + 'create', patient, httpOptions);
+    return this._data;
   }
 
   public update(patient: Patient): Observable<Patient> {
-    return this.http.post<Patient>(this.URL + 'update', patient, httpOptions);
+    this._data = this.http.post<Patient>(this.URL + 'update', patient, httpOptions);
+    return this._data;
   }
 
   public delete(id: number): Observable<boolean> {
     let params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this._data;
+  }
+
+  // Get/Set metode.
+
+  public get data() {
+    return this._data;
+  }
+
+  public setData(data: any) {
+    this._data = data;
   }
 
 }
