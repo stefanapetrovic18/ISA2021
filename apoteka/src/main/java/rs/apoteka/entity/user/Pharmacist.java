@@ -35,6 +35,13 @@ public class Pharmacist extends User {
     public Pharmacist() {
     }
 
+    public Pharmacist(User user) {
+        super(user.getUsername(), user.getPassword(), user.getForename(), user.getSurname(),
+                user.getAddress(), user.getCity(), user.getCountry(), user.getPhone(),
+                user.getPasswordChanged(), user.getEnabled(), user.getValidated(), user.getRoles());
+
+    }
+
     public LocalDateTime getVacationStart() {
         return vacationStart;
     }

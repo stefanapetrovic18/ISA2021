@@ -9,7 +9,7 @@ public interface PharmacistService {
 
     Pharmacist getOne(Long id);
 
-    Pharmacist create(Pharmacist pharmacist);
+    Pharmacist create(Pharmacist pharmacist) throws Exception;
 
     Pharmacist update(Pharmacist pharmacist);
 

@@ -55,6 +55,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getUsersWithoutType() {
+        List<User> users = findValidatedAndEnabled();
+        users.forEach(user -> System.out.println(user.getUsername() + ": " + user.getRoles()));
+        users.removeIf(user -> (user.getRoles() != null && !user.getRoles().isEmpty()));
+        users.forEach(user -> System.out.println(user.getUsername() + ": " + user.getRoles()));
+        return users;
+    }
+
+    @Override
     public User create(RegistrationRequest request) throws Exception {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new Exception("Korisnik sa ovom email adresom već postoji!");
@@ -130,11 +139,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean delete(Long id) {
         User user = getOne(id);
-        if (user == null || validatedAndEnabled(user)) {
+        if (user == null) {
             return false;
         }
-        user.setEnabled(false);
-        return !user.getEnabled();
+        userRepository.delete(user);
+        return true;
     }
 
     private Boolean validatedAndEnabled(User user) {

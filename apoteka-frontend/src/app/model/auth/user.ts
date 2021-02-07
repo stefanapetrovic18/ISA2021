@@ -12,5 +12,6 @@ export class User {
   phone: string;
   enabled: boolean;
   validated: boolean;
+  passwordChanged: boolean;
   roles: Role[];
 }

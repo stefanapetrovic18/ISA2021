@@ -1,9 +1,20 @@
 <h1 mat-dialog-title>Dodaj farmaceuta</h1>
 <div mat-dialog-content>
-  <p>Naziv</p>
+  <p>Korisnik</p>
   <mat-form-field>
-    <mat-label>Naziv</mat-label>
-    <input matInput type="text" [(ngModel)]="data.name" required>
+    <mat-label>Korisnik</mat-label>
+    <mat-select [(value)]="user">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let user1 of users" [value]="user1">{{user1.username}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p>Apoteka</p>
+  <mat-form-field>
+    <mat-label>Apoteka</mat-label>
+    <mat-select [(value)]="data.pharmacy">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>
+    </mat-select>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

@@ -48,6 +48,21 @@ public class User {
     public User() {
     }
 
+    public User(@Email String username, String password, String forename, String surname, String address, String city, String country, String phone, Boolean passwordChanged, Boolean enabled, Boolean validated, Set<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.forename = forename;
+        this.surname = surname;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.phone = phone;
+        this.passwordChanged = passwordChanged;
+        this.enabled = enabled;
+        this.validated = validated;
+        this.roles = roles;
+    }
+
     public User(RegistrationRequest request) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         this.username = request.getUsername();
@@ -61,9 +76,9 @@ public class User {
         this.passwordChanged = false;
         this.enabled = true;
         this.validated = false;
-        this.roles = new HashSet<>() {{
-            add(new Role(RoleType.ROLE_PATIENT));
-        }};
+//        this.roles = new HashSet<>() {{
+//            add(new Role(RoleType.ROLE_PATIENT));
+//        }};
     }
 
     public User(Long id, String username, String password, String forename, String surname, String address, String city, String country, String phone, Boolean passwordChanged, Boolean enabled, Boolean validated, Set<Role> roles) {

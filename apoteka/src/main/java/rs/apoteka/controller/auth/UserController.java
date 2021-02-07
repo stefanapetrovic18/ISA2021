@@ -17,6 +17,7 @@ import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.auth.VerificationTokenService;
 
 import java.net.URI;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -72,6 +73,11 @@ public class UserController {
     public ResponseEntity<?> requestToken(@RequestParam String email) throws Exception {
         verificationTokenService.requestToken(email);
         return new ResponseEntity<>(gson.toJson("Zahtev je poslat. Molimo vas da proverite email kako biste potvrdili registraciju."), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/get/without-type")
+    public ResponseEntity<List<User>> getUsersWithoutType() {
+        return new ResponseEntity<>(userService.getUsersWithoutType(), HttpStatus.OK);
     }
 
 }

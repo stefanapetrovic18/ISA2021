@@ -17,6 +17,8 @@ public interface UserService {
 
     User findByUsername(String username);
 
+    List<User> getUsersWithoutType();
+
     User create(RegistrationRequest request) throws Exception;
 
     Boolean confirm(String token) throws Exception;

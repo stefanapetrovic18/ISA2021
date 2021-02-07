@@ -19,6 +19,7 @@ export class AuthService {
   private requestTokenURL = 'http://localhost:8080/api/user/request-token?email=';
   private confirmURL = 'http://localhost:8080/api/user/confirm?token=';
   private changePasswordURL = 'http://localhost:8080/api/user/change-password';
+  private getUsersWithoutTypeURL = 'http://localhost:8080/api/user/get/without-type';
 
   constructor(private http: HttpClient) { }
 
@@ -40,6 +41,10 @@ export class AuthService {
 
   changePassword(request: PasswordChangeRequest): Observable<any> {
     return this.http.post<any>(this.changePasswordURL, request, httpOptions);
+  }
+
+  getUsersWithoutType(): Observable<any> {
+    return this.http.get<any>(this.getUsersWithoutTypeURL, httpOptions);
   }
 
 }

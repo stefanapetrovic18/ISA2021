@@ -17,7 +17,7 @@ public class VerificationToken {
     @Column
     private String token;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
