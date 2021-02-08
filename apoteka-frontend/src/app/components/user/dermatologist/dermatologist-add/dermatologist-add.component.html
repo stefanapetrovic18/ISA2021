@@ -48,7 +48,7 @@
   <p>Apoteke</p>
   <mat-form-field>
     <mat-label>Apoteke</mat-label>
-    <mat-select multiple [(value)]="data.pharmacy">
+    <mat-select multiple [(value)]="data.pharmacies">
       <mat-option>--</mat-option>
       <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>
     </mat-select>
