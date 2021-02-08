@@ -1,3 +1,38 @@
-<p>
-  working-hours-add works!
-</p>
+<h1 mat-dialog-title>Dodaj smenu</h1>
+<div mat-dialog-content>
+  <p>Dan</p>
+  <mat-form-field>
+    <mat-label>Dan</mat-label>
+    <mat-select [(value)]="workingHours.dayOfWeek">
+      <mat-option value="MONDAY">PONEDELJAK</mat-option>
+      <mat-option value="TUESDAY">UTORAK</mat-option>
+      <mat-option value="WEDNESDAY">SREDA</mat-option>
+      <mat-option value="THURSDAY">ČETVRTAK</mat-option>
+      <mat-option value="FRIDAY">PETAK</mat-option>
+      <mat-option value="SATURDAY">SUBOTA</mat-option>
+      <mat-option value="SUNDAY">NEDELJA</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p>Početak radnog vremena</p>
+  <mat-form-field>
+    <mat-label>Početak radnog vremena</mat-label>
+    <input matInput type="time" [(ngModel)]="workingHours.shiftStart" />
+  </mat-form-field>
+  <p>Kraj radnog vremena</p>
+  <mat-form-field>
+    <mat-label>Kraj radnog vremena</mat-label>
+    <input matInput type="time" [(ngModel)]="workingHours.shiftEnd" />
+  </mat-form-field>
+  <p *ngIf="dermatologist !== undefined">Apoteka</p>
+  <mat-form-field *ngIf="dermatologist !== undefined">
+    <mat-label>Apoteka</mat-label>
+    <mat-select [(value)]="data.pharmacy">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-raised-button class="add-button" (click)="add()">DODAJ</button>
+  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
+</div>

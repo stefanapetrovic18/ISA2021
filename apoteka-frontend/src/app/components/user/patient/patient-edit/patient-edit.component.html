@@ -1,3 +1,52 @@
-<p>
-  patient-edit works!
-</p>
+<h1 mat-dialog-title>Izmeni pacijenta</h1>
+<div mat-dialog-content>
+  <p>Email adresa</p>
+  <mat-form-field>
+    <mat-label>Email adresa</mat-label>
+    <input matInput placeholder="Email adresa" type="email" [(ngModel)]="data.username" />
+  </mat-form-field>
+  <p>Šifra</p>
+  <mat-form-field>
+    <mat-label>Šifra</mat-label>
+    <input matInput placeholder="Šifra" type="password" [(ngModel)]="data.password" />
+  </mat-form-field>
+  <p>Ponovi šifru</p>
+  <mat-form-field>
+    <mat-label>Ponovi šifru</mat-label>
+    <input matInput placeholder="Ponovi šifru" type="password" [(ngModel)]="repeatPassword" />
+  </mat-form-field>
+  <p>Ime</p>
+  <mat-form-field>
+    <mat-label>Ime</mat-label>
+    <input matInput placeholder="Ime" type="text" [(ngModel)]="data.forename" />
+  </mat-form-field>
+  <p>Prezime</p>
+  <mat-form-field>
+    <mat-label>Prezime</mat-label>
+    <input matInput placeholder="Prezime" type="text" [(ngModel)]="data.surname" />
+  </mat-form-field>
+  <p>Adresa</p>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input matInput placeholder="Adresa" type="text" [(ngModel)]="data.address" />
+  </mat-form-field>
+  <p>Mesto</p>
+  <mat-form-field>
+    <mat-label>Mesto</mat-label>
+    <input matInput placeholder="Mesto" type="text" [(ngModel)]="data.city" />
+  </mat-form-field>
+  <p>Država</p>
+  <mat-form-field>
+    <mat-label>Država</mat-label>
+    <input matInput placeholder="Država" type="text" [(ngModel)]="data.country" />
+  </mat-form-field>
+  <p>Broj telefona</p>
+  <mat-form-field>
+    <mat-label>Broj telefona</mat-label>
+    <input matInput placeholder="Broj telefona" type="text" [(ngModel)]="data.phone" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-raised-button class="add-button" (click)="edit()">IZMENI</button>
+  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
+</div>
