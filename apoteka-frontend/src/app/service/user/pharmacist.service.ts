@@ -12,7 +12,7 @@ const httpOptions = {
 })
 export class PharmacistService {
 
-  private _data = new Observable<any>();
+  private _data: Observable<any>;
 
   constructor(private http: HttpClient) { }
 

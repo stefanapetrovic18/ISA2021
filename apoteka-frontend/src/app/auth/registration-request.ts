@@ -7,4 +7,5 @@ export class RegistrationRequest {
   city: string;
   country: string;
   phone: string;
+  type: string;
 }

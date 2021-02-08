@@ -1,24 +1,27 @@
 package rs.apoteka.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import rs.apoteka.entity.auth.RegistrationRequest;
+import rs.apoteka.entity.auth.Role;
+import rs.apoteka.entity.auth.RoleType;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Consultation;
-import rs.apoteka.entity.business.Examination;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.business.WorkingHours;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
 @Table
 public class Pharmacist extends User {
-    @Column(nullable = false)
+    @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime vacationStart;
-    @Column(nullable = false)
+    @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime vacationEnd;
     @ManyToOne
@@ -33,6 +36,24 @@ public class Pharmacist extends User {
     private Double rating;
 
     public Pharmacist() {
+    }
+
+    public Pharmacist(RegistrationRequest request) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.setUsername(request.getUsername());
+        this.setPassword(encoder.encode(request.getPassword()));
+        this.setForename(request.getForename());
+        this.setSurname(request.getSurname());
+        this.setAddress(request.getAddress());
+        this.setCity(request.getCity());
+        this.setCountry(request.getCountry());
+        this.setPhone(request.getPhone());
+        this.setPasswordChanged(false);
+        this.setEnabled(true);
+        this.setValidated(false);
+        this.setRoles(new HashSet<>() {{
+            add(new Role(RoleType.ROLE_PHARMACIST));
+        }});
     }
 
     public Pharmacist(User user) {

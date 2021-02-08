@@ -17,38 +17,34 @@ export class PharmacistAddComponent implements OnInit {
   data = new Pharmacist();
   output = new Pharmacist();
   pharmacies: Pharmacy[];
-  users: User[];
-  user: User;
+  users: Pharmacist[];
+  user: Pharmacist;
+  repeatPassword = '';
 
-  constructor(private pharmacistService: PharmacistService, private pharmacyService: PharmacyService, private authService: AuthService, private dialogRef: MatDialogRef<PharmacistAddComponent>) { }
+  constructor(private pharmacistService: PharmacistService, private pharmacyService: PharmacyService,
+              private authService: AuthService, private dialogRef: MatDialogRef<PharmacistAddComponent>) { }
 
   ngOnInit() {
     this.pharmacyService.findAll().subscribe(
       data => {
-        this.pharmacies = data;
-      }
-    );
-    this.authService.getUsersWithoutType().subscribe(
-      data => {
-        this.users = data;
         console.log(data);
+        this.pharmacies = data;
       }
     );
   }
 
   add() {
-    if (this.user !== undefined || this.user !== null) {
-      this.data = this.data.convert(this.data, this.user);
+    if (this.data.password === this.repeatPassword) {
+      this.pharmacistService.create(this.data).subscribe(
+        data => {
+          window.alert('Uspešno kreiranje!');
+          this.output = data;
+          this.dialogRef.close();
+        }, error => {
+          window.alert('Neuspešno kreiranje ->' + error.message);
+        }
+      );
     }
-    this.pharmacistService.create(this.data).subscribe(
-      data => {
-        window.alert("Uspešno kreiranje!");
-        this.output = data;
-        this.dialogRef.close();
-      }, error => {
-        window.alert("Neuspešno kreiranje ->" + error.message);
-      }
-    )
   }
 
   close() {

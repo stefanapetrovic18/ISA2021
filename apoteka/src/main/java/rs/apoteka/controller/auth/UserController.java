@@ -1,13 +1,10 @@
 package rs.apoteka.controller.auth;
 
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.LoginRequest;
 import rs.apoteka.entity.auth.PasswordChangeRequest;
@@ -16,7 +13,6 @@ import rs.apoteka.entity.auth.User;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.auth.VerificationTokenService;
 
-import java.net.URI;
 import java.util.List;
 
 @CrossOrigin

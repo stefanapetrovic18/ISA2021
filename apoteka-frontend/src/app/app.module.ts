@@ -109,6 +109,12 @@ import { DermatologistDeleteComponent } from './components/user/dermatologist/de
 import { DermatologistEditComponent } from './components/user/dermatologist/dermatologist-edit/dermatologist-edit.component';
 import { DermatologistTableViewComponent } from './components/user/dermatologist/dermatologist-table-view/dermatologist-table-view.component';
 import { DermatologistViewComponent } from './components/user/dermatologist/dermatologist-view/dermatologist-view.component';
+import { PharmacistDashboardComponent } from './components/navigation/pharmacist-dashboard/pharmacist-dashboard.component';
+import { PharmacyAdminDashboardComponent } from './components/navigation/pharmacy-admin-dashboard/pharmacy-admin-dashboard.component';
+import { PatientDashboardComponent } from './components/navigation/patient-dashboard/patient-dashboard.component';
+import { DermatologistDashboardComponent } from './components/navigation/dermatologist-dashboard/dermatologist-dashboard.component';
+import { SystemAdminDashboardComponent } from './components/navigation/system-admin-dashboard/system-admin-dashboard.component';
+import { SupplierDashboardComponent } from './components/navigation/supplier-dashboard/supplier-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -214,6 +220,12 @@ import { DermatologistViewComponent } from './components/user/dermatologist/derm
     SystemAdminEditComponent,
     SystemAdminTableViewComponent,
     SystemAdminViewComponent,
+    PharmacistDashboardComponent,
+    PharmacyAdminDashboardComponent,
+    PatientDashboardComponent,
+    DermatologistDashboardComponent,
+    SystemAdminDashboardComponent,
+    SupplierDashboardComponent,
 
 
   ],

@@ -1,5 +1,6 @@
 package rs.apoteka.entity.business;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
@@ -16,18 +17,25 @@ public class Pharmacy {
     private Long id;
     @Column(nullable = false, unique = true)
     private String name;
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<PharmacyAdmin> admins;
+    @JsonIgnore
     @ManyToMany
     private List<Dermatologist> dermatologists;
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Pharmacist> pharmacists;
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Examination> examinations;
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Consultation> consultations;
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Promotion> promotions;
+    @JsonIgnore
     @ElementCollection(targetClass = User.class)
     private List<User> subscriptions;
     // Inventar.

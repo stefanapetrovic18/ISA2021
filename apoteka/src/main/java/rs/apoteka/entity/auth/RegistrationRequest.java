@@ -12,6 +12,7 @@ public class RegistrationRequest {
     private String city;
     private String country;
     private String phone; //TODO: regex
+    private String type;
 
     public RegistrationRequest() {
     }
@@ -78,5 +79,13 @@ public class RegistrationRequest {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

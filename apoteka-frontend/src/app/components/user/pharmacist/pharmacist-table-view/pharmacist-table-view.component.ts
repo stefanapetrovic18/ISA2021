@@ -23,12 +23,12 @@ export class PharmacistTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   data: Pharmacist[];
-  columns = ['name', 'rating'];
+  columns = ['username', 'forename', 'surname', 'rating'];
   actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pharmacistService: PharmacistService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.pharmacistService.data.subscribe(
+    this.pharmacistService.findAll().subscribe(
       data => {
         this.data = data;
         console.log(data);
@@ -76,7 +76,7 @@ export class PharmacistTableViewComponent implements OnInit {
       //     )
       //   }
       // }
-    )
+    );
     this.ngOnInit();
   }
 

@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 import rs.apoteka.auth.JWTProvider;
 import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.*;
+import rs.apoteka.entity.auth.User;
+import rs.apoteka.entity.user.*;
 import rs.apoteka.repository.auth.RoleRepository;
 import rs.apoteka.repository.auth.UserRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.auth.VerificationTokenService;
+import rs.apoteka.service.intf.user.*;
 
 import java.util.Calendar;
 import java.util.List;
@@ -33,6 +36,19 @@ public class UserServiceImpl implements UserService {
     AuthenticationService authenticationService;
     @Autowired
     JWTProvider provider;
+
+    @Autowired
+    DermatologistService dermatologistService;
+    @Autowired
+    PatientService patientService;
+    @Autowired
+    PharmacistService pharmacistService;
+    @Autowired
+    PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    SupplierService supplierService;
+    @Autowired
+    SystemAdminService systemAdminService;
 
     @Override
     public List<User> findAll() {
@@ -68,7 +84,29 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new Exception("Korisnik sa ovom email adresom već postoji!");
         }
-        return userRepository.save(new User(request));
+        User user;
+        if (request.getType().equalsIgnoreCase("patient")) {
+            Patient patient = new Patient(request);
+            user = patientService.create(patient);
+        } else if (request.getType().equalsIgnoreCase("dermatologist")) {
+            Dermatologist dermatologist = new Dermatologist(request);
+            user = dermatologistService.create(dermatologist);
+        } else if (request.getType().equalsIgnoreCase("pharmacist")) {
+            Pharmacist pharmacist = new Pharmacist(request);
+            user = pharmacistService.create(pharmacist);
+        } else if (request.getType().equalsIgnoreCase("pharmacy-admin")) {
+            PharmacyAdmin pharmacyAdmin = new PharmacyAdmin(request);
+            user = pharmacyAdminService.create(pharmacyAdmin);
+        } else if (request.getType().equalsIgnoreCase("supplier")) {
+            Supplier supplier = new Supplier(request);
+            user = supplierService.create(supplier);
+        } else if (request.getType().equalsIgnoreCase("system-admin")) {
+            SystemAdmin systemAdmin = new SystemAdmin(request);
+            user = systemAdminService.create(systemAdmin);
+        } else {
+            throw new Exception("Tip korisnika nije definisan, ili ne postoji.");
+        }
+        return user;
     }
 
     @Override

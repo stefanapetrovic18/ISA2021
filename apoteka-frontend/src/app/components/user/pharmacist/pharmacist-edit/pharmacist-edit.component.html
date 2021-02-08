@@ -1,3 +1,23 @@
-<p>
-  pharmacist-edit works!
-</p>
+<h1 mat-dialog-title>Izmeni farmaceuta</h1>
+<div mat-dialog-content>
+  <p>Farmaceut</p>
+  <mat-form-field>
+    <mat-label>Farmaceut</mat-label>
+    <mat-select [(value)]="user">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let user1 of users" [value]="user1">{{user1.username}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p>Apoteka</p>
+  <mat-form-field>
+    <mat-label>Apoteka</mat-label>
+    <mat-select [(value)]="pharmacy">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-raised-button class="add-button" (click)="edit()">IZMENI</button>
+  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
+</div>

@@ -1,7 +1,6 @@
 package rs.apoteka.entity.business;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import rs.apoteka.entity.auth.User;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
