@@ -19,6 +19,49 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
+    public List<Medicine> findAllParametrized(Long id, String name, String code, String manufacturer, String type, String form,
+                                              Boolean prescriptionNecessary, String sideEffects, String ingredient,
+                                              String recommendedDose) {
+        List<Medicine> medicine = findAll();
+        if (id != null) {
+            medicine.removeIf(m -> !m.getId().equals(id));
+        }
+        if (name != null) {
+            medicine.removeIf(m -> !m.getName().contains(name));
+        }
+        if (code != null) {
+            medicine.removeIf(m -> !m.getCode().contains(code));
+        }
+        if (manufacturer != null) {
+            medicine.removeIf(m -> !m.getManufacturer().contains(manufacturer));
+        }
+        if (type != null) {
+            medicine.removeIf(m -> !m.getType().equals(type));
+        }
+        if (form != null) {
+            medicine.removeIf(m -> !m.getForm().contains(form));
+        }
+        if (prescriptionNecessary != null) {
+            medicine.removeIf(m -> m.getPrescriptionNecessary() != prescriptionNecessary);
+        }
+        if (sideEffects != null) {
+            medicine.removeIf(m -> !m.getSideEffects().contains(sideEffects));
+        }
+        if (ingredient != null) {
+            medicine.removeIf(m -> !m.getIngredients().contains(ingredient));
+        }
+        if (recommendedDose != null) {
+            medicine.removeIf(m -> !m.getRecommendedDose().contains(recommendedDose));
+        }
+        return medicine;
+    }
+
+    @Override
+    public List<Medicine> findSubstitutes(Long id) {
+        return getOne(id).getSubstitutes();
+    }
+
+    @Override
     public Medicine getOne(Long id) {
         return medicineRepository.getOne(id);
     }

@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.service.intf.business.PharmacyService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin
@@ -19,6 +21,25 @@ public class PharmacyController {
     @GetMapping(value = "")
     public ResponseEntity<List<Pharmacy>> findAll() throws Exception {
         return new ResponseEntity<>(pharmacyService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<Pharmacy>> findAllParametrized(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Long pharmacistID,
+            @RequestParam(required = false) Long dermatologistID,
+            @RequestParam(required = false) Long consultationID,
+            @RequestParam(required = false) Long adminID,
+            @RequestParam(required = false) Long examinationID,
+            @RequestParam(required = false) Long promotionID,
+            @RequestParam(required = false) Long userID,
+            @RequestParam(required = false) Long pricelistID,
+            @RequestParam(required = false) Double rating,
+            @RequestParam(required = false) Double ratingFrom,
+            @RequestParam(required = false) Double ratingTo
+    ) throws Exception {
+        return new ResponseEntity<>(pharmacyService.findAllParametrized(id, pharmacistID, dermatologistID, consultationID,
+                adminID, examinationID, promotionID, userID, pricelistID, rating, ratingFrom, ratingTo), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")

@@ -12,8 +12,6 @@ const httpOptions = {
 })
 export class ExaminationService {
 
-  private _data = new Observable<any>();
-
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/examination/';
@@ -21,40 +19,25 @@ export class ExaminationService {
   // HTTP zahtevi.
 
   public findAll(): Observable<Examination[]> {
-    this._data = this.http.get<Examination[]>(this.URL);
-    return this._data;
+    return this.http.get<Examination[]>(this.URL);
   }
 
   public getOne(id: number): Observable<Examination> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.get<Examination>(this.URL + 'search', { params });
-    return this._data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<Examination>(this.URL + 'search', { params });
   }
 
   public create(examination: Examination): Observable<Examination> {
-    this._data = this.http.post<Examination>(this.URL + 'create', examination, httpOptions);
-    return this._data;
+    return this.http.post<Examination>(this.URL + 'create', examination, httpOptions);
   }
 
   public update(examination: Examination): Observable<Examination> {
-    this._data = this.http.post<Examination>(this.URL + 'update', examination, httpOptions);
-    return this._data;
+    return this.http.post<Examination>(this.URL + 'update', examination, httpOptions);
   }
 
   public delete(id: number): Observable<boolean> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
-    return this._data;
-  }
-
-  // Get/Set metode.
-
-  public get data() {
-    return this._data;
-  }
-
-  public setData(data: any) {
-    this._data = data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.delete<boolean>(this.URL + 'delete', { params });
   }
 
 }

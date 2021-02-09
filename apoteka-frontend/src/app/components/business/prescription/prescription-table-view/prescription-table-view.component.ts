@@ -28,7 +28,7 @@ export class PrescriptionTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private prescriptionService: PrescriptionService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.prescriptionService.data.subscribe(
+    this.prescriptionService.findAll().subscribe(
       data => {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {

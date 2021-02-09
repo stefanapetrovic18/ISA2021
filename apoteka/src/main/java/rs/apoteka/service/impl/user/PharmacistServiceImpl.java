@@ -7,15 +7,18 @@ import rs.apoteka.entity.auth.Role;
 import rs.apoteka.entity.auth.RoleType;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Pharmacy;
+import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.user.PharmacistRepository;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.user.PharmacistService;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PharmacistServiceImpl implements PharmacistService {
@@ -29,6 +32,40 @@ public class PharmacistServiceImpl implements PharmacistService {
     @Override
     public List<Pharmacist> findAll() {
         return pharmacistRepository.findAll();
+    }
+
+    @Override
+    public List<Pharmacist> findAllParametrized(Long id, Long workingHoursID, Long pharmacyID, LocalDateTime vacationStart, LocalDateTime vacationEnd,
+                                                   Long consultationID, Double rating, Double ratingFrom, Double ratingTo) {
+        List<Pharmacist> pharmacists = findAll();
+        if (id != null) {
+            pharmacists.removeIf(p -> !p.getId().equals(id));
+        }
+        if (pharmacyID != null) {
+            pharmacists.removeIf(p -> !p.getPharmacy().getId().equals(pharmacyID));
+        }
+        if (consultationID != null) {
+            pharmacists = pharmacists.stream().filter(d -> d.getConsultations().removeIf(ph -> !ph.getId().equals(consultationID))).collect(Collectors.toList());
+        }
+        if (workingHoursID != null) {
+            pharmacists = pharmacists.stream().filter(d -> d.getWorkingHours().removeIf(ph -> !ph.getId().equals(workingHoursID))).collect(Collectors.toList());
+        }
+        if (rating != null) {
+            pharmacists.removeIf(p -> !p.getRating().equals(rating));
+        }
+        if (ratingFrom != null) {
+            pharmacists.removeIf(p -> p.getRating() < ratingFrom);
+        }
+        if (ratingTo != null) {
+            pharmacists.removeIf(p -> p.getRating() > ratingTo);
+        }
+        if (vacationStart != null) {
+            pharmacists.removeIf(p -> p.getVacationStart().isBefore(vacationStart));
+        }
+        if (vacationEnd != null) {
+            pharmacists.removeIf(p -> p.getVacationStart().isAfter(vacationEnd));
+        }
+        return pharmacists;
     }
 
     @Override

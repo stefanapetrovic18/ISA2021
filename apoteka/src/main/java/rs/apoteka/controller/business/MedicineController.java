@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Medicine;
 import rs.apoteka.service.intf.business.MedicineService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin
@@ -19,6 +21,23 @@ public class MedicineController {
     @GetMapping(value = "")
     public ResponseEntity<List<Medicine>> findAll() throws Exception {
         return new ResponseEntity<>(medicineService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<Medicine>> findAllParametrized(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String manufacturer,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String form,
+            @RequestParam(required = false) Boolean prescriptionNecessary,
+            @RequestParam(required = false) String sideEffect,
+            @RequestParam(required = false) String ingredient,
+            @RequestParam(required = false) String recommendedDose
+    ) throws Exception {
+        return new ResponseEntity<>(medicineService.findAllParametrized(id, name, code, manufacturer,
+                type, form, prescriptionNecessary, sideEffect, ingredient, recommendedDose), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")

@@ -6,7 +6,9 @@ import rs.apoteka.entity.business.Pricelist;
 import rs.apoteka.repository.business.PricelistRepository;
 import rs.apoteka.service.intf.business.PricelistService;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PricelistServiceImpl implements PricelistService {
@@ -16,6 +18,24 @@ public class PricelistServiceImpl implements PricelistService {
     @Override
     public List<Pricelist> findAll() {
         return pricelistRepository.findAll();
+    }
+
+    @Override
+    public List<Pricelist> findAllParametrized(Long id, Long itemID, LocalDateTime validFrom, LocalDateTime validUntil) {
+        List<Pricelist> pricelist = findAll();
+        if (id != null) {
+            pricelist.removeIf(p -> !p.getId().equals(id));
+        }
+        if (itemID != null) {
+            pricelist = pricelist.stream().filter(p -> p.getItems().removeIf(m -> !m.getId().equals(itemID))).collect(Collectors.toList());
+        }
+        if (validFrom != null) {
+            pricelist.removeIf(p -> p.getValidFrom().isBefore(validFrom));
+        }
+        if (validUntil != null) {
+            pricelist.removeIf(p -> p.getValidUntil().isAfter(validUntil));
+        }
+        return pricelist;
     }
 
     @Override

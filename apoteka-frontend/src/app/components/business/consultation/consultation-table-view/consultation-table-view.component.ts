@@ -28,7 +28,7 @@ export class ConsultationTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private consultationService: ConsultationService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.consultationService.data.subscribe(
+    this.consultationService.findAll().subscribe(
       data => {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {

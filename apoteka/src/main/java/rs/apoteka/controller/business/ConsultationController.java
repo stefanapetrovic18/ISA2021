@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.service.intf.business.ConsultationService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin
@@ -19,6 +20,24 @@ public class ConsultationController {
     @GetMapping(value = "")
     public ResponseEntity<List<Consultation>> findAll() throws Exception {
         return new ResponseEntity<>(consultationService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<Consultation>> findAllParametrized(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) LocalDateTime consultationDate,
+            @RequestParam(required = false) Long pharmacistID,
+            @RequestParam(required = false) Long pharmacyID,
+            @RequestParam(required = false) Long patientID,
+            @RequestParam(required = false) Integer duration,
+            @RequestParam(required = false) Double price,
+            @RequestParam(required = false) Integer durationFrom,
+            @RequestParam(required = false) Integer durationTo,
+            @RequestParam(required = false) Double priceFrom,
+            @RequestParam(required = false) Double priceTo
+            ) throws Exception {
+        return new ResponseEntity<>(consultationService.findAllParametrized(id, consultationDate, pharmacistID, pharmacyID,
+                patientID, duration, price, durationFrom, durationTo, priceFrom, priceTo), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")

@@ -28,7 +28,7 @@ export class PharmacyTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pharmacyService: PharmacyService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.pharmacyService.data.subscribe(
+    this.pharmacyService.findAll().subscribe(
       data => {
         this.data = data;
         console.log(data);
@@ -69,7 +69,7 @@ export class PharmacyTableViewComponent implements OnInit {
       // result => {
       //   console.log('RESULT: ', result);
       //   if (result !== undefined) {
-      //     this.pharmacyService.data.subscribe(
+      //     this.pharmacyService.findAll().subscribe(
       //       data => {
       //         console.log('DATA: ', data);
       //       }

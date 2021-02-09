@@ -8,11 +8,11 @@ import java.util.List;
 @Entity
 @Table
 public class Pricelist {
-    @OneToMany(mappedBy = "pricelist")
-    List<Item> items;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToMany(mappedBy = "pricelist")
+    List<Item> items;
     @Column(nullable = false)
     private LocalDateTime validFrom;
     @Column(nullable = false)

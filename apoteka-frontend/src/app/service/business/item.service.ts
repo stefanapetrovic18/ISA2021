@@ -11,9 +11,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ItemService {
-
-  private _data = new Observable<any>();
-
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/item/';
@@ -21,40 +18,25 @@ export class ItemService {
   // HTTP zahtevi.
 
   public findAll(): Observable<Item[]> {
-    this._data = this.http.get<Item[]>(this.URL);
-    return this._data;
+    return this.http.get<Item[]>(this.URL);
   }
 
   public getOne(id: number): Observable<Item> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.get<Item>(this.URL + 'search', { params });
-    return this._data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<Item>(this.URL + 'search', { params });
   }
 
   public create(item: Item): Observable<Item> {
-    this._data = this.http.post<Item>(this.URL + 'create', item, httpOptions);
-    return this._data;
+    return this.http.post<Item>(this.URL + 'create', item, httpOptions);
   }
 
   public update(item: Item): Observable<Item> {
-    this._data = this.http.post<Item>(this.URL + 'update', item, httpOptions);
-    return this._data;
+    return this.http.post<Item>(this.URL + 'update', item, httpOptions);
   }
 
   public delete(id: number): Observable<boolean> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
-    return this._data;
-  }
-
-  // Get/Set metode.
-
-  public get data() {
-    return this._data;
-  }
-
-  public setData(data: any) {
-    this._data = data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.delete<boolean>(this.URL + 'delete', { params });
   }
 
 }

@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin
@@ -19,6 +21,14 @@ public class PharmacyAdminController {
     @GetMapping(value = "")
     public ResponseEntity<List<PharmacyAdmin>> findAll() throws Exception {
         return new ResponseEntity<>(pharmacyAdminService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<PharmacyAdmin>> findAllParametrized(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Long pharmacyID
+    ) throws Exception {
+        return new ResponseEntity<>(pharmacyAdminService.findAllParametrized(id, pharmacyID), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")

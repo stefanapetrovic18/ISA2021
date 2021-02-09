@@ -6,7 +6,9 @@ import rs.apoteka.entity.business.Prescription;
 import rs.apoteka.repository.business.PrescriptionRepository;
 import rs.apoteka.service.intf.business.PrescriptionService;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService {
@@ -16,6 +18,37 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Override
     public List<Prescription> findAll() {
         return prescriptionRepository.findAll();
+    }
+
+    @Override
+    public List<Prescription> findAllParametrized(Long id, String code, LocalDateTime issueDate, LocalDateTime issueDateStart,
+                                                  LocalDateTime issueDateEnd, Long pharmacyID, Long patientID, Long medicineID) {
+        List<Prescription> prescriptions = findAll();
+        if (id != null) {
+            prescriptions.removeIf(p -> !p.getId().equals(id));
+        }
+        if (code != null) {
+            prescriptions.removeIf(p-> !p.getCode().contains(code));
+        }
+        if (issueDate != null) {
+            prescriptions.removeIf(p -> !p.getIssueDate().equals(issueDate));
+        }
+        if (issueDateStart != null) {
+            prescriptions.removeIf(p -> p.getIssueDate().isBefore(issueDateStart));
+        }
+        if (issueDateEnd != null) {
+            prescriptions.removeIf(p -> p.getIssueDate().isAfter(issueDateEnd));
+        }
+        if (pharmacyID != null) {
+            prescriptions.removeIf(p -> !p.getPharmacy().getId().equals(pharmacyID));
+        }
+        if (patientID != null) {
+            prescriptions.removeIf(p -> !p.getPatient().getId().equals(patientID));
+        }
+        if (medicineID != null) {
+            prescriptions = prescriptions.stream().filter(p -> p.getMedicines().removeIf(m -> !m.getId().equals(medicineID))).collect(Collectors.toList());
+        }
+        return prescriptions;
     }
 
     @Override

@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pricelist;
 import rs.apoteka.service.intf.business.PricelistService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin
@@ -19,6 +21,16 @@ public class PricelistController {
     @GetMapping(value = "")
     public ResponseEntity<List<Pricelist>> findAll() throws Exception {
         return new ResponseEntity<>(pricelistService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<Pricelist>> findAllParametrized(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Long itemID,
+            @RequestParam(required = false) LocalDateTime validFrom,
+            @RequestParam(required = false) LocalDateTime validUntil
+    ) throws Exception {
+        return new ResponseEntity<>(pricelistService.findAllParametrized(id, itemID, validFrom, validUntil), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")

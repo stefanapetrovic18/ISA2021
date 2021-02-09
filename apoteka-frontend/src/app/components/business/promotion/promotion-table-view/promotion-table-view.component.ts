@@ -28,7 +28,7 @@ export class PromotionTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private promotionService: PromotionService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.promotionService.data.subscribe(
+    this.promotionService.findAll().subscribe(
       data => {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {

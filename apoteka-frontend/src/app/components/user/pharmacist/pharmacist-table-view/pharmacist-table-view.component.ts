@@ -69,7 +69,7 @@ export class PharmacistTableViewComponent implements OnInit {
       // result => {
       //   console.log('RESULT: ', result);
       //   if (result !== undefined) {
-      //     this.pharmacistService.data.subscribe(
+      //     this.pharmacistService.findAll().subscribe(
       //       data => {
       //         console.log('DATA: ', data);
       //       }

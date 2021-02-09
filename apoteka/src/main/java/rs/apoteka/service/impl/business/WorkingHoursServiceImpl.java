@@ -10,6 +10,8 @@ import rs.apoteka.repository.business.WorkingHoursRepository;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.business.WorkingHoursService;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -22,6 +24,40 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
     @Override
     public List<WorkingHours> findAll() {
         return workingHoursRepository.findAll();
+    }
+
+    @Override
+    public List<WorkingHours> findAllByEmployeeID(Long id) {
+        return workingHoursRepository.findAllByEmployeeID(id);
+    }
+
+    @Override
+    public List<WorkingHours> findAllByPharmacyId(Long id) {
+        return workingHoursRepository.findAllByPharmacy_Id(id);
+    }
+
+    @Override
+    public List<WorkingHours> findAllParametrized(Long id, Long employeeID, Long pharmacyID, LocalTime shiftStart, LocalTime shiftEnd, DayOfWeek dayOfWeek) {
+        List<WorkingHours> workingHours = findAll();
+        if (id != null) {
+            workingHours.removeIf(wh -> !wh.getId().equals(id));
+        }
+        if (employeeID != null) {
+            workingHours.removeIf(wh -> !wh.getEmployeeID().equals(employeeID));
+        }
+        if (pharmacyID != null) {
+            workingHours.removeIf(wh -> !wh.getPharmacy().getId().equals(pharmacyID));
+        }
+        if (shiftStart != null) {
+            workingHours.removeIf(wh -> !wh.getShiftStart().isBefore(shiftStart));
+        }
+        if (shiftEnd != null) {
+            workingHours.removeIf(wh -> !wh.getShiftEnd().isAfter(shiftEnd));
+        }
+        if (dayOfWeek != null) {
+            workingHours.removeIf(wh -> !wh.getDayOfWeek().equals(dayOfWeek));
+        }
+        return workingHours;
     }
 
     @Override

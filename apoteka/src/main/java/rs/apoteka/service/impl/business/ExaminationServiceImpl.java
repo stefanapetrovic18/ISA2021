@@ -22,6 +22,56 @@ public class ExaminationServiceImpl implements ExaminationService {
     public List<Examination> findAll() {
         return examinationRepository.findAll();
     }
+    
+    @Override
+    public List<Examination> findAllParametrized(Long id, LocalDateTime examinationDate, Long dermatologistID, Long pharmacyID,
+                                                  Long patientID,Integer duration, Double price, Integer durationFrom,
+                                                  Integer durationTo, Double priceFrom, Double priceTo, Boolean quickReservation) {
+        List<Examination> examinations = findAll();
+        if (id != null) {
+            examinations.removeIf(e -> !e.getId().equals(id));
+        }
+        if (examinationDate != null) {
+            examinations.removeIf(e -> e.getExaminationDate().equals(examinationDate));
+        }
+        if (dermatologistID != null) {
+            examinations.removeIf(e -> e.getDermatologist().getId().equals(dermatologistID));
+        }
+        if (pharmacyID != null) {
+            examinations.removeIf(e -> e.getPharmacy().getId().equals(pharmacyID));
+        }
+        if (patientID != null) {
+            examinations.removeIf(e -> e.getPatient().getId().equals(patientID));
+        }
+        if (duration != null) {
+            examinations.removeIf(e -> e.getDuration().equals(duration));
+        }
+        if (price != null) {
+            examinations.removeIf(e -> e.getPrice().equals(price));
+        }
+        if (durationFrom != null) {
+            examinations.removeIf(e -> e.getDuration() < durationFrom);
+        }
+        if (durationTo != null) {
+            examinations.removeIf(e -> e.getDuration() > durationTo);
+        }
+        if (durationFrom != null) {
+            examinations.removeIf(e -> e.getDuration() < durationFrom);
+        }
+        if (durationTo != null) {
+            examinations.removeIf(e -> e.getDuration() > durationTo);
+        }
+        if (priceFrom != null) {
+            examinations.removeIf(e -> e.getPrice() > priceFrom);
+        }
+        if (priceTo != null) {
+            examinations.removeIf(e -> e.getPrice() > priceTo);
+        }
+        if (quickReservation != null) {
+            examinations.removeIf(e -> e.getQuickReservation() != quickReservation);
+        }
+        return examinations;
+    }
 
     @Override
     public Examination getOne(Long id) {

@@ -24,6 +24,53 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
+    public List<Consultation> findAllParametrized(Long id, LocalDateTime consultationDate, Long pharmacistID, Long pharmacyID,
+                                                  Long patientID,Integer duration, Double price, Integer durationFrom,
+                                                  Integer durationTo, Double priceFrom, Double priceTo) {
+        List<Consultation> consultations = findAll();
+        if (id != null) {
+            consultations.removeIf(c -> !c.getId().equals(id));
+        }
+        if (consultationDate != null) {
+            consultations.removeIf(c -> !c.getConsultationDate().equals(consultationDate));
+        }
+        if (pharmacistID != null) {
+            consultations.removeIf(c -> !c.getPharmacist().getId().equals(pharmacistID));
+        }
+        if (pharmacyID != null) {
+            consultations.removeIf(c -> !c.getPharmacy().getId().equals(pharmacyID));
+        }
+        if (patientID != null) {
+            consultations.removeIf(c -> !c.getPatient().getId().equals(patientID));
+        }
+        if (duration != null) {
+            consultations.removeIf(c -> !c.getDuration().equals(duration));
+        }
+        if (price != null) {
+            consultations.removeIf(c -> !c.getPrice().equals(price));
+        }
+        if (durationFrom != null) {
+            consultations.removeIf(c -> c.getDuration() < durationFrom);
+        }
+        if (durationTo != null) {
+            consultations.removeIf(c -> c.getDuration() > durationTo);
+        }
+        if (durationFrom != null) {
+            consultations.removeIf(c -> c.getDuration() < durationFrom);
+        }
+        if (durationTo != null) {
+            consultations.removeIf(c -> c.getDuration() > durationTo);
+        }
+        if (priceFrom != null) {
+            consultations.removeIf(c -> c.getPrice() > priceFrom);
+        }
+        if (priceTo != null) {
+            consultations.removeIf(c -> c.getPrice() > priceTo);
+        }
+        return consultations;
+    }
+
+    @Override
     public Consultation getOne(Long id) {
         return consultationRepository.getOne(id);
     }

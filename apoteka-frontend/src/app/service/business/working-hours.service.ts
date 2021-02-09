@@ -12,8 +12,6 @@ const httpOptions = {
 })
 export class WorkingHoursService {
 
-  private _data = new Observable<any>();
-
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/working-hours/';
@@ -21,40 +19,25 @@ export class WorkingHoursService {
   // HTTP zahtevi.
 
   public findAll(): Observable<WorkingHours[]> {
-    this._data = this.http.get<WorkingHours[]>(this.URL);
-    return this._data;
+    return this.http.get<WorkingHours[]>(this.URL);
   }
 
   public getOne(id: number): Observable<WorkingHours> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.get<WorkingHours>(this.URL + 'search', { params });
-    return this._data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<WorkingHours>(this.URL + 'search', { params });
   }
 
   public create(workinghours: WorkingHours): Observable<WorkingHours> {
-    this._data = this.http.post<WorkingHours>(this.URL + 'create', workinghours, httpOptions);
-    return this._data;
+    return this.http.post<WorkingHours>(this.URL + 'create', workinghours, httpOptions);
   }
 
   public update(workinghours: WorkingHours): Observable<WorkingHours> {
-    this._data = this.http.post<WorkingHours>(this.URL + 'update', workinghours, httpOptions);
-    return this._data;
+    return this.http.post<WorkingHours>(this.URL + 'update', workinghours, httpOptions);
   }
 
   public delete(id: number): Observable<boolean> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
-    return this._data;
-  }
-
-  // Get/Set metode.
-
-  public get data() {
-    return this._data;
-  }
-
-  public setData(data: any) {
-    this._data = data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.delete<boolean>(this.URL + 'delete', { params });
   }
 
 }

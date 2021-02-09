@@ -28,7 +28,7 @@ export class MedicineTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private medicineService: MedicineService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.medicineService.data.subscribe(
+    this.medicineService.findAll().subscribe(
       data => {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {

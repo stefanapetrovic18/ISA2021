@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.service.intf.business.ExaminationService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin
@@ -19,6 +21,25 @@ public class ExaminationController {
     @GetMapping(value = "")
     public ResponseEntity<List<Examination>> findAll() throws Exception {
         return new ResponseEntity<>(examinationService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<Examination>> findAllParametrized(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) LocalDateTime consultationDate,
+            @RequestParam(required = false) Long dermatologistID,
+            @RequestParam(required = false) Long pharmacyID,
+            @RequestParam(required = false) Long patientID,
+            @RequestParam(required = false) Integer duration,
+            @RequestParam(required = false) Double price,
+            @RequestParam(required = false) Integer durationFrom,
+            @RequestParam(required = false) Integer durationTo,
+            @RequestParam(required = false) Double priceFrom,
+            @RequestParam(required = false) Double priceTo,
+            @RequestParam(required = false) Boolean quickReservation
+    ) throws Exception {
+        return new ResponseEntity<>(examinationService.findAllParametrized(id, consultationDate, dermatologistID, pharmacyID,
+                patientID, duration, price, durationFrom, durationTo, priceFrom, priceTo, quickReservation), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")

@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Promotion;
 import rs.apoteka.service.intf.business.PromotionService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin
@@ -19,6 +21,18 @@ public class PromotionController {
     @GetMapping(value = "")
     public ResponseEntity<List<Promotion>> findAll() throws Exception {
         return new ResponseEntity<>(promotionService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<Promotion>> findAllParametrized(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) LocalDateTime startDate,
+            @RequestParam(required = false) LocalDateTime endDate,
+            @RequestParam(required = false) Long pharmacyID,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String description
+    ) throws Exception {
+        return new ResponseEntity<>(promotionService.findAllParametrized(id, startDate, endDate, pharmacyID, title, description), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")

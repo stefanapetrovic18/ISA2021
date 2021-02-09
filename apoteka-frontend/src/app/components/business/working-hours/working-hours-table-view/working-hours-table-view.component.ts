@@ -28,7 +28,7 @@ export class WorkingHoursTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private workingHoursService: WorkingHoursService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.workingHoursService.data.subscribe(
+    this.workingHoursService.findAll().subscribe(
       data => {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {

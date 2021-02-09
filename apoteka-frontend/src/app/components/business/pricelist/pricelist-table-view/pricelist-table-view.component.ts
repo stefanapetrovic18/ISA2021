@@ -28,7 +28,7 @@ export class PricelistTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pricelistService: PricelistService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.pricelistService.data.subscribe(
+    this.pricelistService.findAll().subscribe(
       data => {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {

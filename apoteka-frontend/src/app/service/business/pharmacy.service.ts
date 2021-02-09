@@ -11,9 +11,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PharmacyService {
-
-  private _data = new Observable<any>();
-
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/pharmacy/';
@@ -21,40 +18,25 @@ export class PharmacyService {
   // HTTP zahtevi.
 
   public findAll(): Observable<Pharmacy[]> {
-    this._data = this.http.get<Pharmacy[]>(this.URL);
-    return this._data;
+    return this.http.get<Pharmacy[]>(this.URL);
   }
 
   public getOne(id: number): Observable<Pharmacy> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.get<Pharmacy>(this.URL + 'search', { params });
-    return this._data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<Pharmacy>(this.URL + 'search', { params });
   }
 
   public create(pharmacy: Pharmacy): Observable<Pharmacy> {
-    this._data = this.http.post<Pharmacy>(this.URL + 'create', pharmacy, httpOptions);
-    return this._data;
+    return this.http.post<Pharmacy>(this.URL + 'create', pharmacy, httpOptions);
   }
 
   public update(pharmacy: Pharmacy): Observable<Pharmacy> {
-    this._data = this.http.post<Pharmacy>(this.URL + 'update', pharmacy, httpOptions);
-    return this._data;
+    return this.http.post<Pharmacy>(this.URL + 'update', pharmacy, httpOptions);
   }
 
   public delete(id: number): Observable<boolean> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
-    return this._data;
-  }
-
-  // Get/Set metode.
-
-  public get data() {
-    return this._data;
-  }
-
-  public setData(data: any) {
-    this._data = data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.delete<boolean>(this.URL + 'delete', { params });
   }
 
 }

@@ -12,8 +12,6 @@ const httpOptions = {
 })
 export class ConsultationService {
 
-  private _data = new Observable<any>();
-
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/consultation/';
@@ -21,40 +19,25 @@ export class ConsultationService {
   // HTTP zahtevi.
 
   public findAll(): Observable<Consultation[]> {
-    this._data = this.http.get<Consultation[]>(this.URL);
-    return this._data;
+    return this.http.get<Consultation[]>(this.URL);
   }
 
   public getOne(id: number): Observable<Consultation> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.get<Consultation>(this.URL + 'search', { params });
-    return this._data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<Consultation>(this.URL + 'search', { params });
   }
 
   public create(consultation: Consultation): Observable<Consultation> {
-    this._data = this.http.post<Consultation>(this.URL + 'create', consultation, httpOptions);
-    return this._data;
+    return this.http.post<Consultation>(this.URL + 'create', consultation, httpOptions);
   }
 
   public update(consultation: Consultation): Observable<Consultation> {
-    this._data = this.http.post<Consultation>(this.URL + 'update', consultation, httpOptions);
-    return this._data;
+    return this.http.post<Consultation>(this.URL + 'update', consultation, httpOptions);
   }
 
   public delete(id: number): Observable<boolean> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
-    return this._data;
-  }
-
-  // Get/Set metode.
-
-  public get data() {
-    return this._data;
-  }
-
-  public setData(data: any) {
-    this._data = data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.delete<boolean>(this.URL + 'delete', { params });
   }
 
 }

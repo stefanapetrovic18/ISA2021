@@ -28,7 +28,7 @@ export class ItemTableViewComponent implements OnInit {
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private itemService: ItemService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.itemService.data.subscribe(
+    this.itemService.findAll().subscribe(
       data => {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {

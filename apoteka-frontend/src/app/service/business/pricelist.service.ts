@@ -12,8 +12,6 @@ const httpOptions = {
 })
 export class PricelistService {
 
-  private _data = new Observable<any>();
-
   constructor(private http: HttpClient) { }
 
   URL = 'http://localhost:8080/api/pricelist/';
@@ -21,40 +19,25 @@ export class PricelistService {
   // HTTP zahtevi.
 
   public findAll(): Observable<Pricelist[]> {
-    this._data = this.http.get<Pricelist[]>(this.URL);
-    return this._data;
+    return this.http.get<Pricelist[]>(this.URL);
   }
 
   public getOne(id: number): Observable<Pricelist> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.get<Pricelist>(this.URL + 'search', { params });
-    return this._data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<Pricelist>(this.URL + 'search', { params });
   }
 
   public create(pricelist: Pricelist): Observable<Pricelist> {
-    this._data = this.http.post<Pricelist>(this.URL + 'create', pricelist, httpOptions);
-    return this._data;
+    return this.http.post<Pricelist>(this.URL + 'create', pricelist, httpOptions);
   }
 
   public update(pricelist: Pricelist): Observable<Pricelist> {
-    this._data = this.http.post<Pricelist>(this.URL + 'update', pricelist, httpOptions);
-    return this._data;
+    return this.http.post<Pricelist>(this.URL + 'update', pricelist, httpOptions);
   }
 
   public delete(id: number): Observable<boolean> {
-    let params = new HttpParams().set('id', id.toString());
-    this._data = this.http.delete<boolean>(this.URL + 'delete', { params });
-    return this._data;
-  }
-
-  // Get/Set metode.
-
-  public get data() {
-    return this._data;
-  }
-
-  public setData(data: any) {
-    this._data = data;
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.delete<boolean>(this.URL + 'delete', { params });
   }
 
 }
