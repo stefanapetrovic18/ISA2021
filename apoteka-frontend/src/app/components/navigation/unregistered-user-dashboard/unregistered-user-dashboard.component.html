@@ -1,0 +1,35 @@
+<div class="navigation">
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <div mat-card-avatar class="navigation-header-image-pill"></div>
+      <mat-card-title>Lekovi</mat-card-title>
+      <mat-card-subtitle>Lista lekova</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://media.npr.org/assets/img/2020/03/09/gettyimages-88160320-380a490d14a6457572b2b5d7b38896059f13d6c4-s800-c85.jpg" alt="Lekovi">
+    <mat-card-content>
+      <p>
+        Pristupite listi lekova.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="navigate('lek')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <div mat-card-avatar class="navigation-header-image-pharmacy"></div>
+      <mat-card-title>Apoteke</mat-card-title>
+      <mat-card-subtitle>Lista apoteka</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://www.pharmacy.biz/wp-content/uploads/sites/1/2020/01/iStock-1138197108-1.jpg" alt="Apoteke">
+    <mat-card-content>
+      <p>
+        Pristupite listi apoteka.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="navigate('apoteka')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

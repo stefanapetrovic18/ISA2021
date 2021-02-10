@@ -21,7 +21,9 @@ export class PharmacistService {
   public findAll(): Observable<Pharmacist[]> {
     return this.http.get<Pharmacist[]>(this.URL);
   }
-
+  public findAllUnemployed(): Observable<Pharmacist[]> {
+    return this.http.get<Pharmacist[]>(this.URL + 'unemployed');
+  }
   public getOne(id: number): Observable<Pharmacist> {
     const params = new HttpParams().set('id', id.toString());
     return this.http.get<Pharmacist>(this.URL + 'search', { params });

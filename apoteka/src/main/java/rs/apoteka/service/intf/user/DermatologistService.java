@@ -11,6 +11,8 @@ public interface DermatologistService {
 
     List<Dermatologist> findAllByPharmaciesContaining(Pharmacy pharmacy);
 
+    List<Dermatologist> findAllNotEmployedInPharmacy(Long pharmacyID);
+
     List<Dermatologist> findAllParametrized(Long id, Long workingHoursID, Long pharmacyID, LocalDateTime vacationStart, LocalDateTime vacationEnd,
                                             Long examinationID, Double rating, Double ratingFrom, Double ratingTo);
 

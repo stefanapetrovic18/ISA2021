@@ -45,6 +45,14 @@
     <mat-label>Broj telefona</mat-label>
     <input matInput placeholder="Broj telefona" type="text" [(ngModel)]="data.phone" />
   </mat-form-field>
+  <p>Alergije</p>
+  <mat-form-field>
+    <mat-label>Alergije</mat-label>
+    <mat-select multiple [(value)]="data.allergies">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let med of medicine" [value]="med">{{med.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-raised-button class="add-button" (click)="edit()">IZMENI</button>

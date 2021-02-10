@@ -2,7 +2,6 @@ package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.repository.user.PatientRepository;
 import rs.apoteka.service.intf.user.PatientService;
@@ -18,6 +17,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<Patient> findAll() {
         return patientRepository.findAll();
+    }
+
+    @Override
+    public Patient findByUsername(String username) {
+        return patientRepository.findByUsername(username);
     }
 
     @Override

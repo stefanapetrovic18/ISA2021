@@ -1,3 +1,37 @@
-<p>
-  examination-add works!
-</p>
+<h1 mat-dialog-title>Dodaj pregled</h1>
+<div mat-dialog-content>
+  <p>Brza rezervacija</p>
+  <mat-form-field>
+    <mat-label>Brza rezervacija</mat-label>
+    <mat-checkbox [(ngModel)]="data.quickReservation" required></mat-checkbox>
+  </mat-form-field>
+  <p>Datum i vreme početka pregleda</p>
+  <mat-form-field>
+    <mat-label>Datum i vreme početka pregleda</mat-label>
+    <input matInput type="datetime" [(ngModel)]="data.examinationDate" required>
+  </mat-form-field>
+  <p>Trajanje</p>
+  <mat-form-field>
+    <mat-label>Trajanje</mat-label>
+    <input matInput type="text" [(ngModel)]="data.duration" required>
+  </mat-form-field>
+  <p>Cena</p>
+  <mat-form-field>
+    <mat-label>Cena</mat-label>
+    <input matInput type="number" [(ngModel)]="data.price" required>
+  </mat-form-field>
+  <p>Dermatolozi</p>
+  <mat-select [(value)]="data.dermatologists">
+    <mat-option>--</mat-option>
+    <mat-option multiple *ngFor="let dermatologist of dermatologists" [value]="dermatologist">{{dermatologist.username}}</mat-option>
+  </mat-select>
+  <p>Farmaceuti</p>
+  <mat-select [(value)]="data.pharmacy">
+    <mat-option>--</mat-option>
+    <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>
+  </mat-select>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-raised-button class="add-button" (click)="add()">IZMENI</button>
+  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
+</div>

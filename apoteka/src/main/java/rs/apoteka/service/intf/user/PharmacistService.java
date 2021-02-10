@@ -8,6 +8,8 @@ import java.util.List;
 public interface PharmacistService {
     List<Pharmacist> findAll();
 
+    List<Pharmacist> findAllUnemployed();
+
     List<Pharmacist> findAllParametrized(Long id, Long workingHoursID, Long pharmacyID, LocalDateTime vacationStart, LocalDateTime vacationEnd,
                                          Long consultationID, Double rating, Double ratingFrom, Double ratingTo);
 

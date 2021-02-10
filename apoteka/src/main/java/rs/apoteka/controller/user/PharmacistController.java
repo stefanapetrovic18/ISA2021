@@ -23,6 +23,11 @@ public class PharmacistController {
         return new ResponseEntity<>(pharmacistService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/unemployed")
+    public ResponseEntity<List<Pharmacist>> findAllUnemployed() throws Exception {
+        return new ResponseEntity<>(pharmacistService.findAllUnemployed(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/filter")
     public ResponseEntity<List<Pharmacist>> findAllParametrized(
             @RequestParam(required = false) Long id,

@@ -1,3 +1,32 @@
-<p>
-  pharmacy-edit works!
-</p>
+<h1 mat-dialog-title>Izmeni apoteku</h1>
+<div mat-dialog-content>
+  <p>Naziv</p>
+  <mat-form-field>
+    <mat-label>Naziv</mat-label>
+    <input matInput type="text" [(ngModel)]="data.name" required>
+  </mat-form-field>
+  <p>Opis</p>
+  <mat-form-field>
+    <mat-label>Opis</mat-label>
+    <input matInput type="text" [(ngModel)]="data.description" required>
+  </mat-form-field>
+  <p>Adresa</p>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input matInput type="text" [(ngModel)]="data.address" required>
+  </mat-form-field>
+  <p>Dermatolozi</p>
+  <mat-select [(value)]="data.dermatologists">
+    <mat-option>--</mat-option>
+    <mat-option multiple *ngFor="let dermatologist of dermatologists" [value]="dermatologist">{{dermatologist.username}}</mat-option>
+  </mat-select>
+  <p>Farmaceuti</p>
+  <mat-select [(value)]="data.pharmacists">
+    <mat-option>--</mat-option>
+    <mat-option multiple *ngFor="let pharmacist of pharmacists" [value]="pharmacist">{{pharmacist.username}}</mat-option>
+  </mat-select>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-raised-button class="add-button" (click)="edit()">IZMENI</button>
+  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
+</div>

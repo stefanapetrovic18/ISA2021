@@ -7,6 +7,8 @@ import java.util.List;
 public interface PatientService {
     List<Patient> findAll();
 
+    Patient findByUsername(String username);
+
     List<Patient> findAllParametrized(Long id, Long allergyMedicineID, Long consultationID,
                                       Long examinationID, Integer points, Integer pointsFrom, Integer pointsTo);
 

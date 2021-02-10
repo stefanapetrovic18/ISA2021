@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
@@ -115,6 +116,7 @@ import { PatientDashboardComponent } from './components/navigation/patient-dashb
 import { DermatologistDashboardComponent } from './components/navigation/dermatologist-dashboard/dermatologist-dashboard.component';
 import { SystemAdminDashboardComponent } from './components/navigation/system-admin-dashboard/system-admin-dashboard.component';
 import { SupplierDashboardComponent } from './components/navigation/supplier-dashboard/supplier-dashboard.component';
+import { UnregisteredUserDashboardComponent } from './components/navigation/unregistered-user-dashboard/unregistered-user-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -227,7 +229,13 @@ import { SupplierDashboardComponent } from './components/navigation/supplier-das
     SystemAdminDashboardComponent,
     SupplierDashboardComponent,
 
-
+    UnregisteredUserDashboardComponent,
+    DermatologistDashboardComponent,
+    PatientDashboardComponent,
+    PharmacistDashboardComponent,
+    PharmacyAdminDashboardComponent,
+    SupplierDashboardComponent,
+    SystemAdminDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -251,7 +259,8 @@ import { SupplierDashboardComponent } from './components/navigation/supplier-das
     MatExpansionModule,
     MatCheckboxModule,
     MatButtonToggleModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatCardModule
   ],
   providers: [
     {

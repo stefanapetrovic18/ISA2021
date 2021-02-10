@@ -10,6 +10,8 @@ import { Promotion } from "./promotion";
 export class Pharmacy {
   id: number;
   name: string;
+  description: string;
+  address: string;
   admins: PharmacyAdmin[];
   dermatologists: Dermatologist[];
   pharmacists: Pharmacist[];

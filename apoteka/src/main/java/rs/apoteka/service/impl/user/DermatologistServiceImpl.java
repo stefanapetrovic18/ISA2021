@@ -9,6 +9,7 @@ import rs.apoteka.repository.user.DermatologistRepository;
 import rs.apoteka.service.intf.user.DermatologistService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,11 @@ public class DermatologistServiceImpl implements DermatologistService {
     @Override
     public List<Dermatologist> findAllByPharmaciesContaining(Pharmacy pharmacy) {
         return dermatologistRepository.findAllByPharmaciesContaining(pharmacy);
+    }
+
+    @Override
+    public List<Dermatologist> findAllNotEmployedInPharmacy(Long pharmacyID) {
+        return findAll().stream().filter(d -> d.getPharmacies().removeIf(ph -> ph.getId().equals(pharmacyID))).collect(Collectors.toList());
     }
 
     @Override

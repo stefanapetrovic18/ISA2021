@@ -8,6 +8,10 @@ import java.util.List;
 public interface ExaminationService {
     List<Examination> findAll();
 
+    List<Examination> findAllFree();
+
+    List<Examination> findAllReserved();
+
     List<Examination> findAllParametrized(Long id, LocalDateTime examinationDate, Long dermatologistID, Long pharmacyID,
                                           Long patientID, Integer duration, Double price, Integer durationFrom,
                                           Integer durationTo, Double priceFrom, Double priceTo, Boolean quickReservation);
@@ -15,6 +19,10 @@ public interface ExaminationService {
     Examination getOne(Long id);
 
     Examination create(Examination examination);
+
+    Examination quickReserve(Examination examination);
+
+    Examination cancel(Examination examination) throws Exception;
 
     Examination update(Examination examination);
 

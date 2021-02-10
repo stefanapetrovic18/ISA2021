@@ -1,28 +1,50 @@
 package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.entity.business.WorkingHours;
+import rs.apoteka.entity.user.Patient;
 import rs.apoteka.repository.business.ExaminationRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ExaminationService;
+import rs.apoteka.service.intf.user.PatientService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExaminationServiceImpl implements ExaminationService {
     @Autowired
     private ExaminationRepository examinationRepository;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Override
     public List<Examination> findAll() {
         return examinationRepository.findAll();
     }
-    
+
+    @Override
+    public List<Examination> findAllFree() {
+        return findAll().stream().filter(e -> e.getPatient() == null).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Examination> findAllReserved() {
+        return findAll().stream().filter(e -> e.getPatient() != null).collect(Collectors.toList());
+    }
+
     @Override
     public List<Examination> findAllParametrized(Long id, LocalDateTime examinationDate, Long dermatologistID, Long pharmacyID,
                                                   Long patientID,Integer duration, Double price, Integer durationFrom,
@@ -84,6 +106,46 @@ public class ExaminationServiceImpl implements ExaminationService {
             return null;
         }
         return examinationRepository.save(examination);
+    }
+
+    @Override
+    public Examination quickReserve(Examination examination) {
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        if (patient == null) {
+            return null;
+        }
+        examination.setPatient(patient);
+        Examination e = update(examination);
+        patient.getExaminations().add(e);
+        patientService.update(patient);
+        sendMail(e);
+        return e;
+    }
+
+    @Override
+    public Examination cancel(Examination examination) throws Exception {
+        if (examination.getExaminationDate().isBefore(LocalDateTime.now().plusHours(24))) {
+            throw new Exception("Nemoguće je otkazati pregled manje od 24h pre početka istog.");
+        }
+        examination.getPatient().getExaminations().removeIf(e -> e.getId().equals(examination.getId()));
+        patientService.update(examination.getPatient());
+        examination.setPatient(null);
+        return update(examination);
+    }
+
+    private void sendMail(Examination examination) {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(examination.getPatient().getUsername());
+        email.setSubject("Potvrda rezervacije pregleda");
+        email.setText("Poštovani/a " + examination.getPatient().getForename() + ",\n\n" +
+                "Potvrđujemo vašu rezervaciju pregleda na datum " + examination.getExaminationDate().toLocalDate().toString() + ".\n\n" +
+                "Pregled počinje u " + examination.getExaminationDate().toLocalTime().toString() + " sati, a traje " + examination.getDuration() + " minuta.\n\n" +
+                "Za više informacija, molimo vas da kliknete na link ispod.\n\n" +
+                "http://localhost:4200/pregled?id=" + examination.getId() + "\n\n" +
+                "Možete se obratiti vašem dermatologu na email adresu " + examination.getDermatologist().getUsername() + ".\n\n" +
+                "Srdačan pozdrav,\n\n" +
+                examination.getPharmacy().getName());
+        mailSender.send(email);
     }
 
     @Override

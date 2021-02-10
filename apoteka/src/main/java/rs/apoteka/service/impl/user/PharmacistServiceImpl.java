@@ -35,6 +35,11 @@ public class PharmacistServiceImpl implements PharmacistService {
     }
 
     @Override
+    public List<Pharmacist> findAllUnemployed() {
+        return findAll().stream().filter(p -> p.getPharmacy() == null).collect(Collectors.toList());
+    }
+
+    @Override
     public List<Pharmacist> findAllParametrized(Long id, Long workingHoursID, Long pharmacyID, LocalDateTime vacationStart, LocalDateTime vacationEnd,
                                                    Long consultationID, Double rating, Double ratingFrom, Double ratingTo) {
         List<Pharmacist> pharmacists = findAll();

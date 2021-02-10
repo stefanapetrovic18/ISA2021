@@ -12,6 +12,13 @@ import { ReservationTableViewComponent } from './components/business/reservation
 import { WorkingHoursTableViewComponent } from './components/business/working-hours/working-hours-table-view/working-hours-table-view.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { DermatologistDashboardComponent } from './components/navigation/dermatologist-dashboard/dermatologist-dashboard.component';
+import { PatientDashboardComponent } from './components/navigation/patient-dashboard/patient-dashboard.component';
+import { PharmacistDashboardComponent } from './components/navigation/pharmacist-dashboard/pharmacist-dashboard.component';
+import { PharmacyAdminDashboardComponent } from './components/navigation/pharmacy-admin-dashboard/pharmacy-admin-dashboard.component';
+import { SupplierDashboardComponent } from './components/navigation/supplier-dashboard/supplier-dashboard.component';
+import { SystemAdminDashboardComponent } from './components/navigation/system-admin-dashboard/system-admin-dashboard.component';
+import { UnregisteredUserDashboardComponent } from './components/navigation/unregistered-user-dashboard/unregistered-user-dashboard.component';
 import { RequestTokenComponent } from './components/request-token/request-token.component';
 import { DermatologistTableViewComponent } from './components/user/dermatologist/dermatologist-table-view/dermatologist-table-view.component';
 import { PatientTableViewComponent } from './components/user/patient/patient-table-view/patient-table-view.component';
@@ -97,7 +104,38 @@ const routes: Routes = [
   {
     path: 'administrator-sistema',
     component: SystemAdminTableViewComponent
-  }
+  },
+  {
+    path: 'dashboard/dermatolog',
+    component: DermatologistDashboardComponent
+  },
+  {
+    path: 'dashboard/pacijent',
+    component: PatientDashboardComponent
+  },
+  {
+    path: 'dashboard/farmaceut',
+    component: PharmacistDashboardComponent
+  },
+  {
+    path: 'dashboard/administrator-apoteke',
+    component: PharmacyAdminDashboardComponent
+  },
+  {
+    path: 'dashboard/dobavljac',
+    component: SupplierDashboardComponent
+  },
+  {
+    path: 'dashboard/administrator-sistema',
+    component: SystemAdminDashboardComponent
+  },
+  {
+    path: 'dashboard/visitor',
+    component: UnregisteredUserDashboardComponent
+  },
+
+
+
 ];
 
 @NgModule({

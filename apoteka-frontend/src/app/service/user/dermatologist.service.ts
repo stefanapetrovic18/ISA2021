@@ -26,6 +26,11 @@ export class DermatologistService {
     return this.http.get<Dermatologist>(this.URL + 'search', { params });
   }
 
+  public findAllNotEmployedInPharmacy(pharmacyID: number): Observable<Dermatologist[]> {
+    const params = new HttpParams().set('pharmacyID', pharmacyID.toString());
+    return this.http.get<Dermatologist[]>(this.URL + 'not-employed-here', { params });
+  }
+
   public create(dermatologist: Dermatologist): Observable<Dermatologist> {
     return this.http.post<Dermatologist>(this.URL + 'create', dermatologist, httpOptions);
   }

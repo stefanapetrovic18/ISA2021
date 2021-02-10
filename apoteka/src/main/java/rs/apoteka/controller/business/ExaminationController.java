@@ -23,6 +23,16 @@ public class ExaminationController {
         return new ResponseEntity<>(examinationService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/free")
+    public ResponseEntity<List<Examination>> findAllFree() throws Exception {
+        return new ResponseEntity<>(examinationService.findAllFree(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/reserved")
+    public ResponseEntity<List<Examination>> findAllReserved() throws Exception {
+        return new ResponseEntity<>(examinationService.findAllReserved(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/filter")
     public ResponseEntity<List<Examination>> findAllParametrized(
             @RequestParam(required = false) Long id,
@@ -50,6 +60,16 @@ public class ExaminationController {
     @PostMapping(value = "/create")
     public ResponseEntity<Examination> create(@RequestBody Examination examination) throws Exception {
         return new ResponseEntity<>(examinationService.create(examination), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/quick-reserve")
+    public ResponseEntity<Examination> quickReserve(@RequestBody Examination examination) throws Exception {
+        return new ResponseEntity<>(examinationService.quickReserve(examination), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/cancel")
+    public ResponseEntity<Examination> cancel(@RequestBody Examination examination) throws Exception {
+        return new ResponseEntity<>(examinationService.cancel(examination), HttpStatus.OK);
     }
 
     @PostMapping(value = "/update")

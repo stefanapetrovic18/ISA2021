@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Examination } from 'src/app/model/business/examination';
 import { ExaminationService } from 'src/app/service/business/examination.service';
 import { ExaminationAddComponent } from '../examination-add/examination-add.component';
@@ -23,28 +23,125 @@ export class ExaminationTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Examination[];
-  columns = ['x', 'y'];
-  actions = ['view', 'edit', 'delete'];
+  columns = ['examinationDate', 'duration', 'price', 'dermatologist', 'pharmacy'];
+  actions = ['view', 'edit', 'delete', 'reserve', 'cancel'];
   displayedColumns = [...this.columns, ...this.actions];
-  constructor(private examinationService: ExaminationService, private router: Router, private dialog: MatDialog) {}
+  constructor(private examinationService: ExaminationService, private router: Router, private dialog: MatDialog,
+    private route: ActivatedRoute) {}
   ngOnInit() {
-    this.examinationService.findAll().subscribe(
-      data => {
-        this.data = data;
-        if (this.data !== undefined && this.data.length > 0) {
-          this.dataSource = new MatTableDataSource(this.data);
-          console.log(this.dataSource);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+    this.route.queryParams.subscribe(
+      params => {
+        if (params['reserved'] !== undefined && params['reserved'] === false) {
+          this.examinationService.findAllFree().subscribe(
+            data => {
+              this.data = data;
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              this.router.navigateByUrl('');
+            }
+          );
+        } else if (params['reserved'] !== undefined && params['reserved'] === true) {
+          this.examinationService.findAllReserved().subscribe(
+            data => {
+              this.data = data;
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              this.router.navigateByUrl('');
+            }
+          );
+        } else if (params['pharmacyID'] !== undefined) {
+          this.examinationService.findAllByPharmacy(params['pharmacyID']).subscribe(
+            data => {
+              this.data = data;
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              this.router.navigateByUrl('');
+            }
+          );
+        } else if (params['patientID'] !== undefined) {
+          this.examinationService.findAllByPatient(params['patientID']).subscribe(
+            data => {
+              this.data = data;
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              this.router.navigateByUrl('');
+            }
+          );
+        } else if (params['dermatologistID'] !== undefined) {
+          this.examinationService.findAllByDermatologist(params['dermatologistID']).subscribe(
+            data => {
+              this.data = data;
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              this.router.navigateByUrl('');
+            }
+          );
         } else {
-          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-          this.router.navigateByUrl('');
+          this.examinationService.findAll().subscribe(
+            data => {
+              this.data = data;
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              this.router.navigateByUrl('');
+            }
+          );
         }
-      }, error => {
-        window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-        this.router.navigateByUrl('');
       }
-    )
+    );
   }
 
   applyFilter(value: any) {
@@ -82,6 +179,28 @@ export class ExaminationTableViewComponent implements OnInit {
     this.dialog.open(ExaminationDeleteComponent, {
       data: input
     });
+  }
+
+  reserve(input: Examination) {
+    this.examinationService.quickReserve(input).subscribe(
+      data => {
+        let index = this.data.indexOf(data);
+        window.alert(index);
+        window.alert("Uspešna rezervacija! Molimo vas da proverite vaš email za potvrdu.");
+      }, error => {
+        window.alert("Neuspešna rezervacija!");
+      }
+    );
+  }
+
+  cancel(input: Examination) {
+    this.examinationService.cancel(input).subscribe(
+      data => {
+        window.alert("Uspešno otkazivanje!");
+      }, error => {
+        window.alert("Neuspešno otkazivanje!");
+      }
+    )
   }
 
 }

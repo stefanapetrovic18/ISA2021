@@ -1,0 +1,28 @@
+.navigation-card {
+  max-width: 400px;
+  margin: 50px;
+}
+
+.navigation-header-image-pill {
+  background-image: url('https://www.cubicpromote.com.au/media/catalog/product/cache/cf3e68571eed7c27bb001ab86be9a542/p/i/pill.jpg');
+  background-size: cover;
+}
+
+.navigation-header-image-pharmacy {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Swiss_pharmacy_logo.svg/1003px-Swiss_pharmacy_logo.svg.png');
+  background-size: cover;
+}
+
+.navigation {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 81px);
+  width: 100%;
+}
+
+img {
+  object-fit: cover;
+  height: 280px;
+  width: 370px;
+}
