@@ -127,6 +127,16 @@ import { OrderItemDeleteComponent } from './components/business/order-item/order
 import { OrderItemEditComponent } from './components/business/order-item/order-item-edit/order-item-edit.component';
 import { OrderItemTableViewComponent } from './components/business/order-item/order-item-table-view/order-item-table-view.component';
 import { OrderItemViewComponent } from './components/business/order-item/order-item-view/order-item-view.component';
+import {InventoryDeleteComponent} from './components/business/inventory/inventory-delete/inventory-delete.component';
+import {InventoryViewComponent} from './components/business/inventory/inventory-view/inventory-view.component';
+import {InventoryAddComponent} from './components/business/inventory/inventory-add/inventory-add.component';
+import {InventoryItemTableViewComponent} from './components/business/inventory-item/inventory-item-table-view/inventory-item-table-view.component';
+import {InventoryItemViewComponent} from './components/business/inventory-item/inventory-item-view/inventory-item-view.component';
+import {InventoryItemAddComponent} from './components/business/inventory-item/inventory-item-add/inventory-item-add.component';
+import {InventoryItemDeleteComponent} from './components/business/inventory-item/inventory-item-delete/inventory-item-delete.component';
+import {InventoryTableViewComponent} from './components/business/inventory/inventory-table-view/inventory-table-view.component';
+import {InventoryEditComponent} from './components/business/inventory/inventory-edit/inventory-edit.component';
+import {InventoryItemEditComponent} from './components/business/inventory-item/inventory-item-edit/inventory-item-edit.component';
 
 @NgModule({
   declarations: [
@@ -255,7 +265,17 @@ import { OrderItemViewComponent } from './components/business/order-item/order-i
     OrderItemDeleteComponent,
     OrderItemEditComponent,
     OrderItemTableViewComponent,
-    OrderItemViewComponent
+    OrderItemViewComponent,
+    InventoryAddComponent,
+    InventoryDeleteComponent,
+    InventoryEditComponent,
+    InventoryTableViewComponent,
+    InventoryViewComponent,
+    InventoryItemAddComponent,
+    InventoryItemDeleteComponent,
+    InventoryItemEditComponent,
+    InventoryItemTableViewComponent,
+    InventoryItemViewComponent
   ],
   imports: [
     BrowserModule,

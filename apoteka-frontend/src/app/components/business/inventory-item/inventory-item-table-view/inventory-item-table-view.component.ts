@@ -4,34 +4,33 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Pharmacy } from 'src/app/model/business/pharmacy';
-import { PharmacyService } from 'src/app/service/business/pharmacy.service';
-import { PharmacyAddComponent } from '../pharmacy-add/pharmacy-add.component';
-import { PharmacyDeleteComponent } from '../pharmacy-delete/pharmacy-delete.component';
-import { PharmacyEditComponent } from '../pharmacy-edit/pharmacy-edit.component';
-import { PharmacyViewComponent } from '../pharmacy-view/pharmacy-view.component';
+import { InventoryItem } from 'src/app/model/business/inventory-item';
+import { InventoryItemService } from 'src/app/service/business/inventory-item.service';
+import { InventoryItemAddComponent } from '../inventory-item-add/inventory-item-add.component';
+import { InventoryItemDeleteComponent } from '../inventory-item-delete/inventory-item-delete.component';
+import { InventoryItemEditComponent } from '../inventory-item-edit/inventory-item-edit.component';
+import { InventoryItemViewComponent } from '../inventory-item-view/inventory-item-view.component';
 
 @Component({
-  selector: 'app-pharmacy-table-view',
-  templateUrl: './pharmacy-table-view.component.html',
-  styleUrls: ['./pharmacy-table-view.component.css']
+  selector: 'app-inventory-item-table-view',
+  templateUrl: './inventory-item-table-view.component.html',
+  styleUrls: ['./inventory-item-table-view.component.css']
 })
-export class PharmacyTableViewComponent implements OnInit {
+export class InventoryItemTableViewComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource: MatTableDataSource<any>;
-  data: Pharmacy[];
-  columns = ['name', 'address', 'rating'];
-  actions = ['view', 'edit', 'delete'];
+  @Input() data: InventoryItem[];
+  columns = ['quantity'];
+  actions = ['view', 'edit', 'delete', 'medicine'];
   displayedColumns = [...this.columns, ...this.actions];
-  constructor(private pharmacyService: PharmacyService, private router: Router, private dialog: MatDialog) {}
+  constructor(private inventoryItemService: InventoryItemService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
-    this.pharmacyService.findAll().subscribe(
+    this.inventoryItemService.findAll().subscribe(
       data => {
         this.data = data;
-        console.log(data);
         if (this.data !== undefined && this.data.length > 0) {
           this.dataSource = new MatTableDataSource(this.data);
           console.log(this.dataSource);
@@ -64,36 +63,23 @@ export class PharmacyTableViewComponent implements OnInit {
   }
 
   add() {
-    const dialogRef = this.dialog.open(PharmacyAddComponent);
-    dialogRef.afterClosed().subscribe(
-      // result => {
-      //   console.log('RESULT: ', result);
-      //   if (result !== undefined) {
-      //     this.pharmacyService.findAll().subscribe(
-      //       data => {
-      //         console.log('DATA: ', data);
-      //       }
-      //     )
-      //   }
-      // }
-    )
-    this.ngOnInit();
+    this.dialog.open(InventoryItemAddComponent);
   }
 
-  view(input: Pharmacy) {
-    this.dialog.open(PharmacyViewComponent, {
+  view(input: InventoryItem) {
+    this.dialog.open(InventoryItemViewComponent, {
       data: input
     });
   }
 
-  edit(input: Pharmacy) {
-    this.dialog.open(PharmacyEditComponent, {
+  edit(input: InventoryItem) {
+    this.dialog.open(InventoryItemEditComponent, {
       data: input
     });
   }
 
-  delete(input: Pharmacy) {
-    this.dialog.open(PharmacyDeleteComponent, {
+  delete(input: InventoryItem) {
+    this.dialog.open(InventoryItemDeleteComponent, {
       data: input
     });
   }
