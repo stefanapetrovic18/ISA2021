@@ -21,6 +21,11 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    public List<Offer> findNonAccepted() {
+        return findAll().stream().filter(o -> o.getAccepted().equals(false)).collect(Collectors.toList());
+    }
+
+    @Override
     public List<Offer> findAllParametrized(Long id, Long orderID, LocalDateTime shippingDate, LocalDateTime shippingDateFrom, LocalDateTime shippingDateUntil) {
         List<Offer> offer = findAll();
         if (id != null) {
@@ -44,6 +49,15 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Offer getOne(Long id) {
         return offerRepository.getOne(id);
+    }
+
+    @Override
+    public Offer accept(Offer offer) throws Exception {
+        if (offer.getOrder().getExpiryDate().isAfter(LocalDateTime.now())) {
+            throw new Exception("Rok za dostavljanje ponuda nije istekao!");
+        }
+        offer.setAccepted(true);
+        return update(offer);
     }
 
     @Override

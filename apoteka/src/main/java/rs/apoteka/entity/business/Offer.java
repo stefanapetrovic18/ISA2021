@@ -19,6 +19,8 @@ public class Offer {
     private Double price;
     @Column(nullable = false)
     private LocalDateTime shippingDate;
+    @Column
+    private Boolean accepted;
 
     public Offer() {
     }
@@ -57,5 +59,13 @@ public class Offer {
 
     public void setShippingDate(LocalDateTime shippingDate) {
         this.shippingDate = shippingDate;
+    }
+
+    public Boolean getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(Boolean accepted) {
+        this.accepted = accepted;
     }
 }

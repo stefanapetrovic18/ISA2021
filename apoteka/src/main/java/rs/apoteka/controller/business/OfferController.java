@@ -23,6 +23,11 @@ public class OfferController {
         return new ResponseEntity<>(offerService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/non-accepted")
+    public ResponseEntity<List<Offer>> findNonAccepted() throws Exception {
+        return new ResponseEntity<>(offerService.findNonAccepted(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/filter")
     public ResponseEntity<List<Offer>> findAllParametrized(
             @RequestParam(required = false) Long id,
@@ -42,6 +47,11 @@ public class OfferController {
     @PostMapping(value = "/create")
     public ResponseEntity<Offer> create(@RequestBody Offer offer) throws Exception {
         return new ResponseEntity<>(offerService.create(offer), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/accept")
+    public ResponseEntity<Offer> accept(@RequestBody Offer offer) throws Exception {
+        return new ResponseEntity<>(offerService.accept(offer), HttpStatus.OK);
     }
 
     @PostMapping(value = "/update")
