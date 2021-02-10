@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "pharmacy_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "order")
+    @OneToMany
     private List<OrderItem> items;
     @Column(nullable = false)
     private LocalDateTime expiryDate;

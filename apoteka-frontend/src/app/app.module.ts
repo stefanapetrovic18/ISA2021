@@ -137,11 +137,11 @@ import {InventoryItemDeleteComponent} from './components/business/inventory-item
 import {InventoryTableViewComponent} from './components/business/inventory/inventory-table-view/inventory-table-view.component';
 import {InventoryEditComponent} from './components/business/inventory/inventory-edit/inventory-edit.component';
 import {InventoryItemEditComponent} from './components/business/inventory-item/inventory-item-edit/inventory-item-edit.component';
-import {OfferTableViewComponent} from './components/business/offer/order-table-view/offer-table-view.component';
-import {OfferEditComponent} from './components/business/offer/order-edit/offer-edit.component';
+import {OfferTableViewComponent} from './components/business/offer/offer-table-view/offer-table-view.component';
+import {OfferEditComponent} from './components/business/offer/offer-edit/offer-edit.component';
 import {OfferAddComponent} from './components/business/offer/offer-add/offer-add.component';
-import {OfferDeleteComponent} from './components/business/offer/order-delete/offer-delete.component';
-import {OfferViewComponent} from './components/business/offer/order-view/offer-view.component';
+import {OfferDeleteComponent} from './components/business/offer/offer-delete/offer-delete.component';
+import {OfferViewComponent} from './components/business/offer/offer-view/offer-view.component';
 
 @NgModule({
   declarations: [

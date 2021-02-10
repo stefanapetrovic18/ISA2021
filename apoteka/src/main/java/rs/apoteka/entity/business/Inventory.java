@@ -12,7 +12,7 @@ public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "inventory")
+    @OneToMany
     private List<InventoryItem> items;
     @OneToOne
     private Supplier supplier;

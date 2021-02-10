@@ -21,7 +21,7 @@
     <input matInput type="number" [(ngModel)]="data.price" required>
   </mat-form-field>
   <p>Dermatolozi</p>
-  <mat-select [(value)]="data.dermatologists">
+  <mat-select [(value)]="data.dermatologist">
     <mat-option>--</mat-option>
     <mat-option multiple *ngFor="let dermatologist of dermatologists" [value]="dermatologist">{{dermatologist.username}}</mat-option>
   </mat-select>
