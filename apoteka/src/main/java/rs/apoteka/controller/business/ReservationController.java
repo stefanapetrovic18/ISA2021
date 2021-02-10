@@ -49,6 +49,16 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.create(reservation), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/reserve")
+    public ResponseEntity<Reservation> quickReserve(@RequestBody Reservation reservation) throws Exception {
+        return new ResponseEntity<>(reservationService.reserve(reservation), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/cancel")
+    public ResponseEntity<Reservation> cancel(@RequestBody Reservation reservation) throws Exception {
+        return new ResponseEntity<>(reservationService.cancel(reservation), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/update")
     public ResponseEntity<Reservation> update(@RequestBody Reservation reservation) throws Exception {
         return new ResponseEntity<>(reservationService.update(reservation), HttpStatus.OK);

@@ -16,6 +16,10 @@ public interface ConsultationService {
 
     Consultation create(Consultation consultation);
 
+    Consultation reserve(Consultation consultation);
+
+    Consultation cancel(Consultation consultation) throws Exception;
+
     Consultation update(Consultation consultation);
 
     Boolean delete(Long id);

@@ -16,6 +16,10 @@ public interface ReservationService {
 
     Reservation create(Reservation reservation);
 
+    Reservation reserve(Reservation reservation);
+
+    Reservation cancel(Reservation reservation) throws Exception;
+
     Reservation update(Reservation reservation);
 
     Boolean delete(Long id);

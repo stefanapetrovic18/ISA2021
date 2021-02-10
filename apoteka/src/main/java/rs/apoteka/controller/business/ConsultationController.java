@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Consultation;
+import rs.apoteka.entity.business.Examination;
 import rs.apoteka.service.intf.business.ConsultationService;
 
 import java.time.LocalDateTime;
@@ -48,6 +49,16 @@ public class ConsultationController {
     @PostMapping(value = "/create")
     public ResponseEntity<Consultation> create(@RequestBody Consultation consultation) throws Exception {
         return new ResponseEntity<>(consultationService.create(consultation), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/reserve")
+    public ResponseEntity<Consultation> quickReserve(@RequestBody Consultation consultation) throws Exception {
+        return new ResponseEntity<>(consultationService.reserve(consultation), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/cancel")
+    public ResponseEntity<Consultation> cancel(@RequestBody Consultation consultation) throws Exception {
+        return new ResponseEntity<>(consultationService.cancel(consultation), HttpStatus.OK);
     }
 
     @PostMapping(value = "/update")

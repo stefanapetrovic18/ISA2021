@@ -1,12 +1,17 @@
 package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.entity.business.WorkingHours;
+import rs.apoteka.entity.user.Patient;
 import rs.apoteka.repository.business.ConsultationRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ConsultationService;
+import rs.apoteka.service.intf.user.PatientService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -17,6 +22,12 @@ import java.util.List;
 public class ConsultationServiceImpl implements ConsultationService {
     @Autowired
     private ConsultationRepository consultationRepository;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Override
     public List<Consultation> findAll() {
@@ -81,6 +92,46 @@ public class ConsultationServiceImpl implements ConsultationService {
             return null;
         }
         return consultationRepository.save(consultation);
+    }
+
+    @Override
+    public Consultation reserve(Consultation consultation) {
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        if (patient == null) {
+            return null;
+        }
+        consultation.setPatient(patient);
+        Consultation c = update(consultation);
+        patient.getConsultations().add(c);
+        patientService.update(patient);
+        sendMail(c);
+        return c;
+    }
+
+    @Override
+    public Consultation cancel(Consultation consultation) throws Exception {
+        if (consultation.getConsultationDate().isBefore(LocalDateTime.now().plusHours(24))) {
+            throw new Exception("Nemoguće je otkazati konsultaciju manje od 24h pre početka istog.");
+        }
+        consultation.getPatient().getConsultations().removeIf(e -> e.getId().equals(consultation.getId()));
+        patientService.update(consultation.getPatient());
+        consultation.setPatient(null);
+        return update(consultation);
+    }
+
+    private void sendMail(Consultation consultation) {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(consultation.getPatient().getUsername());
+        email.setSubject("Potvrda rezervacije konsultacije");
+        email.setText("Poštovani/a " + consultation.getPatient().getForename() + ",\n\n" +
+                "Potvrđujemo vašu rezervaciju konsultacije na datum " + consultation.getConsultationDate().toLocalDate().toString() + ".\n\n" +
+                "Pregled počinje u " + consultation.getConsultationDate().toLocalTime().toString() + " sati, a traje " + consultation.getDuration() + " minuta.\n\n" +
+                "Za više informacija, molimo vas da kliknete na link ispod.\n\n" +
+                "http://localhost:4200/pregled?id=" + consultation.getId() + "\n\n" +
+                "Možete se obratiti vašem farmaceutu na email adresu " + consultation.getPharmacist().getUsername() + ".\n\n" +
+                "Srdačan pozdrav,\n\n" +
+                consultation.getPharmacy().getName());
+        mailSender.send(email);
     }
 
     @Override
