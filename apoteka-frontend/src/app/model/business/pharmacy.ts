@@ -6,6 +6,7 @@ import { Consultation } from "./consultation";
 import { Examination } from "./examination";
 import { Pricelist } from "./pricelist";
 import { Promotion } from "./promotion";
+import {Order} from './order';
 
 export class Pharmacy {
   id: number;
@@ -17,6 +18,7 @@ export class Pharmacy {
   pharmacists: Pharmacist[];
   examinations: Examination[];
   consultations: Consultation[];
+  orders: Order[];
   promotions: Promotion[];
   subscriptions: User[];
   pricelist: Pricelist;

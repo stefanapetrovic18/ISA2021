@@ -40,6 +40,9 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy")
     private List<Promotion> promotions;
     @JsonIgnore
+    @OneToMany(mappedBy = "pharmacy")
+    private List<Order> orders;
+    @JsonIgnore
     @ElementCollection(targetClass = User.class)
     private List<User> subscriptions;
     // Inventar.
@@ -125,6 +128,14 @@ public class Pharmacy {
 
     public void setPromotions(List<Promotion> promotions) {
         this.promotions = promotions;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public List<User> getSubscriptions() {

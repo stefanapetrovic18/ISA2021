@@ -117,6 +117,16 @@ import { DermatologistDashboardComponent } from './components/navigation/dermato
 import { SystemAdminDashboardComponent } from './components/navigation/system-admin-dashboard/system-admin-dashboard.component';
 import { SupplierDashboardComponent } from './components/navigation/supplier-dashboard/supplier-dashboard.component';
 import { UnregisteredUserDashboardComponent } from './components/navigation/unregistered-user-dashboard/unregistered-user-dashboard.component';
+import { OrderAddComponent } from './components/business/order/order-add/order-add.component';
+import { OrderDeleteComponent } from './components/business/order/order-delete/order-delete.component';
+import { OrderEditComponent } from './components/business/order/order-edit/order-edit.component';
+import { OrderTableViewComponent } from './components/business/order/order-table-view/order-table-view.component';
+import { OrderViewComponent } from './components/business/order/order-view/order-view.component';
+import { OrderItemAddComponent } from './components/business/order-item/order-item-add/order-item-add.component';
+import { OrderItemDeleteComponent } from './components/business/order-item/order-item-delete/order-item-delete.component';
+import { OrderItemEditComponent } from './components/business/order-item/order-item-edit/order-item-edit.component';
+import { OrderItemTableViewComponent } from './components/business/order-item/order-item-table-view/order-item-table-view.component';
+import { OrderItemViewComponent } from './components/business/order-item/order-item-view/order-item-view.component';
 
 @NgModule({
   declarations: [
@@ -235,7 +245,17 @@ import { UnregisteredUserDashboardComponent } from './components/navigation/unre
     PharmacistDashboardComponent,
     PharmacyAdminDashboardComponent,
     SupplierDashboardComponent,
-    SystemAdminDashboardComponent
+    SystemAdminDashboardComponent,
+    OrderAddComponent,
+    OrderDeleteComponent,
+    OrderEditComponent,
+    OrderTableViewComponent,
+    OrderViewComponent,
+    OrderItemAddComponent,
+    OrderItemDeleteComponent,
+    OrderItemEditComponent,
+    OrderItemTableViewComponent,
+    OrderItemViewComponent
   ],
   imports: [
     BrowserModule,
