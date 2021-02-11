@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Consultation;
-import rs.apoteka.entity.business.Examination;
 import rs.apoteka.service.intf.business.ConsultationService;
 
 import java.time.LocalDateTime;
@@ -36,7 +35,7 @@ public class ConsultationController {
             @RequestParam(required = false) Integer durationTo,
             @RequestParam(required = false) Double priceFrom,
             @RequestParam(required = false) Double priceTo
-            ) throws Exception {
+    ) throws Exception {
         return new ResponseEntity<>(consultationService.findAllParametrized(id, consultationDate, pharmacistID, pharmacyID,
                 patientID, duration, price, durationFrom, durationTo, priceFrom, priceTo), HttpStatus.OK);
     }
@@ -52,7 +51,7 @@ public class ConsultationController {
     }
 
     @PostMapping(value = "/reserve")
-    public ResponseEntity<Consultation> quickReserve(@RequestBody Consultation consultation) throws Exception {
+    public ResponseEntity<Consultation> reserve(@RequestBody Consultation consultation) throws Exception {
         return new ResponseEntity<>(consultationService.reserve(consultation), HttpStatus.OK);
     }
 

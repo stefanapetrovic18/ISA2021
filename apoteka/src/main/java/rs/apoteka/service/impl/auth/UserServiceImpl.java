@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import rs.apoteka.auth.JWTProvider;
 import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.*;
-import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.user.*;
 import rs.apoteka.repository.auth.RoleRepository;
 import rs.apoteka.repository.auth.UserRepository;

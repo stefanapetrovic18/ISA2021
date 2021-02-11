@@ -6,7 +6,6 @@ import rs.apoteka.entity.business.Inventory;
 import rs.apoteka.repository.business.InventoryRepository;
 import rs.apoteka.service.intf.business.InventoryService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 

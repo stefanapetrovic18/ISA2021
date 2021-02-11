@@ -8,7 +8,6 @@ import rs.apoteka.entity.auth.RoleType;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pharmacy;
-import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.user.PharmacistRepository;
 import rs.apoteka.service.intf.auth.UserService;
@@ -44,9 +43,9 @@ public class PharmacistServiceImpl implements PharmacistService {
     @Override
     public List<Pharmacist> findAllByPharmacistFreeAt(Long pharmacyID, LocalDateTime localDateTime) {
         List<Pharmacist> pharmacists = new ArrayList<>();
-        for (Pharmacy p: pharmacyService.findAllByPharmacistFreeAt(localDateTime)) {
-            for (Pharmacist ph: p.getPharmacists()) {
-                for (Consultation c: ph.getConsultations()) {
+        for (Pharmacy p : pharmacyService.findAllByPharmacistFreeAt(localDateTime)) {
+            for (Pharmacist ph : p.getPharmacists()) {
+                for (Consultation c : ph.getConsultations()) {
                     if ((c.getConsultationDate().plusMinutes(c.getDuration()).isBefore(localDateTime)
                             ||
                             c.getConsultationDate().isAfter(localDateTime))
@@ -62,7 +61,7 @@ public class PharmacistServiceImpl implements PharmacistService {
 
     @Override
     public List<Pharmacist> findAllParametrized(Long id, Long workingHoursID, Long pharmacyID, LocalDateTime vacationStart, LocalDateTime vacationEnd,
-                                                   Long consultationID, Double rating, Double ratingFrom, Double ratingTo) {
+                                                Long consultationID, Double rating, Double ratingFrom, Double ratingTo) {
         List<Pharmacist> pharmacists = findAll();
         if (id != null) {
             pharmacists.removeIf(p -> !p.getId().equals(id));

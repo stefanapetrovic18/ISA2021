@@ -19,11 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/user")
 public class UserController {
+    private static final Gson gson = new Gson();
     @Autowired
     UserService userService;
     @Autowired
     VerificationTokenService verificationTokenService;
-    private static final Gson gson = new Gson();
 
     @PostMapping(value = "/register")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) throws Exception {

@@ -2,7 +2,6 @@ package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Inventory;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface InventoryService {

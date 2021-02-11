@@ -3,7 +3,6 @@ package rs.apoteka.entity.business;
 import rs.apoteka.entity.user.Supplier;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity

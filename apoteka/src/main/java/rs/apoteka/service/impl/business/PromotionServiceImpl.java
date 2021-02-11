@@ -1,18 +1,15 @@
 package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import rs.apoteka.entity.business.Pricelist;
 import rs.apoteka.entity.business.Promotion;
 import rs.apoteka.repository.business.PromotionRepository;
 import rs.apoteka.service.intf.business.PromotionService;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PromotionServiceImpl implements PromotionService {

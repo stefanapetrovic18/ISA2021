@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.service.intf.user.PatientService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin

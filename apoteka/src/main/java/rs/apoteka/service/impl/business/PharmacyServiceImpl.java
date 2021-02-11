@@ -8,7 +8,6 @@ import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.business.PharmacyRepository;
 import rs.apoteka.service.intf.business.PharmacyService;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,9 +75,9 @@ public class PharmacyServiceImpl implements PharmacyService {
     @Override
     public List<Pharmacy> findAllByPharmacistFreeAt(LocalDateTime localDateTime) {
         List<Pharmacy> pharmacies = new ArrayList<>();
-        for (Pharmacy p: findAll()) {
-            for (Pharmacist ph: p.getPharmacists()) {
-                for (Consultation c: ph.getConsultations()) {
+        for (Pharmacy p : findAll()) {
+            for (Pharmacist ph : p.getPharmacists()) {
+                for (Consultation c : ph.getConsultations()) {
                     if (c.getConsultationDate().plusMinutes(c.getDuration()).isBefore(localDateTime)
                             ||
                             c.getConsultationDate().isAfter(localDateTime)) {
@@ -92,14 +91,20 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     @Override
     public Pharmacy create(Pharmacy pharmacy) {
-        if (pharmacy.getPharmacists() != null && pharmacy.getPharmacists().size() > 0) pharmacy = removeWorkingPharmacists(pharmacy);
+        if (pharmacy.getPharmacists() != null && pharmacy.getPharmacists().size() > 0)
+            pharmacy = removeWorkingPharmacists(pharmacy);
         Pharmacy ph = pharmacy;
-        if (ph.getPharmacists() != null && ph.getPharmacists().size() > 0) ph.getPharmacists().forEach(pharmacist -> pharmacist.setPharmacy(ph));
-        if (ph.getDermatologists() != null && ph.getDermatologists().size() > 0) ph.getDermatologists().forEach(dermatologist -> dermatologist.getPharmacies().add(ph));
-        if (ph.getConsultations() != null && ph.getConsultations().size() > 0) ph.getConsultations().forEach(consultation -> consultation.setPharmacy(ph));
+        if (ph.getPharmacists() != null && ph.getPharmacists().size() > 0)
+            ph.getPharmacists().forEach(pharmacist -> pharmacist.setPharmacy(ph));
+        if (ph.getDermatologists() != null && ph.getDermatologists().size() > 0)
+            ph.getDermatologists().forEach(dermatologist -> dermatologist.getPharmacies().add(ph));
+        if (ph.getConsultations() != null && ph.getConsultations().size() > 0)
+            ph.getConsultations().forEach(consultation -> consultation.setPharmacy(ph));
         if (ph.getAdmins() != null && ph.getAdmins().size() > 0) ph.getAdmins().forEach(admin -> admin.setPharmacy(ph));
-        if (ph.getExaminations() != null && ph.getExaminations().size() > 0) ph.getExaminations().forEach(examination -> examination.setPharmacy(ph));
-        if (ph.getPromotions() != null && ph.getPromotions().size() > 0) ph.getPromotions().forEach(consultation -> consultation.setPharmacy(ph));
+        if (ph.getExaminations() != null && ph.getExaminations().size() > 0)
+            ph.getExaminations().forEach(examination -> examination.setPharmacy(ph));
+        if (ph.getPromotions() != null && ph.getPromotions().size() > 0)
+            ph.getPromotions().forEach(consultation -> consultation.setPharmacy(ph));
         return pharmacyRepository.save(ph);
     }
 

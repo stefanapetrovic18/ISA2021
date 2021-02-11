@@ -20,7 +20,7 @@ public class InventoryItemServiceImpl implements InventoryItemService {
 
     @Override
     public List<InventoryItem> findAllParametrized(Long id, Long medicineID,
-                                               Integer quantity, Integer quantityFrom, Integer quantityTo) {
+                                                   Integer quantity, Integer quantityFrom, Integer quantityTo) {
         List<InventoryItem> inventoryItems = findAll();
         if (id != null) {
             inventoryItems.removeIf(i -> !i.getId().equals(id));

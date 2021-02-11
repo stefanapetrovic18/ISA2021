@@ -47,8 +47,8 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public List<Examination> findAllParametrized(Long id, LocalDateTime examinationDate, Long dermatologistID, Long pharmacyID,
-                                                  Long patientID,Integer duration, Double price, Integer durationFrom,
-                                                  Integer durationTo, Double priceFrom, Double priceTo, Boolean quickReservation) {
+                                                 Long patientID, Integer duration, Double price, Integer durationFrom,
+                                                 Integer durationTo, Double priceFrom, Double priceTo, Boolean quickReservation) {
         List<Examination> examinations = findAll();
         if (id != null) {
             examinations.removeIf(e -> !e.getId().equals(id));
@@ -167,7 +167,7 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     private Boolean appointmentCheck(Examination examination) {
-       return duringWorkingHours(examination) &&
+        return duringWorkingHours(examination) &&
                 appointmentFree(examination) &&
                 !patientHasConsultation(examination) &&
                 !patientHasExamination(examination);

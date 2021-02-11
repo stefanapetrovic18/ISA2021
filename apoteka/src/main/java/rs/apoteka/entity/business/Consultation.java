@@ -6,7 +6,6 @@ import rs.apoteka.entity.user.Pharmacist;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table

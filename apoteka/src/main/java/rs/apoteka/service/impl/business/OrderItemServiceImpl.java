@@ -20,7 +20,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public List<OrderItem> findAllParametrized(Long id, Long medicineID,
-                                          Integer quantity, Integer quantityFrom, Integer quantityTo) {
+                                               Integer quantity, Integer quantityFrom, Integer quantityTo) {
         List<OrderItem> orderItems = findAll();
         if (id != null) {
             orderItems.removeIf(i -> !i.getId().equals(id));

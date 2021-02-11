@@ -98,7 +98,7 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
         for (WorkingHours wh : hours) {
             if (wh.getDayOfWeek() == workingHours.getDayOfWeek()) {
                 if (wh.getShiftStart().isAfter(workingHours.getShiftEnd()) ||
-                wh.getShiftEnd().isBefore(workingHours.getShiftStart())) {
+                        wh.getShiftEnd().isBefore(workingHours.getShiftStart())) {
                     flag = true;
                 }
             }

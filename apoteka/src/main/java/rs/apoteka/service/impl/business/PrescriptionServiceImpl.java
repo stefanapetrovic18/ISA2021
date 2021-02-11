@@ -28,7 +28,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
             prescriptions.removeIf(p -> !p.getId().equals(id));
         }
         if (code != null) {
-            prescriptions.removeIf(p-> !p.getCode().contains(code));
+            prescriptions.removeIf(p -> !p.getCode().contains(code));
         }
         if (issueDate != null) {
             prescriptions.removeIf(p -> !p.getIssueDate().equals(issueDate));

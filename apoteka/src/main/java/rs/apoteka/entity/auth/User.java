@@ -2,12 +2,9 @@ package rs.apoteka.entity.auth;
 
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import rs.apoteka.entity.auth.RegistrationRequest;
-import rs.apoteka.entity.auth.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

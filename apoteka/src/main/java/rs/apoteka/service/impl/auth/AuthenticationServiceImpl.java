@@ -17,22 +17,27 @@ import java.util.Collection;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserService userService;
+
     @Override
     public Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
+
     @Override
     public String getUsername() {
         return getAuthentication().getName();
     }
+
     @Override
     public User getUser() {
         return userService.findByUsername(getUsername());
     }
+
     @Override
     public UserDetails getUserDetails() {
         return (UserDetailsImpl) getAuthentication().getPrincipal();
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getUserDetails().getAuthorities();

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.service.intf.user.PharmacistService;
 
@@ -26,6 +25,11 @@ public class PharmacistController {
     @GetMapping(value = "/unemployed")
     public ResponseEntity<List<Pharmacist>> findAllUnemployed() throws Exception {
         return new ResponseEntity<>(pharmacistService.findAllUnemployed(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/free")
+    public ResponseEntity<List<Pharmacist>> findAllByPharmacistFreeAt(@RequestParam Long pharmacyID, @RequestParam LocalDateTime localDateTime) throws Exception {
+        return new ResponseEntity<>(pharmacistService.findAllByPharmacistFreeAt(pharmacyID, localDateTime), HttpStatus.OK);
     }
 
     @GetMapping(value = "/filter")

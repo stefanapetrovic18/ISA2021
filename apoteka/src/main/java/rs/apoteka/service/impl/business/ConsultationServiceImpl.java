@@ -36,7 +36,7 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public List<Consultation> findAllParametrized(Long id, LocalDateTime consultationDate, Long pharmacistID, Long pharmacyID,
-                                                  Long patientID,Integer duration, Double price, Integer durationFrom,
+                                                  Long patientID, Integer duration, Double price, Integer durationFrom,
                                                   Integer durationTo, Double priceFrom, Double priceTo) {
         List<Consultation> consultations = findAll();
         if (id != null) {
@@ -224,10 +224,10 @@ public class ConsultationServiceImpl implements ConsultationService {
             if ((consultation.getConsultationDate().isBefore(exam.getExaminationDate()) &&
                     (consultation.getConsultationDate().plusMinutes(consultation.getDuration()).isBefore(
                             exam.getExaminationDate())
-            ))
+                    ))
                     ||
                     (consultation.getConsultationDate().isAfter(exam.getExaminationDate()) &&
-                           (consultation.getConsultationDate().plusMinutes(consultation.getDuration())).isAfter(
+                            (consultation.getConsultationDate().plusMinutes(consultation.getDuration())).isAfter(
                                     exam.getExaminationDate()))) {
                 // Termini se ne poklapaju.
                 flag = true;

@@ -26,7 +26,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> findAllParametrized(Long id, Long allergyMedicineID, Long consultationID,
-                                              Long examinationID, Integer points, Integer pointsFrom, Integer pointsTo) {
+                                             Long examinationID, Integer points, Integer pointsFrom, Integer pointsTo) {
         List<Patient> patients = findAll();
         if (id != null) {
             patients.removeIf(p -> !p.getId().equals(id));
