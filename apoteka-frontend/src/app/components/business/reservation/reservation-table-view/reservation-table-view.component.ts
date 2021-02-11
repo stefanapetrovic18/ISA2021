@@ -44,7 +44,7 @@ export class ReservationTableViewComponent implements OnInit {
         window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
         this.router.navigateByUrl('');
       }
-    )
+    );
   }
 
   applyFilter(value: any) {
@@ -82,6 +82,15 @@ export class ReservationTableViewComponent implements OnInit {
     this.dialog.open(ReservationDeleteComponent, {
       data: input
     });
+  }
+  cancel(input: Reservation) {
+    this.reservationService.cancel(input).subscribe(
+      data => {
+        window.alert('Otkazivanje je uspelo!');
+      }, error => {
+        window.alert('Otkazivanje nije uspelo!');
+      }
+    );
   }
 
 }

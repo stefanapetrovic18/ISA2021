@@ -47,6 +47,11 @@ public class PharmacyController {
         return new ResponseEntity<>(pharmacyService.getOne(id), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/medicine")
+    public ResponseEntity<List<Pharmacy>> findAllContainingMedicine(@RequestParam Long medicineID) throws Exception {
+        return new ResponseEntity<>(pharmacyService.findAllContainingMedicine(medicineID), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/free")
     public ResponseEntity<List<Pharmacy>> findAllByPharmacistFreeAt(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime) throws Exception {
         return new ResponseEntity<>(pharmacyService.findAllByPharmacistFreeAt(localDateTime), HttpStatus.OK);

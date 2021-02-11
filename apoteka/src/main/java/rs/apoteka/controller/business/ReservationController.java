@@ -50,7 +50,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/reserve")
-    public ResponseEntity<Reservation> quickReserve(@RequestBody Reservation reservation) throws Exception {
+    public ResponseEntity<Reservation> reserve(@RequestBody Reservation reservation) throws Exception {
         return new ResponseEntity<>(reservationService.reserve(reservation), HttpStatus.OK);
     }
 

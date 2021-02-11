@@ -1,6 +1,7 @@
 package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.VacationRequest;
 import rs.apoteka.repository.business.VacationRequestRepository;
@@ -66,7 +67,7 @@ public class VacationRequestServiceImpl implements VacationRequestService {
         if (!checkDates(vacationRequest)) {
             return null;
         }
-        if (!authenticationService.getAuthorities().contains("ROLE_PHARMACY_ADMIN") && vacationRequest.getAccepted()) {
+        if (!authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACY_ADMIN")) && vacationRequest.getAccepted()) {
             throw new Exception("Jedino administrator apoteke prihvata zahteve za odmor/odsustvo!");
         }
         return vacationRequestRepository.save(vacationRequest);
@@ -77,7 +78,7 @@ public class VacationRequestServiceImpl implements VacationRequestService {
         if (!checkDates(vacationRequest)) {
             return null;
         }
-        if (!authenticationService.getAuthorities().contains("ROLE_PHARMACY_ADMIN")) {
+        if (!authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACY_ADMIN"))) {
             throw new Exception("Jedino administrator apoteke prihvata zahteve za odmor/odsustvo!");
         }
         vacationRequest.setAccepted(true);
@@ -89,7 +90,7 @@ public class VacationRequestServiceImpl implements VacationRequestService {
         if (!checkDates(vacationRequest)) {
             return null;
         }
-        if (!authenticationService.getAuthorities().contains("ROLE_PHARMACY_ADMIN")) {
+        if (!authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACY_ADMIN"))) {
             throw new Exception("Jedino administrator apoteke prihvata zahteve za odmor/odsustvo!");
         }
         vacationRequest.setAccepted(false);

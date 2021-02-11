@@ -1,6 +1,7 @@
 package rs.apoteka.entity.business;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.web.bind.annotation.GetMapping;
 import rs.apoteka.entity.user.Patient;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private String reservationNumber;
     @Column(nullable = false)

@@ -27,6 +27,11 @@ export class PharmacyService {
     return this.http.get<Pharmacy>(this.URL + 'search', {params});
   }
 
+  public findAllContainingMedicine(medicineID: number): Observable<Pharmacy[]> {
+    const params = new HttpParams().set('medicineID', medicineID.toString());
+    return this.http.get<Pharmacy[]>(this.URL + 'medicine', {params});
+  }
+
   public findAllByPharmacistFreeAt(localDateTime: Date): Observable<Pharmacy[]> {
     const params = new HttpParams().set('localDateTime', new Date(localDateTime).toISOString());
     return this.http.get<Pharmacy[]>(this.URL + 'free', {params});

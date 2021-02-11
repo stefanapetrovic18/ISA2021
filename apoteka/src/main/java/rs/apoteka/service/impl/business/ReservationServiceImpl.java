@@ -3,6 +3,7 @@ package rs.apoteka.service.impl.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Reservation;
 import rs.apoteka.entity.user.Patient;
@@ -13,6 +14,8 @@ import rs.apoteka.service.intf.user.PatientService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -27,6 +30,13 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> findAll() {
+        if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
+            Patient patient = patientService.findByUsername(authenticationService.getUsername());
+            if (patient == null) {
+                return null;
+            }
+            return reservationRepository.findAll().stream().filter(r -> r.getPatient().getUsername().equals(authenticationService.getUsername())).collect(Collectors.toList());
+        }
         return reservationRepository.findAll();
     }
 

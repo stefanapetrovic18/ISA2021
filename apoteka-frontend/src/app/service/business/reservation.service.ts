@@ -32,6 +32,14 @@ export class ReservationService {
     return this.http.post<Reservation>(this.URL + 'create', reservation, httpOptions);
   }
 
+  public reserve(reservation: Reservation): Observable<Reservation> {
+    return this.http.post<Reservation>(this.URL + 'reserve', reservation, httpOptions);
+  }
+
+  public cancel(reservation: Reservation): Observable<Reservation> {
+    return this.http.post<Reservation>(this.URL + 'cancel', reservation, httpOptions);
+  }
+
   public update(reservation: Reservation): Observable<Reservation> {
     return this.http.post<Reservation>(this.URL + 'update', reservation, httpOptions);
   }

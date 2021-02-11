@@ -3,6 +3,7 @@ package rs.apoteka.service.impl.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Consultation;
+import rs.apoteka.entity.business.Item;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.business.PharmacyRepository;
@@ -68,6 +69,20 @@ public class PharmacyServiceImpl implements PharmacyService {
         }
         if (ratingTo != null) {
             pharmacies.removeIf(p -> p.getRating() > ratingTo);
+        }
+        return pharmacies;
+    }
+
+    @Override
+    public List<Pharmacy> findAllContainingMedicine(Long medicineID) {
+        List<Pharmacy> pharmacies = new ArrayList<>();
+        for (Pharmacy p:
+             findAll()) {
+            for (Item i: p.getPricelist().getItems()) {
+                if (i.getMedicine().getId().equals(medicineID) && i.getQuantity() > 0) {
+                    pharmacies.add(p);
+                }
+            }
         }
         return pharmacies;
     }

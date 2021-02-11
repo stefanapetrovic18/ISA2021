@@ -1,3 +1,15 @@
-<p>
-  reservation-add works!
-</p>
+<h1 mat-dialog-title>Dodaj apoteku u rezervaciju leka</h1>
+<div mat-dialog-content>
+  <p>Apoteka</p>
+  <mat-form-field>
+    <mat-label>Apoteka</mat-label>
+    <mat-select [(value)]="output">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let pharmacy of data" [value]="pharmacy">{{pharmacy.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button (click)="add()" class="add-button" mat-button mat-raised-button>POTVRDI</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>

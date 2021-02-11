@@ -14,6 +14,8 @@ public interface PharmacyService {
                                        Long adminID, Long examinationID, Long promotionID, Long userID,
                                        Long pricelistID, Double rating, Double ratingFrom, Double ratingTo);
 
+    List<Pharmacy> findAllContainingMedicine(Long medicineID);
+
     List<Pharmacy> findAllByPharmacistFreeAt(LocalDateTime localDateTime);
 
     Pharmacy create(Pharmacy pharmacy);

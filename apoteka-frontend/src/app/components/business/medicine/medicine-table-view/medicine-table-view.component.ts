@@ -10,6 +10,9 @@ import { MedicineAddComponent } from '../medicine-add/medicine-add.component';
 import { MedicineDeleteComponent } from '../medicine-delete/medicine-delete.component';
 import { MedicineEditComponent } from '../medicine-edit/medicine-edit.component';
 import { MedicineViewComponent } from '../medicine-view/medicine-view.component';
+import {ReservationService} from '../../../../service/business/reservation.service';
+import {Reservation} from '../../../../model/business/reservation';
+import {ReservationAddComponent} from '../../reservation/reservation-add/reservation-add.component';
 
 @Component({
   selector: 'app-medicine-table-view',
@@ -20,13 +23,14 @@ export class MedicineTableViewComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  medicine: Medicine[];
   dataSource: MatTableDataSource<any>;
   @Input() data: Medicine[];
   columns = ['name', 'manufacturer', 'code', 'type', 'form', 'prescriptionNecessary', 'sideEffects', 'recommendedDose'];
-  actions = ['view', 'edit', 'delete'];
+  actions = ['view', 'edit', 'delete', 'reserve'];
   displayedColumns = [...this.columns, ...this.actions];
-  constructor(private medicineService: MedicineService, private router: Router, private dialog: MatDialog) {}
+  constructor(private medicineService: MedicineService, private router: Router, private dialog: MatDialog,
+              private reservationService: ReservationService) {}
   ngOnInit() {
     this.medicineService.findAll().subscribe(
       data => {
@@ -44,7 +48,7 @@ export class MedicineTableViewComponent implements OnInit {
         window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
         this.router.navigateByUrl('');
       }
-    )
+    );
   }
 
   applyFilter(value: any) {
@@ -82,6 +86,29 @@ export class MedicineTableViewComponent implements OnInit {
     this.dialog.open(MedicineDeleteComponent, {
       data: input
     });
+  }
+  reserve(input: Medicine) {
+    const r = new Reservation();
+    const dialogRef = this.dialog.open(ReservationAddComponent);
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if (result.pharmacy !== undefined && result.pharmacy !== null) {
+          console.log(result);
+          r.pharmacy = result.pharmacy;
+        }
+      }
+    );
+    r.medicine = input;
+    r.collected = false;
+    r.pharmacy = null;
+    r.reservationDate = new Date();
+    this.reservationService.reserve(r).subscribe(
+      data => {
+        window.alert('Rezervacija je uspela!');
+      }, error => {
+        window.alert('Rezervacija nije uspela!');
+      }
+    );
   }
 
 }
