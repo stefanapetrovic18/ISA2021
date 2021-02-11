@@ -143,6 +143,7 @@ import {OfferAddComponent} from './components/business/offer/offer-add/offer-add
 import {OfferDeleteComponent} from './components/business/offer/offer-delete/offer-delete.component';
 import {OfferViewComponent} from './components/business/offer/offer-view/offer-view.component';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -313,7 +314,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatSidenavModule,
     MatCardModule,
     MatStepperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatChipsModule
   ],
   providers: [
     {

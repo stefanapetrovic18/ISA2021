@@ -1,3 +1,69 @@
-<p>
-  medicine-add works!
-</p>
+<h1 mat-dialog-title>Dodaj lek</h1>
+<div mat-dialog-content>
+  <p>Naziv</p>
+  <mat-form-field>
+    <mat-label>Naziv</mat-label>
+    <input [(ngModel)]="data.name" matInput placeholder="Naziv" type="text"/>
+  </mat-form-field>
+  <p>Proizvođač</p>
+  <mat-form-field>
+    <mat-label>Proizvođač</mat-label>
+    <input [(ngModel)]="data.manufacturer" matInput placeholder="Proizvođač" type="text"/>
+  </mat-form-field>
+  <p>Kod</p>
+  <mat-form-field>
+    <mat-label>Kod</mat-label>
+    <input [(ngModel)]="data.code" matInput placeholder="Kod" type="text"/>
+  </mat-form-field>
+  <p>Tip</p>
+  <mat-form-field>
+    <mat-label>Tip</mat-label>
+    <input [(ngModel)]="data.type" matInput placeholder="Tip" type="text"/>
+  </mat-form-field>
+  <p>Forma</p>
+  <mat-form-field>
+    <mat-label>Forma</mat-label>
+    <input [(ngModel)]="data.form" matInput placeholder="Forma" type="text"/>
+  </mat-form-field>
+  <p>Potreban recept</p>
+  <mat-label>Potreban recept</mat-label>
+  <mat-checkbox [(ngModel)]="data.prescriptionNecessary"></mat-checkbox>
+  <p>Kontraindikacije</p>
+  <mat-form-field>
+    <mat-label>Kontraindikacije</mat-label>
+    <input [(ngModel)]="data.sideEffects" matInput placeholder="Kontraindikacije" type="text"/>
+  </mat-form-field>
+  <p>Sastojci</p>
+  <mat-form-field class="medicine-chip-list">
+    <mat-label>Sastojci</mat-label>
+    <mat-chip-list #chipList aria-label="Sastojci">
+      <mat-chip *ngFor="let ing of data.ingredients" [selectable]="selectable"
+                [removable]="true" (removed)="remove(ing)">
+        {{ing}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input matInput placeholder="Sastojci"
+             [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             [matChipInputAddOnBlur]="addOnBlur"
+             (matChipInputTokenEnd)="push($event)">
+    </mat-chip-list>
+  </mat-form-field>
+  <p>Preporučena doza</p>
+  <mat-form-field>
+    <mat-label>Preporučena doza</mat-label>
+    <input [(ngModel)]="data.recommendedDose" matInput placeholder="Preporučena doza" type="text"/>
+  </mat-form-field>
+  <p>Zamenski lekovi</p>
+  <mat-form-field>
+    <mat-label>Zamenski lekovi</mat-label>
+    <mat-select [(value)]="data.substitutes" multiple>
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let med of medicine" [value]="med">{{med.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button (click)="add()" class="add-button" mat-button mat-raised-button>DODAJ</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>

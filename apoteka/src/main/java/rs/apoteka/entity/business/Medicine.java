@@ -33,7 +33,7 @@ public class Medicine {
     private List<String> ingredients;
     @Column(nullable = false)
     private String recommendedDose;
-    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Medicine.class)
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Medicine.class)
     private List<Medicine> substitutes;
 
     public Medicine() {
