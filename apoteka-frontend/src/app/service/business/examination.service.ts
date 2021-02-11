@@ -1,10 +1,10 @@
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Examination } from 'src/app/model/business/examination';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Examination} from 'src/app/model/business/examination';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -12,9 +12,10 @@ const httpOptions = {
 })
 export class ExaminationService {
 
-  constructor(private http: HttpClient) { }
-
   URL = 'http://localhost:8080/api/examination/';
+
+  constructor(private http: HttpClient) {
+  }
 
   // HTTP zahtevi.
 
@@ -32,22 +33,22 @@ export class ExaminationService {
 
   public getOne(id: number): Observable<Examination> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.get<Examination>(this.URL + 'search', { params });
+    return this.http.get<Examination>(this.URL + 'search', {params});
   }
 
   public findAllByPharmacy(id: number): Observable<Examination[]> {
     const params = new HttpParams().set('pharmacyID', id.toString());
-    return this.http.get<Examination[]>(this.URL + 'search', { params });
+    return this.http.get<Examination[]>(this.URL + 'search', {params});
   }
 
   public findAllByPatient(id: number): Observable<Examination[]> {
     const params = new HttpParams().set('patientID', id.toString());
-    return this.http.get<Examination[]>(this.URL + 'filter', { params });
+    return this.http.get<Examination[]>(this.URL + 'filter', {params});
   }
 
   public findAllByDermatologist(id: number): Observable<Examination[]> {
     const params = new HttpParams().set('dermatologistID', id.toString());
-    return this.http.get<Examination[]>(this.URL + 'filter', { params });
+    return this.http.get<Examination[]>(this.URL + 'filter', {params});
   }
 
   public create(examination: Examination): Observable<Examination> {
@@ -68,7 +69,7 @@ export class ExaminationService {
 
   public delete(id: number): Observable<boolean> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this.http.delete<boolean>(this.URL + 'delete', {params});
   }
 
 }

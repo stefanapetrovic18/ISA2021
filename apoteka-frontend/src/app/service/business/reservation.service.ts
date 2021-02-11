@@ -1,10 +1,10 @@
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Reservation } from 'src/app/model/business/reservation';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Reservation} from 'src/app/model/business/reservation';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -12,9 +12,10 @@ const httpOptions = {
 })
 export class ReservationService {
 
-  constructor(private http: HttpClient) { }
-
   URL = 'http://localhost:8080/api/reservation/';
+
+  constructor(private http: HttpClient) {
+  }
 
   // HTTP zahtevi.
 
@@ -24,7 +25,7 @@ export class ReservationService {
 
   public getOne(id: number): Observable<Reservation> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.get<Reservation>(this.URL + 'search', { params });
+    return this.http.get<Reservation>(this.URL + 'search', {params});
   }
 
   public create(reservation: Reservation): Observable<Reservation> {
@@ -37,7 +38,7 @@ export class ReservationService {
 
   public delete(id: number): Observable<boolean> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this.http.delete<boolean>(this.URL + 'delete', {params});
   }
 
 }

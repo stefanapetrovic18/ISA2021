@@ -1,6 +1,7 @@
 package rs.apoteka.controller.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class VacationRequestController {
     @GetMapping(value = "/filter")
     public ResponseEntity<List<VacationRequest>> findAllParametrized(
             @RequestParam(required = false) Long id,
-            @RequestParam(required = false) LocalDateTime vacationStart,
-            @RequestParam(required = false) LocalDateTime vacationEnd,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime vacationStart,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime vacationEnd,
             @RequestParam(required = false) Long pharmacyID,
             @RequestParam(required = false) Long employeeID,
             @RequestParam(required = false) Boolean accepted

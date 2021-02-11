@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Pharmacy } from 'src/app/model/business/pharmacy';
 import { PharmacyService } from 'src/app/service/business/pharmacy.service';
 import { PharmacyAddComponent } from '../pharmacy-add/pharmacy-add.component';
@@ -24,26 +24,55 @@ export class PharmacyTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   data: Pharmacy[];
   columns = ['name', 'address', 'rating'];
-  actions = ['view', 'edit', 'delete'];
+  actions = ['view', 'edit', 'delete', 'reserve consultation'];
   displayedColumns = [...this.columns, ...this.actions];
-  constructor(private pharmacyService: PharmacyService, private router: Router, private dialog: MatDialog) {}
+  constructor(private pharmacyService: PharmacyService, private router: Router, private dialog: MatDialog,
+              private route: ActivatedRoute) {}
   ngOnInit() {
-    this.pharmacyService.findAll().subscribe(
-      data => {
-        this.data = data;
-        console.log(data);
-        if (this.data !== undefined && this.data.length > 0) {
-          this.dataSource = new MatTableDataSource(this.data);
-          console.log(this.dataSource);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+    this.route.queryParamMap.subscribe(
+      params => {
+        console.log(params.get('localDateTime'));
+        if (params.get('localDateTime') !== undefined) {
+          // params.get('localDateTime'). = new Date();
+          console.log(params);
+          this.pharmacyService.findAllByPharmacistFreeAt(new Date(params.get('localDateTime'))).subscribe(
+            data => {
+              this.data = data;
+              console.log(data);
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              this.router.navigateByUrl('');
+            }
+          );
         } else {
-          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-          this.router.navigateByUrl('');
+          this.pharmacyService.findAll().subscribe(
+            data => {
+              this.data = data;
+              console.log(data);
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              this.router.navigateByUrl('');
+            }
+          );
         }
-      }, error => {
-        window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-        this.router.navigateByUrl('');
       }
     );
   }

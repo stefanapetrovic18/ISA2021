@@ -1,9 +1,7 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SupplierTableViewComponent } from './supplier-table-view.component';
+import {SupplierTableViewComponent} from './supplier-table-view.component';
 
 describe('SupplierTableViewComponent', () => {
   let component: SupplierTableViewComponent;
@@ -11,9 +9,9 @@ describe('SupplierTableViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SupplierTableViewComponent ]
+      declarations: [SupplierTableViewComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

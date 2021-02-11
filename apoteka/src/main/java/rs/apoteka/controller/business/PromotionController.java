@@ -1,6 +1,7 @@
 package rs.apoteka.controller.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class PromotionController {
     @GetMapping(value = "/filter")
     public ResponseEntity<List<Promotion>> findAllParametrized(
             @RequestParam(required = false) Long id,
-            @RequestParam(required = false) LocalDateTime startDate,
-            @RequestParam(required = false) LocalDateTime endDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
             @RequestParam(required = false) Long pharmacyID,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String description

@@ -1,12 +1,12 @@
-<mat-drawer-container class="table-container" autosize>
+<mat-drawer-container autosize class="table-container">
 
   <mat-drawer #drawer class="filter-sidenav" mode="side" position="end">
     <p>Filter pretraga</p>
-    <button class="filter-button" (click)="filter()" mat-raised-button>
+    <button (click)="filter()" class="filter-button" mat-raised-button>
       PRIMENI
       <mat-icon>filter_list</mat-icon>
     </button>
-    <button class="cancel-button" (click)="drawer.toggle()" mat-raised-button>
+    <button (click)="drawer.toggle()" class="cancel-button" mat-raised-button>
       ZATVORI
       <mat-icon>clear</mat-icon>
     </button>
@@ -14,24 +14,24 @@
 
   <mat-drawer-content class="page-content">
     <div class="table-header">
-      <mat-form-field class="search-input" *ngIf="dataSource">
+      <mat-form-field *ngIf="dataSource" class="search-input">
         <mat-label>
           <mat-icon>search</mat-icon>
           Pretraga
         </mat-label>
         <input
+          #input
           (keyup)="applyFilter($event.target.value)"
           matInput
           placeholder="Pretraga"
-          #input
         />
       </mat-form-field>
       <div class="action-buttons">
-        <button class="add-button" mat-raised-button (click)="add()">
+        <button (click)="add()" class="add-button" mat-raised-button>
           DODAJ
           <mat-icon>add</mat-icon>
         </button>
-        <button class="filter-button" mat-raised-button (click)="drawer.toggle()">
+        <button (click)="drawer.toggle()" class="filter-button" mat-raised-button>
           FILTER
           <mat-icon>filter_list</mat-icon>
         </button>
@@ -47,7 +47,7 @@
       <ng-container [matColumnDef]="'view'">
         <mat-header-cell *matHeaderCellDef>Info</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="info-button" mat-raised-button (click)="view(element)">
+          <button (click)="view(element)" class="info-button" mat-raised-button>
             INFO
             <mat-icon>info</mat-icon>
           </button>
@@ -56,7 +56,7 @@
       <ng-container [matColumnDef]="'edit'">
         <mat-header-cell *matHeaderCellDef>Izmeni</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="edit-button" mat-raised-button (click)="edit(element)">
+          <button (click)="edit(element)" class="edit-button" mat-raised-button>
             IZMENI
             <mat-icon>edit</mat-icon>
           </button>
@@ -65,7 +65,7 @@
       <ng-container [matColumnDef]="'delete'">
         <mat-header-cell *matHeaderCellDef>Ukloni</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="delete-button" mat-raised-button (click)="delete(element)">
+          <button (click)="delete(element)" class="delete-button" mat-raised-button>
             UKLONI
             <mat-icon>delete</mat-icon>
           </button>
@@ -77,7 +77,8 @@
 
       <mat-row *matNoDataRow>
         <mat-cell colspan="4"
-          >Nijedan podatak ne odgovara unetom parametru.</mat-cell
+        >Nijedan podatak ne odgovara unetom parametru.
+        </mat-cell
         >
       </mat-row>
     </mat-table>

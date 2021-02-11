@@ -1,19 +1,20 @@
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Patient } from 'src/app/model/user/patient';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Patient} from 'src/app/model/user/patient';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
-  constructor(private http: HttpClient) { }
-
   URL = 'http://localhost:8080/api/patient/';
+
+  constructor(private http: HttpClient) {
+  }
 
   // HTTP zahtevi.
 
@@ -23,7 +24,7 @@ export class PatientService {
 
   public getOne(id: number): Observable<Patient> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.get<Patient>(this.URL + 'search', { params });
+    return this.http.get<Patient>(this.URL + 'search', {params});
   }
 
   public create(patient: Patient): Observable<Patient> {
@@ -36,7 +37,7 @@ export class PatientService {
 
   public delete(id: number): Observable<boolean> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this.http.delete<boolean>(this.URL + 'delete', {params});
   }
 
 }

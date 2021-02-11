@@ -1,6 +1,7 @@
 package rs.apoteka.controller.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,9 @@ public class OrderController {
     public ResponseEntity<List<Order>> findAllParametrized(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) Long orderItemID,
-            @RequestParam(required = false) LocalDateTime expiryDate,
-            @RequestParam(required = false) LocalDateTime expiryDateFrom,
-            @RequestParam(required = false) LocalDateTime expiryDateUntil
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime expiryDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime expiryDateFrom,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime expiryDateUntil
     ) throws Exception {
         return new ResponseEntity<>(orderService.findAllParametrized(id, orderItemID, expiryDate, expiryDateFrom, expiryDateUntil), HttpStatus.OK);
     }

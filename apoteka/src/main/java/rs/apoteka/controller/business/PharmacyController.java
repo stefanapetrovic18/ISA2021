@@ -1,6 +1,7 @@
 package rs.apoteka.controller.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,7 @@ public class PharmacyController {
     }
 
     @GetMapping(value = "/free")
-    public ResponseEntity<List<Pharmacy>> findAllByPharmacistFreeAt(@RequestParam LocalDateTime localDateTime) throws Exception {
+    public ResponseEntity<List<Pharmacy>> findAllByPharmacistFreeAt(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime) throws Exception {
         return new ResponseEntity<>(pharmacyService.findAllByPharmacistFreeAt(localDateTime), HttpStatus.OK);
     }
 

@@ -27,11 +27,11 @@ export class ExaminationTableViewComponent implements OnInit {
   actions = ['view', 'edit', 'delete', 'reserve', 'cancel'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private examinationService: ExaminationService, private router: Router, private dialog: MatDialog,
-    private route: ActivatedRoute) {}
+              private route: ActivatedRoute) {}
   ngOnInit() {
-    this.route.queryParams.subscribe(
+    this.route.queryParamMap.subscribe(
       params => {
-        if (params['reserved'] !== undefined && params['reserved'] === false) {
+        if (params.get('reserved') !== undefined && params.get('reserved') === 'false') {
           this.examinationService.findAllFree().subscribe(
             data => {
               this.data = data;
@@ -49,7 +49,7 @@ export class ExaminationTableViewComponent implements OnInit {
               this.router.navigateByUrl('');
             }
           );
-        } else if (params['reserved'] !== undefined && params['reserved'] === true) {
+        } else if (params.get('reserved') !== undefined && params.get('reserved') === 'true') {
           this.examinationService.findAllReserved().subscribe(
             data => {
               this.data = data;
@@ -67,8 +67,8 @@ export class ExaminationTableViewComponent implements OnInit {
               this.router.navigateByUrl('');
             }
           );
-        } else if (params['pharmacyID'] !== undefined) {
-          this.examinationService.findAllByPharmacy(params['pharmacyID']).subscribe(
+        } else if (params.get('pharmacyID') !== undefined) {
+          this.examinationService.findAllByPharmacy(Number.parseInt(params.get('pharmacyID'))).subscribe(
             data => {
               this.data = data;
               if (this.data !== undefined && this.data.length > 0) {
@@ -85,8 +85,8 @@ export class ExaminationTableViewComponent implements OnInit {
               this.router.navigateByUrl('');
             }
           );
-        } else if (params['patientID'] !== undefined) {
-          this.examinationService.findAllByPatient(params['patientID']).subscribe(
+        } else if (params.get('patientID') !== undefined) {
+          this.examinationService.findAllByPatient(Number.parseInt(params.get('patientID'))).subscribe(
             data => {
               this.data = data;
               if (this.data !== undefined && this.data.length > 0) {
@@ -103,8 +103,8 @@ export class ExaminationTableViewComponent implements OnInit {
               this.router.navigateByUrl('');
             }
           );
-        } else if (params['dermatologistID'] !== undefined) {
-          this.examinationService.findAllByDermatologist(params['dermatologistID']).subscribe(
+        } else if (params.get('dermatologistID') !== undefined) {
+          this.examinationService.findAllByDermatologist(Number.parseInt(params.get('dermatologistID'))).subscribe(
             data => {
               this.data = data;
               if (this.data !== undefined && this.data.length > 0) {

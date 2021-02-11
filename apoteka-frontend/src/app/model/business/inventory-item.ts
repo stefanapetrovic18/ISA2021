@@ -1,4 +1,4 @@
-import { Medicine } from './medicine';
+import {Medicine} from './medicine';
 
 export class InventoryItem {
   id: number;

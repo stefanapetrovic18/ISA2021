@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/model/auth/user';
-import { Pharmacy } from 'src/app/model/business/pharmacy';
-import { Pharmacist } from 'src/app/model/user/pharmacist';
-import { PharmacyService } from 'src/app/service/business/pharmacy.service';
-import { PharmacistService } from 'src/app/service/user/pharmacist.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
+import {AuthService} from 'src/app/auth/auth.service';
+import {Pharmacy} from 'src/app/model/business/pharmacy';
+import {Pharmacist} from 'src/app/model/user/pharmacist';
+import {PharmacyService} from 'src/app/service/business/pharmacy.service';
+import {PharmacistService} from 'src/app/service/user/pharmacist.service';
 
 @Component({
   selector: 'app-pharmacist-add',
@@ -22,7 +21,8 @@ export class PharmacistAddComponent implements OnInit {
   repeatPassword = '';
 
   constructor(private pharmacistService: PharmacistService, private pharmacyService: PharmacyService,
-              private authService: AuthService, private dialogRef: MatDialogRef<PharmacistAddComponent>) { }
+              private authService: AuthService, private dialogRef: MatDialogRef<PharmacistAddComponent>) {
+  }
 
   ngOnInit() {
     this.pharmacyService.findAll().subscribe(

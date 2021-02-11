@@ -1,19 +1,20 @@
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { InventoryItem } from 'src/app/model/business/inventory-item';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {InventoryItem} from 'src/app/model/business/inventory-item';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryItemService {
-  constructor(private http: HttpClient) { }
-
   URL = 'http://localhost:8080/api/inventory-item/';
+
+  constructor(private http: HttpClient) {
+  }
 
   // HTTP zahtevi.
 
@@ -23,7 +24,7 @@ export class InventoryItemService {
 
   public getOne(id: number): Observable<InventoryItem> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.get<InventoryItem>(this.URL + 'search', { params });
+    return this.http.get<InventoryItem>(this.URL + 'search', {params});
   }
 
   public create(inventoryItem: InventoryItem): Observable<InventoryItem> {
@@ -36,7 +37,7 @@ export class InventoryItemService {
 
   public delete(id: number): Observable<boolean> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this.http.delete<boolean>(this.URL + 'delete', {params});
   }
 
 }

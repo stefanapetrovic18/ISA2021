@@ -1,5 +1,5 @@
-import { DayOfWeek } from "./day-of-week";
-import { Pharmacy } from "./pharmacy";
+import {DayOfWeek} from './day-of-week';
+import {Pharmacy} from './pharmacy';
 
 export class WorkingHours {
   id: number;

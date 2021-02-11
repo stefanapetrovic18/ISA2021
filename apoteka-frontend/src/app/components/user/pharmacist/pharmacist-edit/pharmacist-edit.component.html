@@ -18,6 +18,6 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button mat-raised-button class="add-button" (click)="edit()">IZMENI</button>
-  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
+  <button (click)="edit()" class="add-button" mat-button mat-raised-button>IZMENI</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
 </div>

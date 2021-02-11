@@ -1,6 +1,7 @@
 package rs.apoteka.controller.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class ConsultationController {
     @GetMapping(value = "/filter")
     public ResponseEntity<List<Consultation>> findAllParametrized(
             @RequestParam(required = false) Long id,
-            @RequestParam(required = false) LocalDateTime consultationDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime consultationDate,
             @RequestParam(required = false) Long pharmacistID,
             @RequestParam(required = false) Long pharmacyID,
             @RequestParam(required = false) Long patientID,

@@ -1,11 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/model/auth/user';
-import { Pharmacy } from 'src/app/model/business/pharmacy';
-import { Dermatologist } from 'src/app/model/user/dermatologist';
-import { PharmacyService } from 'src/app/service/business/pharmacy.service';
-import { DermatologistService } from 'src/app/service/user/dermatologist.service';
+import {AuthService} from 'src/app/auth/auth.service';
+import {Pharmacy} from 'src/app/model/business/pharmacy';
+import {Dermatologist} from 'src/app/model/user/dermatologist';
+import {PharmacyService} from 'src/app/service/business/pharmacy.service';
+import {DermatologistService} from 'src/app/service/user/dermatologist.service';
 
 @Component({
   selector: 'app-dermatologist-edit',
@@ -22,7 +21,8 @@ export class DermatologistEditComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dermatologistService: DermatologistService,
               private pharmacyService: PharmacyService, private authService: AuthService,
-              private dialogRef: MatDialogRef<DermatologistEditComponent>) { }
+              private dialogRef: MatDialogRef<DermatologistEditComponent>) {
+  }
 
   ngOnInit() {
     this.dermatologistService.findAll().subscribe(

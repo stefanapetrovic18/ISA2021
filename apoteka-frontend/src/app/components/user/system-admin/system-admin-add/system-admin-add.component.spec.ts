@@ -1,9 +1,7 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SystemAdminAddComponent } from './system-admin-add.component';
+import {SystemAdminAddComponent} from './system-admin-add.component';
 
 describe('SystemAdminAddComponent', () => {
   let component: SystemAdminAddComponent;
@@ -11,9 +9,9 @@ describe('SystemAdminAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SystemAdminAddComponent ]
+      declarations: [SystemAdminAddComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

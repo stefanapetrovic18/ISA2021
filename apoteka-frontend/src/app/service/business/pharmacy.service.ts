@@ -1,19 +1,20 @@
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Pharmacy } from 'src/app/model/business/pharmacy';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Pharmacy} from 'src/app/model/business/pharmacy';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class PharmacyService {
-  constructor(private http: HttpClient) { }
-
   URL = 'http://localhost:8080/api/pharmacy/';
+
+  constructor(private http: HttpClient) {
+  }
 
   // HTTP zahtevi.
 
@@ -23,7 +24,12 @@ export class PharmacyService {
 
   public getOne(id: number): Observable<Pharmacy> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.get<Pharmacy>(this.URL + 'search', { params });
+    return this.http.get<Pharmacy>(this.URL + 'search', {params});
+  }
+
+  public findAllByPharmacistFreeAt(localDateTime: Date): Observable<Pharmacy[]> {
+    const params = new HttpParams().set('localDateTime', localDateTime.toISOString());
+    return this.http.get<Pharmacy[]>(this.URL + 'free', {params});
   }
 
   public create(pharmacy: Pharmacy): Observable<Pharmacy> {
@@ -36,7 +42,7 @@ export class PharmacyService {
 
   public delete(id: number): Observable<boolean> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this.http.delete<boolean>(this.URL + 'delete', {params});
   }
 
 }

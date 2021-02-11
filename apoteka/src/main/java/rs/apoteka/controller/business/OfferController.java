@@ -1,6 +1,7 @@
 package rs.apoteka.controller.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +32,9 @@ public class OfferController {
     public ResponseEntity<List<Offer>> findAllParametrized(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) Long orderID,
-            @RequestParam(required = false) LocalDateTime shippingDate,
-            @RequestParam(required = false) LocalDateTime shippingDateFrom,
-            @RequestParam(required = false) LocalDateTime shippingDateUntil
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDateFrom,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDateUntil
     ) throws Exception {
         return new ResponseEntity<>(offerService.findAllParametrized(id, orderID, shippingDate, shippingDateFrom, shippingDateUntil), HttpStatus.OK);
     }

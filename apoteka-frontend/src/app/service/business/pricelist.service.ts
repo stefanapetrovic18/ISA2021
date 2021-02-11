@@ -1,10 +1,10 @@
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Pricelist } from 'src/app/model/business/pricelist';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Pricelist} from 'src/app/model/business/pricelist';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -12,9 +12,10 @@ const httpOptions = {
 })
 export class PricelistService {
 
-  constructor(private http: HttpClient) { }
-
   URL = 'http://localhost:8080/api/pricelist/';
+
+  constructor(private http: HttpClient) {
+  }
 
   // HTTP zahtevi.
 
@@ -24,7 +25,7 @@ export class PricelistService {
 
   public getOne(id: number): Observable<Pricelist> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.get<Pricelist>(this.URL + 'search', { params });
+    return this.http.get<Pricelist>(this.URL + 'search', {params});
   }
 
   public create(pricelist: Pricelist): Observable<Pricelist> {
@@ -37,7 +38,7 @@ export class PricelistService {
 
   public delete(id: number): Observable<boolean> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this.http.delete<boolean>(this.URL + 'delete', {params});
   }
 
 }

@@ -1,9 +1,7 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PatientViewComponent } from './patient-view.component';
+import {PatientViewComponent} from './patient-view.component';
 
 describe('PatientViewComponent', () => {
   let component: PatientViewComponent;
@@ -11,9 +9,9 @@ describe('PatientViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PatientViewComponent ]
+      declarations: [PatientViewComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

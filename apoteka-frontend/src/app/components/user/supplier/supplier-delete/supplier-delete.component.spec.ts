@@ -1,9 +1,7 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SupplierDeleteComponent } from './supplier-delete.component';
+import {SupplierDeleteComponent} from './supplier-delete.component';
 
 describe('SupplierDeleteComponent', () => {
   let component: SupplierDeleteComponent;
@@ -11,9 +9,9 @@ describe('SupplierDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SupplierDeleteComponent ]
+      declarations: [SupplierDeleteComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

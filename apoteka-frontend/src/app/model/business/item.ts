@@ -1,5 +1,5 @@
-import { Medicine } from './medicine';
-import { Pricelist } from './pricelist';
+import {Medicine} from './medicine';
+import {Pricelist} from './pricelist';
 
 export class Item {
   id: number;

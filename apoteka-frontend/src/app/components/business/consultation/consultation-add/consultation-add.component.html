@@ -1,3 +1,12 @@
-<p>
-  consultation-add works!
-</p>
+<h1 mat-dialog-title>Rezerviši konsultaciju</h1>
+<div mat-dialog-content>
+  <p>Datum i vreme</p>
+  <mat-form-field>
+    <mat-label>Datum i vreme</mat-label>
+    <input matInput type="datetime" [(ngModel)]="date" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-raised-button class="add-button" (click)="search()">PRETRAŽI</button>
+  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
+</div>

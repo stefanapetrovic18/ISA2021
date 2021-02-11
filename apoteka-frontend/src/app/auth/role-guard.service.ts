@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { TokenStorageService } from './token-storage.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
+import {TokenStorageService} from './token-storage.service';
 
 const TOKEN_KEY = 'AuthToken';
 const AUTHORITIES_KEY = 'AuthAuthorities';
@@ -10,7 +10,9 @@ const AUTHORITIES_KEY = 'AuthAuthorities';
 })
 export class RoleGuardService implements CanActivate {
 
-  constructor(public router: Router, public token: TokenStorageService) { }
+  constructor(public router: Router, public token: TokenStorageService) {
+  }
+
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRole = route.data.expectedRole;
     const token = this.token.getToken();

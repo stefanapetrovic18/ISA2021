@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoginRequest } from './login-request';
-import { Observable } from 'rxjs';
-import { JwtResponse } from './jwt-response';
-import { RegistrationRequest } from './registration-request';
-import { PasswordChangeRequest } from './password-change-request';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {LoginRequest} from './login-request';
+import {Observable} from 'rxjs';
+import {JwtResponse} from './jwt-response';
+import {RegistrationRequest} from './registration-request';
+import {PasswordChangeRequest} from './password-change-request';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,8 @@ export class AuthService {
   private changePasswordURL = 'http://localhost:8080/api/user/change-password';
   private getUsersWithoutTypeURL = 'http://localhost:8080/api/user/get/without-type';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   attemptAuth(credentials: LoginRequest): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(this.signinURL, credentials, httpOptions);

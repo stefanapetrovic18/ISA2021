@@ -1,4 +1,4 @@
-import { Pharmacy } from "./pharmacy";
+import {Pharmacy} from './pharmacy';
 
 export class Promotion {
   id: number;

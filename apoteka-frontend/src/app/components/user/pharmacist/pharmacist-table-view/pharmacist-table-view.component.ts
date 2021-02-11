@@ -1,15 +1,15 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { Pharmacist } from 'src/app/model/user/pharmacist';
-import { PharmacistService } from 'src/app/service/user/pharmacist.service';
-import { PharmacistAddComponent } from '../pharmacist-add/pharmacist-add.component';
-import { PharmacistDeleteComponent } from '../pharmacist-delete/pharmacist-delete.component';
-import { PharmacistEditComponent } from '../pharmacist-edit/pharmacist-edit.component';
-import { PharmacistViewComponent } from '../pharmacist-view/pharmacist-view.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {Router} from '@angular/router';
+import {Pharmacist} from 'src/app/model/user/pharmacist';
+import {PharmacistService} from 'src/app/service/user/pharmacist.service';
+import {PharmacistAddComponent} from '../pharmacist-add/pharmacist-add.component';
+import {PharmacistDeleteComponent} from '../pharmacist-delete/pharmacist-delete.component';
+import {PharmacistEditComponent} from '../pharmacist-edit/pharmacist-edit.component';
+import {PharmacistViewComponent} from '../pharmacist-view/pharmacist-view.component';
 
 @Component({
   selector: 'app-pharmacist-table-view',
@@ -26,7 +26,10 @@ export class PharmacistTableViewComponent implements OnInit {
   columns = ['username', 'forename', 'surname', 'rating'];
   actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
-  constructor(private pharmacistService: PharmacistService, private router: Router, private dialog: MatDialog) {}
+
+  constructor(private pharmacistService: PharmacistService, private router: Router, private dialog: MatDialog) {
+  }
+
   ngOnInit() {
     this.pharmacistService.findAll().subscribe(
       data => {

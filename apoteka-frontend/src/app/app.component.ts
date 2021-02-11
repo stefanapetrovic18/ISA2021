@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
       this.user = true;
       this.router.navigateByUrl('dashboard/dobavljac');
     } else {
-      this.router.navigateByUrl('dashboard/visitor');
+      // this.router.navigateByUrl('dashboard/visitor');
     }
   }
 }

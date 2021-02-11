@@ -1,10 +1,10 @@
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Order } from 'src/app/model/business/order';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Order} from 'src/app/model/business/order';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -12,9 +12,10 @@ const httpOptions = {
 })
 export class OrderService {
 
-  constructor(private http: HttpClient) { }
-
   URL = 'http://localhost:8080/api/order/';
+
+  constructor(private http: HttpClient) {
+  }
 
   // HTTP zahtevi.
 
@@ -24,7 +25,7 @@ export class OrderService {
 
   public getOne(id: number): Observable<Order> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.get<Order>(this.URL + 'search', { params });
+    return this.http.get<Order>(this.URL + 'search', {params});
   }
 
   public create(order: Order): Observable<Order> {
@@ -37,7 +38,7 @@ export class OrderService {
 
   public delete(id: number): Observable<boolean> {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.delete<boolean>(this.URL + 'delete', { params });
+    return this.http.delete<boolean>(this.URL + 'delete', {params});
   }
 
 }

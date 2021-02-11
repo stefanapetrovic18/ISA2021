@@ -1,6 +1,7 @@
 package rs.apoteka.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class PharmacistController {
     }
 
     @GetMapping(value = "/free")
-    public ResponseEntity<List<Pharmacist>> findAllByPharmacistFreeAt(@RequestParam Long pharmacyID, @RequestParam LocalDateTime localDateTime) throws Exception {
+    public ResponseEntity<List<Pharmacist>> findAllByPharmacistFreeAt(@RequestParam Long pharmacyID, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime) throws Exception {
         return new ResponseEntity<>(pharmacistService.findAllByPharmacistFreeAt(pharmacyID, localDateTime), HttpStatus.OK);
     }
 
@@ -37,8 +38,8 @@ public class PharmacistController {
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) Long workingHoursID,
             @RequestParam(required = false) Long pharmacyID,
-            @RequestParam(required = false) LocalDateTime vacationStart,
-            @RequestParam(required = false) LocalDateTime vacationEnd,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime vacationStart,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime vacationEnd,
             @RequestParam(required = false) Long consultationID,
             @RequestParam(required = false) Double rating,
             @RequestParam(required = false) Double ratingFrom,

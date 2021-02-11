@@ -1,6 +1,6 @@
-import { Patient } from "../user/patient";
-import { Pharmacist } from "../user/pharmacist";
-import { Pharmacy } from "./pharmacy";
+import {Patient} from '../user/patient';
+import {Pharmacist} from '../user/pharmacist';
+import {Pharmacy} from './pharmacy';
 
 export class Consultation {
   id: number;
