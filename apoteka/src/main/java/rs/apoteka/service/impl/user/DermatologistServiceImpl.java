@@ -2,10 +2,13 @@ package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
+import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.user.DermatologistRepository;
+import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.user.DermatologistService;
 
 import java.time.LocalDateTime;

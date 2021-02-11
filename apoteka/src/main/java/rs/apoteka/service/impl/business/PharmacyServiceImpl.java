@@ -2,11 +2,15 @@ package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.business.PharmacyRepository;
 import rs.apoteka.service.intf.business.PharmacyService;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,6 +69,23 @@ public class PharmacyServiceImpl implements PharmacyService {
         }
         if (ratingTo != null) {
             pharmacies.removeIf(p -> p.getRating() > ratingTo);
+        }
+        return pharmacies;
+    }
+
+    @Override
+    public List<Pharmacy> findAllByPharmacistFreeAt(LocalDateTime localDateTime) {
+        List<Pharmacy> pharmacies = new ArrayList<>();
+        for (Pharmacy p: findAll()) {
+            for (Pharmacist ph: p.getPharmacists()) {
+                for (Consultation c: ph.getConsultations()) {
+                    if (c.getConsultationDate().plusMinutes(c.getDuration()).isBefore(localDateTime)
+                            ||
+                            c.getConsultationDate().isAfter(localDateTime)) {
+                        pharmacies.add(p);
+                    }
+                }
+            }
         }
         return pharmacies;
     }

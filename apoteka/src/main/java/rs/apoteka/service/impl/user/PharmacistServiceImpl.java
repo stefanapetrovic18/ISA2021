@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import rs.apoteka.entity.auth.Role;
 import rs.apoteka.entity.auth.RoleType;
 import rs.apoteka.entity.auth.User;
+import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
@@ -15,6 +16,7 @@ import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.user.PharmacistService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +39,25 @@ public class PharmacistServiceImpl implements PharmacistService {
     @Override
     public List<Pharmacist> findAllUnemployed() {
         return findAll().stream().filter(p -> p.getPharmacy() == null).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Pharmacist> findAllByPharmacistFreeAt(Long pharmacyID, LocalDateTime localDateTime) {
+        List<Pharmacist> pharmacists = new ArrayList<>();
+        for (Pharmacy p: pharmacyService.findAllByPharmacistFreeAt(localDateTime)) {
+            for (Pharmacist ph: p.getPharmacists()) {
+                for (Consultation c: ph.getConsultations()) {
+                    if ((c.getConsultationDate().plusMinutes(c.getDuration()).isBefore(localDateTime)
+                            ||
+                            c.getConsultationDate().isAfter(localDateTime))
+                            &&
+                            p.getId().equals(pharmacyID)) {
+                        pharmacists.add(ph);
+                    }
+                }
+            }
+        }
+        return pharmacists;
     }
 
     @Override
