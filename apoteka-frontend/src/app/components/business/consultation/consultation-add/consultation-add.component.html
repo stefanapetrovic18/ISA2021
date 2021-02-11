@@ -1,12 +1,112 @@
-<h1 mat-dialog-title>Rezerviši konsultaciju</h1>
-<div mat-dialog-content>
-  <p>Datum i vreme</p>
-  <mat-form-field>
-    <mat-label>Datum i vreme</mat-label>
-    <input matInput type="datetime" [(ngModel)]="date" required>
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button mat-raised-button class="add-button" (click)="search()">PRETRAŽI</button>
-  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>
-</div>
+<!--<h1 mat-dialog-title>Rezerviši konsultaciju</h1>-->
+<!--<div mat-dialog-content>-->
+<!--  <p>Datum i vreme</p>-->
+<!--  <mat-form-field>-->
+<!--    <mat-label>Datum i vreme</mat-label>-->
+<!--    <input matInput type="datetime" [(ngModel)]="date" required>-->
+<!--  </mat-form-field>-->
+<!--</div>-->
+<!--<div mat-dialog-actions>-->
+<!--  <button mat-button mat-raised-button class="add-button" (click)="search()">PRETRAŽI</button>-->
+<!--  <button mat-button mat-raised-button class="cancel-button" (click)="close()" cdkFocusInitial>ZATVORI</button>-->
+<!--</div>-->
+
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="firstFormGroup" [editable]="true">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Datum pregleda</ng-template>
+      <p>Datum pregleda</p>
+      <mat-form-field>
+        <mat-label>Datum pregleda</mat-label>
+        <input [(ngModel)]="date" matInput type="datetime-local" formControlName="firstCtrl" placeholder="Datum i vreme konsultacije" required>
+      </mat-form-field>
+      <p>Trajanje pregleda</p>
+      <mat-form-field>
+        <mat-label>Trajanje pregleda (u minutama)</mat-label>
+        <input [(ngModel)]="duration" matInput type="number" formControlName="fourthCtrl" placeholder="Trajanje pregleda (u minutama)" required>
+      </mat-form-field>
+      <div>
+        <button mat-button (click)="getPharmacies()" matStepperNext [disabled]="date === null">Napred</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" [editable]="false">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Apoteka</ng-template>
+      <mat-table *ngIf="pharmacyDataSource" [dataSource]="pharmacyDataSource" matSort>
+        <ng-container *ngFor="let column of pharmacyColumns" [matColumnDef]="column">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</mat-header-cell>
+          <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>
+        </ng-container>
+        <ng-container [matColumnDef]="'price'">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Cena</mat-header-cell>
+          <mat-cell *matCellDef="let object">{{ object['pricelist'].consultationPrice }}</mat-cell>
+        </ng-container>
+        <ng-container [matColumnDef]="'odaberi'">
+          <mat-header-cell *matHeaderCellDef>Odaberi</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button *ngIf="pharmacyID === undefined || pharmacyID !== element.id" class="add-button" mat-raised-button (click)="setPharmacy(element)"
+            [disabled]="pharmacyID !== undefined">
+              ODABERI
+              <mat-icon>add</mat-icon>
+            </button>
+            <button *ngIf="pharmacyID !== undefined && pharmacyID == element.id" class="delete-button" mat-raised-button (click)="unsetPharmacy()">
+              PONIŠTI
+              <mat-icon>remove_done</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="pharmacyDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: pharmacyDisplayedColumns"></mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <div>
+        <button mat-button matStepperPrevious>Nazad</button>
+        <button (click)="getPharmacists()" mat-button matStepperNext [disabled]="pharmacy === undefined">Napred</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup" [editable]="false">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template matStepLabel>Farmaceut</ng-template>
+      <mat-table *ngIf="pharmacistDataSource" [dataSource]="pharmacistDataSource" matSort>
+        <ng-container *ngFor="let column of pharmacistColumns" [matColumnDef]="column">
+          <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+          <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>
+        </ng-container>
+        <ng-container [matColumnDef]="'odaberi'">
+          <mat-header-cell *matHeaderCellDef>Odaberi</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button *ngIf="pharmacyID === undefined || pharmacyID !== element.id" class="add-button" mat-raised-button (click)="setPharmacist(element)"
+                    [disabled]="pharmacyID !== undefined">
+              ODABERI
+              <mat-icon>add</mat-icon>
+            </button>
+            <button *ngIf="pharmacyID !== undefined && pharmacyID == element.id" class="delete-button" mat-raised-button (click)="unsetPharmacist()">
+              PONIŠTI
+              <mat-icon>remove_done</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="pharmacistDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: pharmacistDisplayedColumns"></mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <div>
+        <button mat-button matStepperPrevious>Nazad</button>
+        <button mat-button matStepperNext [disabled]="pharmacist === undefined">Napred</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Potvrda</ng-template>
+    <p>Potvrdite zakazivanje</p>
+    <div>
+      <button mat-button (click)="reserve()">Rezerviši</button>
+      <button mat-button matStepperPrevious>Nazad</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

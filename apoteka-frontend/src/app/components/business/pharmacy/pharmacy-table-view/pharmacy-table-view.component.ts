@@ -23,8 +23,9 @@ export class PharmacyTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   data: Pharmacy[];
+  date: Date;
   columns = ['name', 'address', 'rating'];
-  actions = ['view', 'edit', 'delete', 'reserve consultation'];
+  actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pharmacyService: PharmacyService, private router: Router, private dialog: MatDialog,
               private route: ActivatedRoute) {}
@@ -32,10 +33,11 @@ export class PharmacyTableViewComponent implements OnInit {
     this.route.queryParamMap.subscribe(
       params => {
         console.log(params.get('localDateTime'));
-        if (params.get('localDateTime') !== undefined) {
-          // params.get('localDateTime'). = new Date();
-          console.log(params);
-          this.pharmacyService.findAllByPharmacistFreeAt(new Date(params.get('localDateTime'))).subscribe(
+        if (params.get('localDateTime') !== undefined && params.get('localDateTime')) {
+          this.actions = ['reserve consultation'];
+          this.displayedColumns = [...this.columns, ...this.actions];
+          this.date = new Date(params.get('localDateTime'));
+          this.pharmacyService.findAllByPharmacistFreeAt(this.date).subscribe(
             data => {
               this.data = data;
               console.log(data);
@@ -46,11 +48,11 @@ export class PharmacyTableViewComponent implements OnInit {
                 this.dataSource.sort = this.sort;
               } else {
                 window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-                this.router.navigateByUrl('');
+                // this.router.navigateByUrl('');
               }
             }, error => {
               window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-              this.router.navigateByUrl('');
+              // this.router.navigateByUrl('');
             }
           );
         } else {
@@ -65,11 +67,11 @@ export class PharmacyTableViewComponent implements OnInit {
                 this.dataSource.sort = this.sort;
               } else {
                 window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-                this.router.navigateByUrl('');
+                // this.router.navigateByUrl('');
               }
             }, error => {
               window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-              this.router.navigateByUrl('');
+              // this.router.navigateByUrl('');
             }
           );
         }
@@ -105,7 +107,7 @@ export class PharmacyTableViewComponent implements OnInit {
       //     )
       //   }
       // }
-    )
+    );
     this.ngOnInit();
   }
 
@@ -125,6 +127,9 @@ export class PharmacyTableViewComponent implements OnInit {
     this.dialog.open(PharmacyDeleteComponent, {
       data: input
     });
+  }
+  reserve(input: Pharmacy) {
+    this.router.navigateByUrl('farmaceut?pharmacyID=' + input.id + '&localDateTime=' + this.date);
   }
 
 }

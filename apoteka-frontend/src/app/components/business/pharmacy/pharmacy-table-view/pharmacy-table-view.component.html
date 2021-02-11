@@ -71,6 +71,15 @@
           </button>
         </mat-cell>
       </ng-container>
+      <ng-container [matColumnDef]="'rezervisi konsultaciju'">
+        <mat-header-cell *matHeaderCellDef>Rezerviši konsultaciju</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button class="delete-button" mat-raised-button (click)="reserve(element)">
+            REZERVIŠI
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

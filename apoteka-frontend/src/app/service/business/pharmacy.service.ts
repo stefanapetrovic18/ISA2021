@@ -28,7 +28,7 @@ export class PharmacyService {
   }
 
   public findAllByPharmacistFreeAt(localDateTime: Date): Observable<Pharmacy[]> {
-    const params = new HttpParams().set('localDateTime', localDateTime.toISOString());
+    const params = new HttpParams().set('localDateTime', new Date(localDateTime).toISOString());
     return this.http.get<Pharmacy[]>(this.URL + 'free', {params});
   }
 

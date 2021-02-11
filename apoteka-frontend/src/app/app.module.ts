@@ -8,7 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
@@ -142,6 +142,7 @@ import {OfferEditComponent} from './components/business/offer/offer-edit/offer-e
 import {OfferAddComponent} from './components/business/offer/offer-add/offer-add.component';
 import {OfferDeleteComponent} from './components/business/offer/offer-delete/offer-delete.component';
 import {OfferViewComponent} from './components/business/offer/offer-view/offer-view.component';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -310,7 +311,9 @@ import {OfferViewComponent} from './components/business/offer/offer-view/offer-v
     MatCheckboxModule,
     MatButtonToggleModule,
     MatSidenavModule,
-    MatCardModule
+    MatCardModule,
+    MatStepperModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

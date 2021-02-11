@@ -13,6 +13,10 @@ public class Pricelist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
+    private Double consultationPrice;
+    @Column(nullable = false)
+    private Double examinationPrice;
+    @Column(nullable = false)
     private LocalDateTime validFrom;
     @Column(nullable = false)
     private LocalDateTime validUntil;
@@ -30,6 +34,22 @@ public class Pricelist {
 
     public Long getId() {
         return id;
+    }
+
+    public Double getConsultationPrice() {
+        return consultationPrice;
+    }
+
+    public void setConsultationPrice(Double consultationPrice) {
+        this.consultationPrice = consultationPrice;
+    }
+
+    public Double getExaminationPrice() {
+        return examinationPrice;
+    }
+
+    public void setExaminationPrice(Double examinationPrice) {
+        this.examinationPrice = examinationPrice;
     }
 
     public LocalDateTime getValidFrom() {

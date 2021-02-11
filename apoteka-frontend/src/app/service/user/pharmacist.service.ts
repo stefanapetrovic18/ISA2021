@@ -32,6 +32,11 @@ export class PharmacistService {
     return this.http.get<Pharmacist>(this.URL + 'search', {params});
   }
 
+  public findAllByPharmacistFreeAt(pharmacyID: number, localDateTime: Date): Observable<Pharmacist[]> {
+    const params = new HttpParams().set('pharmacyID', pharmacyID.toString()).append('localDateTime', new Date(localDateTime).toISOString());
+    return this.http.get<Pharmacist[]>(this.URL + 'free', {params});
+  }
+
   public create(pharmacist: Pharmacist): Observable<Pharmacist> {
     return this.http.post<Pharmacist>(this.URL + 'create', pharmacist, httpOptions);
   }

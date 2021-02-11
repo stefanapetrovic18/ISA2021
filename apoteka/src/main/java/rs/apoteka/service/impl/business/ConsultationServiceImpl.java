@@ -101,6 +101,7 @@ public class ConsultationServiceImpl implements ConsultationService {
             return null;
         }
         consultation.setPatient(patient);
+        consultation.setPrice(consultation.getPharmacy().getPricelist().getConsultationPrice());
         Consultation c = update(consultation);
         patient.getConsultations().add(c);
         patientService.update(patient);
