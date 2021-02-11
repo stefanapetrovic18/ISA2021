@@ -1,6 +1,7 @@
 package rs.apoteka.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.Role;
@@ -26,6 +27,7 @@ public class Dermatologist extends User {
     private LocalDateTime vacationEnd;
     @ManyToMany
     private List<Pharmacy> pharmacies;
+    @JsonIgnore
     @OneToMany(mappedBy = "dermatologist", cascade = CascadeType.ALL)
     private List<Examination> appointments;
     @Column

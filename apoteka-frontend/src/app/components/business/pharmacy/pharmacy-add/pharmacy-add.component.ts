@@ -20,7 +20,7 @@ export class PharmacyAddComponent implements OnInit {
   dermatologists: Dermatologist[];
 
   constructor(private pharmacyService: PharmacyService, private pharmacistService: PharmacistService,
-    private dermatologistService: DermatologistService, private dialogRef: MatDialogRef<PharmacyAddComponent>) { }
+              private dermatologistService: DermatologistService, private dialogRef: MatDialogRef<PharmacyAddComponent>) { }
 
   ngOnInit() {
     this.pharmacistService.findAllUnemployed().subscribe(
@@ -32,19 +32,19 @@ export class PharmacyAddComponent implements OnInit {
       data => {
         this.dermatologists = data;
       }
-    )
+    );
   }
 
   add() {
     this.pharmacyService.create(this.data).subscribe(
       data => {
-        window.alert("Uspešno kreiranje!");
+        window.alert('Uspešno kreiranje!');
         this.output = data;
         this.dialogRef.close();
       }, error => {
-        window.alert("Neuspešno kreiranje ->" + error.message);
+        window.alert('Neuspešno kreiranje ->' + error.message);
       }
-    )
+    );
   }
 
   close() {

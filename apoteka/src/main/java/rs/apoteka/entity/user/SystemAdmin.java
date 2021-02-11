@@ -14,6 +14,9 @@ import java.util.HashSet;
 @Table
 public class SystemAdmin extends User {
 
+    public SystemAdmin() {
+    }
+
     public SystemAdmin(RegistrationRequest request) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         this.setUsername(request.getUsername());
