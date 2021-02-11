@@ -18,10 +18,10 @@ import java.util.List;
 @Entity
 @Table
 public class Dermatologist extends User {
-    @Column(nullable = false)
+    @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime vacationStart;
-    @Column(nullable = false)
+    @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime vacationEnd;
     @ManyToMany

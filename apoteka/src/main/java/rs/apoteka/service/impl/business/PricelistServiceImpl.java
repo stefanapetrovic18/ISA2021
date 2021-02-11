@@ -3,8 +3,12 @@ package rs.apoteka.service.impl.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Pricelist;
+import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.PricelistRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
+import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.business.PricelistService;
+import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +18,12 @@ import java.util.stream.Collectors;
 public class PricelistServiceImpl implements PricelistService {
     @Autowired
     private PricelistRepository pricelistRepository;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    private PharmacyService pharmacyService;
 
     @Override
     public List<Pricelist> findAll() {
@@ -44,9 +54,18 @@ public class PricelistServiceImpl implements PricelistService {
     }
 
     @Override
-    public Pricelist create(Pricelist pricelist) {
+    public Pricelist create(Pricelist pricelist) throws Exception {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin == null) {
+            throw new Exception("Administrator apoteke nije ulogovan!");
+        }
         if (!checkDates(pricelist)) {
             return null;
+        }
+        Pricelist p = pricelistRepository.save(pricelist);
+        if (admin.getPharmacy() != null) {
+            admin.getPharmacy().setPricelist(p);
+            pharmacyService.update(admin.getPharmacy());
         }
         return pricelistRepository.save(pricelist);
     }

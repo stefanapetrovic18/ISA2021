@@ -12,7 +12,7 @@ public interface PricelistService {
 
     Pricelist getOne(Long id);
 
-    Pricelist create(Pricelist pricelist);
+    Pricelist create(Pricelist pricelist) throws Exception;
 
     Pricelist update(Pricelist pricelist);
 
