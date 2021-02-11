@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
     }
   }
   register() {
+    this.request.type = 'patient';
     if (this.repeatPassword === this.request.password) {
       this.auth.register(this.request).subscribe(data => {
         this.signUpFailed = false;
@@ -34,7 +35,7 @@ export class RegisterComponent implements OnInit {
         this.signUpFailed = true;
         window.alert(error.message);
         location.reload();
-      })
+      });
     } else {
       window.alert('Šifre se ne poklapaju!');
       // location.reload();

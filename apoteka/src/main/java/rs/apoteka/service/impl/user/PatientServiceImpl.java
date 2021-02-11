@@ -59,6 +59,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient create(Patient patient) {
+        patient.setPoints(0);
         return patientRepository.save(patient);
     }
 

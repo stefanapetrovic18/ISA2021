@@ -1,3 +1,25 @@
-<p>
-  item-add works!
-</p>
+<h1 mat-dialog-title>Dodaj stavku cenovnika</h1>
+<div mat-dialog-content>
+  <p>Cena leka</p>
+  <mat-form-field>
+    <mat-label>Cena leka</mat-label>
+    <input matInput type="number" [(ngModel)]="data.price">
+  </mat-form-field>
+  <p>Količina</p>
+  <mat-form-field>
+    <mat-label>Količina</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="data.quantity">
+  </mat-form-field>
+  <p>Lek</p>
+  <mat-form-field>
+    <mat-label>Lek</mat-label>
+    <mat-select [(value)]="data.medicine">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let med of medicine" [value]="med">{{med.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button (click)="add()" class="add-button" mat-button mat-raised-button>POTVRDI</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>

@@ -6,6 +6,7 @@ export class Reservation {
   id: number;
   reservationNumber: string;
   reservationDate: Date;
+  collectionDate: Date;
   pharmacy: Pharmacy;
   patient: Patient;
   medicine: Medicine;

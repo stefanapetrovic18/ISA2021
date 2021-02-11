@@ -12,6 +12,7 @@ export class ReservationAddComponent implements OnInit {
 
   data: Pharmacy[];
   output: Pharmacy;
+  date: Date;
 
   constructor(private pharmacyService: PharmacyService, private dialogRef: MatDialogRef<ReservationAddComponent>) { }
 
@@ -23,7 +24,7 @@ export class ReservationAddComponent implements OnInit {
     );
   }
   add() {
-    this.dialogRef.close({pharmacy: this.output});
+    this.dialogRef.close({pharmacy: this.output, date: this.date});
   }
   close() {
     this.dialogRef.close();

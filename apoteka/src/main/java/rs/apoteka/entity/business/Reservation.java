@@ -20,6 +20,8 @@ public class Reservation {
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime reservationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private LocalDateTime collectionDate;
     @ManyToOne(optional = false)
     @JoinColumn(name = "pharmacy", referencedColumnName = "id")
     private Pharmacy pharmacy;
@@ -53,6 +55,14 @@ public class Reservation {
 
     public void setReservationDate(LocalDateTime reservationDate) {
         this.reservationDate = reservationDate;
+    }
+
+    public LocalDateTime getCollectionDate() {
+        return collectionDate;
+    }
+
+    public void setCollectionDate(LocalDateTime collectionDate) {
+        this.collectionDate = collectionDate;
     }
 
     public Pharmacy getPharmacy() {

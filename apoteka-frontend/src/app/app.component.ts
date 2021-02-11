@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   type = '';
   constructor(private router: Router, private token: TokenStorageService, private dialog: MatDialog) {}
   ngOnInit() {
-    this.userCheck();
   }
   login() {
     const dialogRef = this.dialog.open(LoginComponent, {

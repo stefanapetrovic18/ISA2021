@@ -8,6 +8,11 @@
       <mat-option *ngFor="let pharmacy of data" [value]="pharmacy">{{pharmacy.name}}</mat-option>
     </mat-select>
   </mat-form-field>
+  <p>Datum preuzimanja</p>
+  <mat-form-field>
+    <mat-label>Datum preuzimanja</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="date">
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button (click)="add()" class="add-button" mat-button mat-raised-button>POTVRDI</button>

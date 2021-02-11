@@ -92,21 +92,21 @@ export class MedicineTableViewComponent implements OnInit {
     const dialogRef = this.dialog.open(ReservationAddComponent);
     dialogRef.afterClosed().subscribe(
       result => {
-        if (result.pharmacy !== undefined && result.pharmacy !== null) {
+        if (result.pharmacy !== undefined && result.pharmacy !== null && result.date !== undefined && result.date !== null) {
           console.log(result);
           r.pharmacy = result.pharmacy;
+          r.medicine = input;
+          r.collected = false;
+          r.reservationDate = new Date();
+          r.collectionDate = result.date;
+          this.reservationService.reserve(r).subscribe(
+            data => {
+              window.alert('Rezervacija je uspela!');
+            }, error => {
+              window.alert('Rezervacija nije uspela!');
+            }
+          );
         }
-      }
-    );
-    r.medicine = input;
-    r.collected = false;
-    r.pharmacy = null;
-    r.reservationDate = new Date();
-    this.reservationService.reserve(r).subscribe(
-      data => {
-        window.alert('Rezervacija je uspela!');
-      }, error => {
-        window.alert('Rezervacija nije uspela!');
       }
     );
   }

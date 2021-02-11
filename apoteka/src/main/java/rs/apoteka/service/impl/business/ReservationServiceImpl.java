@@ -105,7 +105,7 @@ public class ReservationServiceImpl implements ReservationService {
                 i.setQuantity(i.getQuantity() - 1);
             }
         });
-        Reservation r = update(reservation);
+        Reservation r = reservationRepository.save(reservation);
 //        patient.().add(r);
         patientService.update(patient);
         sendMail(r);
