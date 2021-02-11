@@ -31,6 +31,11 @@ public class PharmacyAdminServiceImpl implements PharmacyAdminService {
     }
 
     @Override
+    public PharmacyAdmin findByUsername(String username) {
+        return pharmacyAdminRepository.findByUsername(username);
+    }
+
+    @Override
     public PharmacyAdmin getOne(Long id) {
         return pharmacyAdminRepository.getOne(id);
     }

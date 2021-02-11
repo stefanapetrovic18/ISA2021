@@ -9,6 +9,8 @@ public interface PharmacyAdminService {
 
     List<PharmacyAdmin> findAllParametrized(Long id, Long pharmacyID);
 
+    PharmacyAdmin findByUsername(String username);
+
     PharmacyAdmin getOne(Long id);
 
     PharmacyAdmin create(PharmacyAdmin pharmacyAdmin);

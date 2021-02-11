@@ -27,6 +27,11 @@ public class DermatologistServiceImpl implements DermatologistService {
     }
 
     @Override
+    public Dermatologist findByUsername(String username) {
+        return dermatologistRepository.findByUsername(username);
+    }
+
+    @Override
     public List<Dermatologist> findAllNotEmployedInPharmacy(Long pharmacyID) {
         return findAll().stream().filter(d -> d.getPharmacies().removeIf(ph -> ph.getId().equals(pharmacyID))).collect(Collectors.toList());
     }

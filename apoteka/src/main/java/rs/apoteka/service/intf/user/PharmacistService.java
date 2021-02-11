@@ -12,6 +12,8 @@ public interface PharmacistService {
 
     List<Pharmacist> findAllByPharmacistFreeAt(Long pharmacyID, LocalDateTime localDateTime);
 
+    Pharmacist findByUsername(String username);
+
     List<Pharmacist> findAllParametrized(Long id, Long workingHoursID, Long pharmacyID, LocalDateTime vacationStart, LocalDateTime vacationEnd,
                                          Long consultationID, Double rating, Double ratingFrom, Double ratingTo);
 

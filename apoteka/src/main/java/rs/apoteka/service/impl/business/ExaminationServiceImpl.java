@@ -3,15 +3,21 @@ package rs.apoteka.service.impl.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.entity.business.WorkingHours;
+import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
+import rs.apoteka.entity.user.Pharmacist;
+import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.ExaminationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ExaminationService;
+import rs.apoteka.service.intf.user.DermatologistService;
 import rs.apoteka.service.intf.user.PatientService;
+import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -28,10 +34,30 @@ public class ExaminationServiceImpl implements ExaminationService {
     @Autowired
     private PatientService patientService;
     @Autowired
+    private PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    private DermatologistService dermatologistService;
+    @Autowired
     private JavaMailSender mailSender;
 
     @Override
     public List<Examination> findAll() {
+        if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
+            Patient patient = patientService.findByUsername(authenticationService.getUsername());
+            if (patient != null) {
+                return patient.getExaminations();
+            }
+        } else if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACY_ADMIN"))) {
+            PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+            if (admin != null) {
+                return admin.getPharmacy().getExaminations();
+            }
+        } else if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACIST"))) {
+            Dermatologist dermatologist = dermatologistService.findByUsername(authenticationService.getUsername());
+            if (dermatologist != null) {
+                return dermatologist.getAppointments();
+            }
+        }
         return examinationRepository.findAll();
     }
 
