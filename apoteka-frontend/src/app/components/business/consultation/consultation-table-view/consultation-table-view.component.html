@@ -71,6 +71,15 @@
           </button>
         </mat-cell>
       </ng-container>
+      <ng-container [matColumnDef]="'cancel'">
+        <mat-header-cell *matHeaderCellDef>Ukloni</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button class="cancel-button" mat-raised-button (click)="cancel(element)">
+            OTKAŽI
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

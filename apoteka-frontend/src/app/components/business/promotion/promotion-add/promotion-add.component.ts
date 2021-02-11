@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Promotion } from 'src/app/model/business/promotion';
+import { PromotionService } from 'src/app/service/business/promotion.service';
 
 @Component({
   selector: 'app-promotion-add',
@@ -6,10 +9,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./promotion-add.component.css']
 })
 export class PromotionAddComponent implements OnInit {
-
-  constructor() { }
+  data: Promotion;
+  constructor(private promotionService: PromotionService, private dialogRef: MatDialogRef<PromotionAddComponent>) { }
 
   ngOnInit() {
+  }
+  add() {
+    this.promotionService.create(this.data).subscribe(
+      data => {
+        window.alert('Promocija je kreirana!');
+      }, error => {
+        window.alert('Promocija nije kreirana!');
+      }
+    );
+  }
+  close() {
+    this.dialogRef.close();
   }
 
 }

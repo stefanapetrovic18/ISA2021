@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { Consultation } from 'src/app/model/business/consultation';
 import { ConsultationService } from 'src/app/service/business/consultation.service';
 import { ConsultationAddComponent } from '../consultation-add/consultation-add.component';
@@ -26,8 +28,13 @@ export class ConsultationTableViewComponent implements OnInit {
   columns = ['x', 'y'];
   actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
-  constructor(private consultationService: ConsultationService, private router: Router, private dialog: MatDialog) {}
+  constructor(private consultationService: ConsultationService, private router: Router, private dialog: MatDialog,
+    private token: TokenStorageService) {}
   ngOnInit() {
+    if (this.token.getAuthorities().includes('ROLE_PATIENT')) {
+      this.actions.push('cancel');
+      this.displayedColumns = [...this.columns, ...this.actions];
+    }
     this.consultationService.findAll().subscribe(
       data => {
         this.data = data;
@@ -82,6 +89,15 @@ export class ConsultationTableViewComponent implements OnInit {
     this.dialog.open(ConsultationDeleteComponent, {
       data: input
     });
+  }
+  cancel(input: Consultation) {
+    this.consultationService.cancel(input).subscribe(
+      data => {
+        window.alert('Otkazano!');
+      }, error => {
+        window.alert('Nije otkazano!');
+      }
+    )
   }
 
 }

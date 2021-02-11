@@ -1,3 +1,26 @@
-<p>
-  promotion-add works!
-</p>
+<h1 mat-dialog-title>Dodaj promociju</h1>
+<div mat-dialog-content>
+  <p>Naslov</p>
+  <mat-form-field>
+    <mat-label>Naslov</mat-label>
+    <input [(ngModel)]="data.title" matInput placeholder="Naslov" type="text"/>
+  </mat-form-field>
+  <p>Opis</p>
+  <mat-form-field>
+    <mat-label>Opis</mat-label>
+    <input [(ngModel)]="data.description" matInput placeholder="Opis" type="text"/>
+  </mat-form-field>
+  <p>Datum početka</p>
+  <mat-form-field>
+    <mat-label>Datum početka</mat-label>
+    <input [(ngModel)]="data.startDate" matInput placeholder="Datum početka" type="datetime-local"/>
+  </mat-form-field>
+  <p>Datum završetka</p>
+  <mat-form-field>
+    <mat-label>Datum završetka</mat-label>
+    <input [(ngModel)]="data.endDate" matInput placeholder="Datum završetka" type="datetime-local"/>
+  </mat-form-field>
+<div mat-dialog-actions>
+  <button (click)="add()" class="add-button" mat-button mat-raised-button>DODAJ</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>

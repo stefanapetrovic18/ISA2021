@@ -32,6 +32,14 @@ export class ConsultationService {
     return this.http.post<Consultation>(this.URL + 'create', consultation, httpOptions);
   }
 
+  public reserve(consultation: Consultation): Observable<Consultation> {
+    return this.http.post<Consultation>(this.URL + 'reserve', consultation, httpOptions);
+  }
+
+  public cancel(consultation: Consultation): Observable<Consultation> {
+    return this.http.post<Consultation>(this.URL + 'cancel', consultation, httpOptions);
+  }
+
   public update(consultation: Consultation): Observable<Consultation> {
     return this.http.post<Consultation>(this.URL + 'update', consultation, httpOptions);
   }
