@@ -12,7 +12,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "medicine", referencedColumnName = "id", unique = false)
     private Medicine medicine;
     @Column
