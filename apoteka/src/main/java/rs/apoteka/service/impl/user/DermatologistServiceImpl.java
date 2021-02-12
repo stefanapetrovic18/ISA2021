@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.repository.user.DermatologistRepository;
+import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.user.DermatologistService;
+import rs.apoteka.service.intf.user.PharmacistService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
 public class DermatologistServiceImpl implements DermatologistService {
     @Autowired
     private DermatologistRepository dermatologistRepository;
+    @Autowired
+    private PharmacyService pharmacyService;
 
     @Override
     public List<Dermatologist> findAll() {
@@ -22,7 +26,11 @@ public class DermatologistServiceImpl implements DermatologistService {
     }
 
     @Override
-    public List<Dermatologist> findAllByPharmaciesContaining(Pharmacy pharmacy) {
+    public List<Dermatologist> findAllByPharmaciesContaining(Long pharmacyID) {
+        Pharmacy pharmacy = pharmacyService.getOne(pharmacyID);
+        if (pharmacy == null) {
+            return null;
+        }
         return dermatologistRepository.findAllByPharmaciesContaining(pharmacy);
     }
 

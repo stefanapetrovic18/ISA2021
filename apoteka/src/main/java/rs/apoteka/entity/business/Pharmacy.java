@@ -2,7 +2,9 @@ package rs.apoteka.entity.business;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
@@ -13,46 +15,58 @@ import java.util.List;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@JsonView(Views.Public.class)
     private Long id;
     @Column(nullable = false, unique = true)
+    //@JsonView(Views.Public.class)
     private String name;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String description;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String address;
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
+    //@JsonView(Views.Internal.class)
     private List<PharmacyAdmin> admins;
     @ManyToMany(cascade = CascadeType.MERGE)
+    @JsonIgnore
+    //@JsonView(Views.Internal.class)
     private List<Dermatologist> dermatologists;
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
+    //@JsonView(Views.Internal.class)
     private List<Pharmacist> pharmacists;
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
+    //@JsonView(Views.Internal.class)
     private List<Examination> examinations;
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
+    //@JsonView(Views.Internal.class)
     private List<Consultation> consultations;
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
+    //@JsonView(Views.Internal.class)
     private List<Promotion> promotions;
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
+    //@JsonView(Views.Internal.class)
     private List<Order> orders;
-    //@JsonIgnore
+    @JsonIgnore
     @ElementCollection(targetClass = User.class)
+    //@JsonView(Views.Internal.class)
     private List<User> subscriptions;
     // Inventar.
     @OneToOne
+    //@JsonView(Views.Public.class)
     private Pricelist pricelist;
     @Column
+    //@JsonView(Views.Public.class)
     private Double rating;
 
     public Pharmacy() {

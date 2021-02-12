@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.section {
+  width: 100%;
+  border-bottom: 1px solid saddlebrown;
+}
+
+.basic-info {
+  padding: 5px 0 0 5px;
+}
+
+.basic-info .address {
+  font-size: 18px;
+}
+
+.avarage-grade {
+  margin-top: 100px;
+  padding-bottom: 5px;
+}
+
+.medicine {
+  padding: 10px 0 5px 10px;
+  display: inline-block;
+  width: 700px;
+}
+
+.med-info {
+  width: 250px;
+}
+
+.price {
+  float: right;
+  padding-right: 50px;
+}
+
+.reserve {
+  display: inline-block;
+  padding: 5px;
+  text-align: center;
+  width: 150px;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #00796b;
+  color: #fff;
+}

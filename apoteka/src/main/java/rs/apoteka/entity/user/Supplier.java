@@ -19,9 +19,6 @@ import java.util.List;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Supplier extends User {
 
     @OneToOne

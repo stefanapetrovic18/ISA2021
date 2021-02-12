@@ -44,6 +44,11 @@ public class DermatologistController {
         return new ResponseEntity<>(dermatologistService.findAllNotEmployedInPharmacy(pharmacyID), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/pharmacy")
+    public ResponseEntity<List<Dermatologist>> findAllByPharmaciesContaining(@RequestParam Long pharmacyID) {
+        return new ResponseEntity<>(dermatologistService.findAllByPharmaciesContaining(pharmacyID), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/search")
     public ResponseEntity<Dermatologist> getOne(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(dermatologistService.getOne(id), HttpStatus.OK);

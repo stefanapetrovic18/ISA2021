@@ -19,9 +19,6 @@ import java.util.List;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Pharmacist extends User {
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING)

@@ -7,9 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class InventoryItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,8 +3,12 @@ package rs.apoteka.service.impl.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Item;
+import rs.apoteka.entity.business.Pricelist;
+import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.ItemRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ItemService;
+import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.util.List;
 
@@ -12,6 +16,10 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private PharmacyAdminService pharmacyAdminService;
 
     @Override
     public List<Item> findAll() {
@@ -59,6 +67,17 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item create(Item item) {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        Pricelist pricelist = admin.getPharmacy().getPricelist();
+        if (pricelist != null) {
+            for (Item i: pricelist.getItems()) {
+                if (i.getMedicine().getId().equals(item.getMedicine().getId())) {
+                    i.setPrice(item.getPrice());
+                    i.setQuantity(item.getQuantity() + i.getQuantity());
+                    return update(i);
+                }
+            }
+        }
         return itemRepository.save(item);
     }
 

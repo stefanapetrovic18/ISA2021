@@ -9,9 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

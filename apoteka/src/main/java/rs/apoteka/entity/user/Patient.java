@@ -1,7 +1,11 @@
 package rs.apoteka.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.Role;
 import rs.apoteka.entity.auth.RoleType;
@@ -18,13 +22,18 @@ import java.util.List;
 @Table
 public class Patient extends User {
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private Integer points;
     @OneToMany(mappedBy = "patient")
-    //@JsonIgnore
+    @JsonIgnore
+    //@JsonView(Views.Internal.class)
     private List<Examination> examinations;
     @OneToMany(mappedBy = "patient")
+    //@JsonView(Views.Internal.class)
+    @JsonIgnore
     private List<Consultation> consultations;
     @ManyToMany
+    //@JsonView(Views.Internal.class)
     private List<Medicine> allergies;
 
     public Patient() {

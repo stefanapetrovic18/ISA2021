@@ -9,7 +9,7 @@ import java.util.List;
 public interface DermatologistService {
     List<Dermatologist> findAll();
 
-    List<Dermatologist> findAllByPharmaciesContaining(Pharmacy pharmacy);
+    List<Dermatologist> findAllByPharmaciesContaining(Long pharmacyID);
 
     Dermatologist findByUsername(String username);
 

@@ -14,9 +14,6 @@ import java.util.HashSet;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class SystemAdmin extends User {
 
     public SystemAdmin() {

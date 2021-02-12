@@ -14,7 +14,7 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> authorities;
     private Long id;
     private String username; //TODO: email validacija
-    //@JsonIgnore
+    @JsonIgnore
     private String password;
     private String forename;
     private String surname;

@@ -17,9 +17,6 @@ import java.util.HashSet;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class PharmacyAdmin extends User {
     @ManyToOne
     @JoinColumn(name = "pharmacy", referencedColumnName = "id")

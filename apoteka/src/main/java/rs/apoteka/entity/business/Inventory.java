@@ -9,9 +9,6 @@ import java.util.List;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

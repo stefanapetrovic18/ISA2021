@@ -1,46 +1,52 @@
 package rs.apoteka.entity.business;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@JsonView(Views.Public.class)
     private Long id;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String name;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String manufacturer;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String code;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String type;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String form;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private Boolean prescriptionNecessary;
     // Specification.
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String sideEffects;
     @Column(nullable = false)
     @ElementCollection(targetClass = String.class)
     @JsonFormat(shape = JsonFormat.Shape.ARRAY)
+    //@JsonView(Views.Public.class)
     private List<String> ingredients;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private String recommendedDose;
     @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Medicine.class)
-    //@JsonIgnore
+    @JsonIgnore
+    //@JsonView(Views.Internal.class)
     private List<Medicine> substitutes;
 
     public Medicine() {

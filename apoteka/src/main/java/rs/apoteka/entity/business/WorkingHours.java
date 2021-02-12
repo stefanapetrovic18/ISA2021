@@ -10,9 +10,6 @@ import java.time.LocalTime;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class WorkingHours {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

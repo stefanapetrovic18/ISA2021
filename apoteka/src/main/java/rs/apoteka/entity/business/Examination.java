@@ -2,7 +2,9 @@ package rs.apoteka.entity.business;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 
@@ -11,30 +13,35 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Examination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@JsonView(Views.Public.class)
     private Long id;
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
+    //@JsonView(Views.Public.class)
     private LocalDateTime examinationDate;
     @ManyToOne(optional = false)
     @JoinColumn(name = "dermatologist", referencedColumnName = "id")
+    //@JsonView(Views.Public.class)
     private Dermatologist dermatologist;
     @ManyToOne(optional = false)
     @JoinColumn(name = "patient", referencedColumnName = "id")
+    //@JsonView(Views.Public.class)
     private Patient patient;
     @ManyToOne(optional = false)
     @JoinColumn(name = "pharmacy", referencedColumnName = "id")
+    //@JsonView(Views.Public.class)
     private Pharmacy pharmacy;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private Integer duration;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private Double price;
     @Column(nullable = false)
+    //@JsonView(Views.Public.class)
     private Boolean quickReservation;
 
     public Examination() {

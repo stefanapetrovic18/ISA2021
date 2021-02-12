@@ -9,9 +9,6 @@ import java.util.List;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Pricelist {
     @OneToMany(mappedBy = "pricelist")
     List<Item> items;

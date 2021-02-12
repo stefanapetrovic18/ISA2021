@@ -8,22 +8,19 @@ import javax.persistence.*;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(optional = false)
-    @JoinColumn(name = "medicine", referencedColumnName = "id")
+    @JoinColumn(name = "medicine", referencedColumnName = "id", unique = false)
     private Medicine medicine;
     @Column
     private Double price;
     @Column
     private Integer quantity;
     @ManyToOne
-    //@JsonIgnore
+    @JsonIgnore
     @JoinColumn(name = "pricelist", referencedColumnName = "id")
     private Pricelist pricelist;
 

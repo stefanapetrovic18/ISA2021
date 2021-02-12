@@ -1,10 +1,8 @@
 package rs.apoteka.entity.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.Role;
 import rs.apoteka.entity.auth.RoleType;
@@ -20,25 +18,28 @@ import java.util.List;
 
 @Entity
 @Table
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Dermatologist extends User {
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING)
+    //@JsonView(Views.Public.class)
     private LocalDateTime vacationStart;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING)
+    //@JsonView(Views.Public.class)
     private LocalDateTime vacationEnd;
     @ManyToMany
+    //@JsonView(Views.Internal.class)
     private List<Pharmacy> pharmacies;
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "dermatologist", cascade = CascadeType.ALL)
+    //@JsonView(Views.Internal.class)
     private List<Examination> appointments;
     @Column
     @ElementCollection(targetClass = WorkingHours.class)
+    //@JsonView(Views.Public.class)
     private List<WorkingHours> workingHours;
     @Column
+    //@JsonView(Views.Public.class)
     private Double rating;
 
     public Dermatologist() {

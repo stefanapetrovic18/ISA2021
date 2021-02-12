@@ -9,9 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "pharmacy_order")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
