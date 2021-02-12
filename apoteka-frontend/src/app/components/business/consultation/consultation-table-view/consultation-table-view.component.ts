@@ -25,8 +25,8 @@ export class ConsultationTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Consultation[];
-  columns = ['x', 'y'];
-  actions = ['view', 'edit', 'delete'];
+  columns = ['consultationDate', 'duration', 'price'];
+  actions = ['patient', 'pharmacy', 'pharmacist', 'view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private consultationService: ConsultationService, private router: Router, private dialog: MatDialog,
     private token: TokenStorageService) {}

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
 
@@ -21,6 +22,7 @@ public class Consultation {
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     //@JsonView(Views.Public.class)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime consultationDate;
     @ManyToOne(optional = false)
     @JoinColumn(name = "pharmacist", referencedColumnName = "id")
@@ -30,7 +32,7 @@ public class Consultation {
     @JoinColumn(name = "pharmacy", referencedColumnName = "id")
     //@JsonView(Views.Public.class)
     private Pharmacy pharmacy;
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "patient", referencedColumnName = "id")
     //@JsonView(Views.Public.class)
     private Patient patient;

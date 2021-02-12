@@ -39,6 +39,14 @@
     </div>
 
     <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="dermatologist">
+        <mat-header-cell *matHeaderCellDef>Dermatologist</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object.dermatologist.forename }} {{object.dermatologist.surname}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="pharmacy">
+        <mat-header-cell *matHeaderCellDef>Pharmacy</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object.pharmacy.name }}</mat-cell>
+      </ng-container>
       <ng-container *ngFor="let column of columns" [matColumnDef]="column">
         <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
         <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>

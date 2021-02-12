@@ -113,9 +113,9 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public Consultation create(Consultation consultation) {
-//        if (!appointmentCheck(consultation)) {
-//            return null;
-//        }
+        if (!appointmentCheck(consultation)) {
+            return null;
+        }
         return consultationRepository.save(consultation);
     }
 
@@ -130,17 +130,22 @@ public class ConsultationServiceImpl implements ConsultationService {
         Consultation c = create(consultation);
         patient.getConsultations().add(c);
         patientService.update(patient);
+        System.out.println(patient.getUsername());
         sendMail(c);
         return c;
     }
 
     @Override
     public Consultation cancel(Consultation consultation) throws Exception {
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        if (patient == null) {
+            return null;
+        }
         if (consultation.getConsultationDate().isBefore(LocalDateTime.now().plusHours(24))) {
             throw new Exception("Nemoguće je otkazati konsultaciju manje od 24h pre početka istog.");
         }
-        consultation.getPatient().getConsultations().removeIf(e -> e.getId().equals(consultation.getId()));
-        patientService.update(consultation.getPatient());
+        patient.getConsultations().removeIf(e -> e.getId().equals(consultation.getId()));
+        patientService.update(patient);
         consultation.setPatient(null);
         return update(consultation);
     }
@@ -162,9 +167,9 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public Consultation update(Consultation consultation) {
-        if (!appointmentCheck(consultation)) {
-            return null;
-        }
+//        if (!appointmentCheck(consultation)) {
+//            return null;
+//        }
         return consultationRepository.save(consultation);
     }
 

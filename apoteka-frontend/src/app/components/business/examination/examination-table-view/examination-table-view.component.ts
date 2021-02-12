@@ -23,8 +23,8 @@ export class ExaminationTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Examination[];
-  columns = ['examinationDate', 'duration', 'price', 'dermatologist', 'pharmacy'];
-  actions = ['view', 'edit', 'delete', 'reserve', 'cancel'];
+  columns = ['examinationDate', 'duration', 'price'];
+  actions = [ 'dermatologist', 'pharmacy', 'view', 'edit', 'delete', 'reserve', 'cancel'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private examinationService: ExaminationService, private router: Router, private dialog: MatDialog,
               private route: ActivatedRoute) {}
