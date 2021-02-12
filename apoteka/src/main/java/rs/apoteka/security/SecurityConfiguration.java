@@ -57,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "OPTIONS", "DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "PATCH", "HEAD", "GET", "OPTIONS", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "AuthToken"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -79,19 +79,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors().and().csrf().ignoringAntMatchers("/api/user/signin").disable()
+                .cors().and().csrf().ignoringAntMatchers("/api/user/**").disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/api/user/login",
-                        "/api/user/register",
-                        "/api/user/confirm",
-                        "/api/user/request-token",
-                        "/api/user/change-password",
-                        "/api/medicine",
-                        "/api/pharmacy"
+                        "/api/user/**",
+                        "/api/medicine/",
+                        "/api/pharmacy/"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and().headers().cacheControl().disable()

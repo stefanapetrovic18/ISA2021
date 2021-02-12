@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
       data: new LoginRequest()
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.user = true;
       // this.userCheck();
     });
   }
@@ -41,6 +42,30 @@ export class AppComponent implements OnInit {
     const tkn = this.token.getAuthorities();
     if (tkn.includes('ROLE_PATIENT')) {
       this.user = true;
+    } else if (tkn.includes('ROLE_DERMATOLOGIST')) {
+      this.user = true;
+      this.router.navigateByUrl('dashboard/dermatolog');
+    } else if (tkn.includes('ROLE_PHARMACIST')) {
+      this.user = true;
+      this.router.navigateByUrl('dashboard/farmaceut');
+    } else if (tkn.includes('ROLE_PHARMACY_ADMIN')) {
+      this.user = true;
+      this.router.navigateByUrl('dashboard/administrator-apoteke');
+    } else if (tkn.includes('ROLE_SYSTEM_ADMIN')) {
+      this.user = true;
+      this.router.navigateByUrl('dashboard/administrator-sistema');
+    } else if (tkn.includes('ROLE_SUPPLIER')) {
+      this.user = true;
+      this.router.navigateByUrl('dashboard/dobavljac');
+    } else {
+      // this.router.navigateByUrl('dashboard/visitor');
+    }
+  }
+  userCheckX() {
+    const tkn = this.token.getAuthorities();
+    if (tkn.includes('ROLE_PATIENT')) {
+      this.user = true;
+      this.router.navigateByUrl('dashboard/pacijent');
     } else if (tkn.includes('ROLE_DERMATOLOGIST')) {
       this.user = true;
       this.router.navigateByUrl('dashboard/dermatolog');

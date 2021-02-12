@@ -2,13 +2,16 @@ package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Item;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.business.PharmacyRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.user.DermatologistService;
+import rs.apoteka.service.intf.user.PatientService;
 import rs.apoteka.service.intf.user.PharmacistService;
 
 import java.time.LocalDateTime;
@@ -22,6 +25,10 @@ public class PharmacyServiceImpl implements PharmacyService {
     private PharmacyRepository pharmacyRepository;
     @Autowired
     private PharmacistService pharmacistService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private AuthenticationService authenticationService;
     @Autowired
     private DermatologistService dermatologistService;
 
@@ -75,6 +82,22 @@ public class PharmacyServiceImpl implements PharmacyService {
         }
         if (ratingTo != null) {
             pharmacies.removeIf(p -> p.getRating() > ratingTo);
+        }
+        return pharmacies;
+    }
+
+    @Override
+    public List<Pharmacy> findSubs() {
+        User user = authenticationService.getUser();
+        List<Pharmacy> pharmacies = new ArrayList<>();
+        for (Pharmacy p:
+                findAll()) {
+            for (User u:
+                    p.getSubscriptions()) {
+                if (u.getId().equals(user.getId())) {
+                    pharmacies.add(p);
+                }
+            }
         }
         return pharmacies;
     }

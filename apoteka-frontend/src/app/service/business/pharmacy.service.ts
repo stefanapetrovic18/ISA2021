@@ -21,6 +21,9 @@ export class PharmacyService {
   public findAll(): Observable<Pharmacy[]> {
     return this.http.get<Pharmacy[]>(this.URL);
   }
+  public findSubs(): Observable<Pharmacy[]> {
+    return this.http.get<Pharmacy[]>(this.URL + 'subs');
+  }
 
   public getOne(id: number): Observable<Pharmacy> {
     const params = new HttpParams().set('id', id.toString());

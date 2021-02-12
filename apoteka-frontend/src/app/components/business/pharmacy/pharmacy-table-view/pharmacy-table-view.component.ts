@@ -56,6 +56,24 @@ export class PharmacyTableViewComponent implements OnInit {
               // this.router.navigateByUrl('');
             }
           );
+        } else if (params.get('sub') !== null && params.get('sub') === 'true') {
+          this.pharmacyService.findSubs().subscribe(
+            data => {
+              this.data = data;
+              if (this.data !== undefined && this.data.length > 0) {
+                this.dataSource = new MatTableDataSource(this.data);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              } else {
+                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+                // this.router.navigateByUrl('');
+              }
+            }, error => {
+              window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+              // this.router.navigateByUrl('');
+            }
+          );
         } else {
           this.pharmacyService.findAll().subscribe(
             data => {
