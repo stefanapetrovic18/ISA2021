@@ -23,8 +23,8 @@ export class PromotionTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Promotion[];
-  columns = ['x', 'y'];
-  actions = ['view', 'edit', 'delete'];
+  columns = ['startDate', 'endDate', 'title', 'description'];
+  actions = ['pharmacy', 'view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private promotionService: PromotionService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
@@ -37,14 +37,14 @@ export class PromotionTableViewComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         } else {
-          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-          this.router.navigateByUrl('');
+          window.alert('Podaci ne postoje!');
+          // this.router.navigateByUrl('');
         }
       }, error => {
-        window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-        this.router.navigateByUrl('');
+        window.alert('Podaci ne postoje!');
+        // this.router.navigateByUrl('');
       }
-    )
+    );
   }
 
   applyFilter(value: any) {

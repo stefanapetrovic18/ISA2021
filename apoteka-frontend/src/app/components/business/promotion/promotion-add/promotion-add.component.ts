@@ -9,7 +9,7 @@ import { PromotionService } from 'src/app/service/business/promotion.service';
   styleUrls: ['./promotion-add.component.css']
 })
 export class PromotionAddComponent implements OnInit {
-  data: Promotion;
+  data = new Promotion();
   constructor(private promotionService: PromotionService, private dialogRef: MatDialogRef<PromotionAddComponent>) { }
 
   ngOnInit() {

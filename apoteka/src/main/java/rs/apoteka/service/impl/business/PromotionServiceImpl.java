@@ -5,8 +5,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Promotion;
+import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.PromotionRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.PromotionService;
+import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,16 +20,24 @@ public class PromotionServiceImpl implements PromotionService {
     private PromotionRepository promotionRepository;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private PharmacyAdminService pharmacyAdminService;
 
     @Override
-    public List<Promotion> findAll() {
-        return promotionRepository.findAll();
+    public List<Promotion> findAll() throws Exception {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin == null) {
+            return promotionRepository.findAll();
+        }
+        return admin.getPharmacy().getPromotions();
     }
 
     @Override
     public List<Promotion> findAllParametrized(Long id, LocalDateTime startDate, LocalDateTime endDate, Long pharmacyID,
                                                String title, String description) {
-        List<Promotion> promotions = findAll();
+        List<Promotion> promotions = promotionRepository.findAll();
         if (id != null) {
             promotions.removeIf(p -> !p.getId().equals(id));
         }
@@ -54,27 +65,34 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public Promotion create(Promotion promotion) {
+    public Promotion create(Promotion promotion) throws Exception {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin == null) {
+            throw new Exception("Administrator apoteke nije ulogovan!");
+        }
         if (!checkDates(promotion)) {
             return null;
         }
+        promotion.setPharmacy(admin.getPharmacy());
         Promotion saved = promotionRepository.save(promotion);
-        saved.getPharmacy().getSubscriptions().forEach(
-                subscription -> {
-                    SimpleMailMessage email = new SimpleMailMessage();
-                    email.setTo(subscription.getUsername());
-                    email.setSubject(promotion.getTitle());
-                    email.setText("Postovani/a " + subscription.getForename() + ",\n\n" +
-                            "Želimo da vas obavestimo o novoj promociji.\n\n" +
-                            saved.getDescription() + "\n\n" +
-                            "Da biste saznali više, molimo vas da kliknete na link ispod.\n\n" +
-                            "http://localhost:4200/promocija?id=" + saved.getId() + "\n\n" +
-                            "Srdačan pozdrav,\n\n" +
-                            saved.getPharmacy().getName());
-                    mailSender.send(email);
-                }
-        );
-        return promotionRepository.save(promotion);
+        if (saved.getPharmacy().getSubscriptions() != null || saved.getPharmacy().getSubscriptions().size() > 0) {
+            saved.getPharmacy().getSubscriptions().forEach(
+                    subscription -> {
+                        SimpleMailMessage email = new SimpleMailMessage();
+                        email.setTo(subscription.getUsername());
+                        email.setSubject(promotion.getTitle());
+                        email.setText("Postovani/a " + subscription.getForename() + ",\n\n" +
+                                "Želimo da vas obavestimo o novoj promociji.\n\n" +
+                                saved.getDescription() + "\n\n" +
+                                "Da biste saznali više, molimo vas da kliknete na link ispod.\n\n" +
+                                "http://localhost:4200/promocija?id=" + saved.getId() + "\n\n" +
+                                "Srdačan pozdrav,\n\n" +
+                                saved.getPharmacy().getName());
+                        mailSender.send(email);
+                    }
+            );
+        }
+        return saved;
     }
 
     @Override
