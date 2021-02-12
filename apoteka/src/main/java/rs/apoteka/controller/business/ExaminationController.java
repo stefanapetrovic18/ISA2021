@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.service.intf.business.ExaminationService;
@@ -62,11 +63,13 @@ public class ExaminationController {
         return new ResponseEntity<>(examinationService.create(examination), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     @PostMapping(value = "/quick-reserve")
     public ResponseEntity<Examination> quickReserve(@RequestBody Examination examination) throws Exception {
         return new ResponseEntity<>(examinationService.quickReserve(examination), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     @PostMapping(value = "/cancel")
     public ResponseEntity<Examination> cancel(@RequestBody Examination examination) throws Exception {
         return new ResponseEntity<>(examinationService.cancel(examination), HttpStatus.OK);

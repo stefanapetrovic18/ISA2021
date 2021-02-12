@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.service.intf.business.ConsultationService;
@@ -51,11 +52,13 @@ public class ConsultationController {
         return new ResponseEntity<>(consultationService.create(consultation), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     @PostMapping(value = "/reserve")
     public ResponseEntity<Consultation> reserve(@RequestBody Consultation consultation) throws Exception {
         return new ResponseEntity<>(consultationService.reserve(consultation), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     @PostMapping(value = "/cancel")
     public ResponseEntity<Consultation> cancel(@RequestBody Consultation consultation) throws Exception {
         return new ResponseEntity<>(consultationService.cancel(consultation), HttpStatus.OK);

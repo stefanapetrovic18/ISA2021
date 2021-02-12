@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Reservation;
 import rs.apoteka.service.intf.business.ReservationService;
@@ -50,11 +51,13 @@ public class ReservationController {
         return new ResponseEntity<>(reservationService.create(reservation), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     @PostMapping(value = "/reserve")
     public ResponseEntity<Reservation> reserve(@RequestBody Reservation reservation) throws Exception {
         return new ResponseEntity<>(reservationService.reserve(reservation), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     @PostMapping(value = "/cancel")
     public ResponseEntity<Reservation> cancel(@RequestBody Reservation reservation) throws Exception {
         return new ResponseEntity<>(reservationService.cancel(reservation), HttpStatus.OK);

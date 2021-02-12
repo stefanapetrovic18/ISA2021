@@ -3,6 +3,7 @@ package rs.apoteka.controller.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.InventoryItem;
 import rs.apoteka.service.intf.business.InventoryItemService;
@@ -38,16 +39,19 @@ public class InventoryItemController {
         return new ResponseEntity<>(inventoryItemService.getOne(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SUPPLIER')")
     @PostMapping(value = "/create")
     public ResponseEntity<InventoryItem> create(@RequestBody InventoryItem inventoryItem) throws Exception {
         return new ResponseEntity<>(inventoryItemService.create(inventoryItem), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SUPPLIER')")
     @PostMapping(value = "/update")
     public ResponseEntity<InventoryItem> update(@RequestBody InventoryItem inventoryItem) throws Exception {
         return new ResponseEntity<>(inventoryItemService.update(inventoryItem), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SUPPLIER')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(inventoryItemService.delete(id), HttpStatus.OK);

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Promotion;
 import rs.apoteka.service.intf.business.PromotionService;
@@ -40,16 +41,19 @@ public class PromotionController {
         return new ResponseEntity<>(promotionService.getOne(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<Promotion> create(@RequestBody Promotion promotion) throws Exception {
         return new ResponseEntity<>(promotionService.create(promotion), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @PostMapping(value = "/update")
     public ResponseEntity<Promotion> update(@RequestBody Promotion promotion) throws Exception {
         return new ResponseEntity<>(promotionService.update(promotion), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(promotionService.delete(id), HttpStatus.OK);

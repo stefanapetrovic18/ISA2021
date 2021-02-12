@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Offer;
 import rs.apoteka.service.intf.business.OfferService;
@@ -44,21 +45,25 @@ public class OfferController {
         return new ResponseEntity<>(offerService.getOne(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SUPPLIER')")
     @PostMapping(value = "/create")
     public ResponseEntity<Offer> create(@RequestBody Offer offer) throws Exception {
         return new ResponseEntity<>(offerService.create(offer), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @PostMapping(value = "/accept")
     public ResponseEntity<Offer> accept(@RequestBody Offer offer) throws Exception {
         return new ResponseEntity<>(offerService.accept(offer), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SUPPLIER')")
     @PostMapping(value = "/update")
     public ResponseEntity<Offer> update(@RequestBody Offer offer) throws Exception {
         return new ResponseEntity<>(offerService.update(offer), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SUPPLIER')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(offerService.delete(id), HttpStatus.OK);

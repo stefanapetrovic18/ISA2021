@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.service.intf.user.DermatologistService;
@@ -54,16 +55,19 @@ public class DermatologistController {
         return new ResponseEntity<>(dermatologistService.getOne(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<Dermatologist> create(@RequestBody Dermatologist dermatologist) throws Exception {
         return new ResponseEntity<>(dermatologistService.create(dermatologist), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @PostMapping(value = "/update")
     public ResponseEntity<Dermatologist> update(@RequestBody Dermatologist dermatologist) throws Exception {
         return new ResponseEntity<>(dermatologistService.update(dermatologist), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(dermatologistService.delete(id), HttpStatus.OK);

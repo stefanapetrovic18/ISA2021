@@ -3,6 +3,7 @@ package rs.apoteka.controller.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.user.Supplier;
 import rs.apoteka.service.intf.user.SupplierService;
@@ -26,16 +27,19 @@ public class SupplierController {
         return new ResponseEntity<>(supplierService.getOne(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<Supplier> create(@RequestBody Supplier supplier) throws Exception {
         return new ResponseEntity<>(supplierService.create(supplier), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/update")
     public ResponseEntity<Supplier> update(@RequestBody Supplier supplier) throws Exception {
         return new ResponseEntity<>(supplierService.update(supplier), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(supplierService.delete(id), HttpStatus.OK);

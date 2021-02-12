@@ -3,6 +3,7 @@ package rs.apoteka.controller.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Medicine;
 import rs.apoteka.service.intf.business.MedicineService;
@@ -43,16 +44,19 @@ public class MedicineController {
         return new ResponseEntity<>(medicineService.getOne(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<Medicine> create(@RequestBody Medicine medicine) throws Exception {
         return new ResponseEntity<>(medicineService.create(medicine), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/update")
     public ResponseEntity<Medicine> update(@RequestBody Medicine medicine) throws Exception {
         return new ResponseEntity<>(medicineService.update(medicine), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(medicineService.delete(id), HttpStatus.OK);

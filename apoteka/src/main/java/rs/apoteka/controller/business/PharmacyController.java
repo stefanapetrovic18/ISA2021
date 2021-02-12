@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.service.intf.business.PharmacyService;
@@ -21,6 +22,12 @@ public class PharmacyController {
     @GetMapping(value = "")
     public ResponseEntity<List<Pharmacy>> findAll() throws Exception {
         return new ResponseEntity<>(pharmacyService.findAll(), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
+    @GetMapping(value = "/subs")
+    public ResponseEntity<List<Pharmacy>> findSubs() throws Exception {
+        return new ResponseEntity<>(pharmacyService.findSubs(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/filter")
@@ -57,16 +64,19 @@ public class PharmacyController {
         return new ResponseEntity<>(pharmacyService.findAllByPharmacistFreeAt(localDateTime), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<Pharmacy> create(@RequestBody Pharmacy pharmacy) throws Exception {
         return new ResponseEntity<>(pharmacyService.create(pharmacy), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/update")
     public ResponseEntity<Pharmacy> update(@RequestBody Pharmacy pharmacy) throws Exception {
         return new ResponseEntity<>(pharmacyService.update(pharmacy), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(pharmacyService.delete(id), HttpStatus.OK);

@@ -3,6 +3,7 @@ package rs.apoteka.controller.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.business.WorkingHours;
 import rs.apoteka.service.intf.business.WorkingHoursService;
@@ -40,16 +41,19 @@ public class WorkingHoursController {
         return new ResponseEntity<>(workingHoursService.getOne(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_DERMATOLOGIST') or hasRole('ROLE_PHARMACIST') or hasRole('ROLE_PHARMACY_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<WorkingHours> create(@RequestBody WorkingHours workingHours) throws Exception {
         return new ResponseEntity<>(workingHoursService.create(workingHours), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_DERMATOLOGIST') or hasRole('ROLE_PHARMACIST') or hasRole('ROLE_PHARMACY_ADMIN')")
     @PostMapping(value = "/update")
     public ResponseEntity<WorkingHours> update(@RequestBody WorkingHours workingHours) throws Exception {
         return new ResponseEntity<>(workingHoursService.update(workingHours), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_DERMATOLOGIST') or hasRole('ROLE_PHARMACIST') or hasRole('ROLE_PHARMACY_ADMIN')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(workingHoursService.delete(id), HttpStatus.OK);
