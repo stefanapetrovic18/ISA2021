@@ -23,7 +23,7 @@ export class PricelistTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Pricelist[];
-  columns = ['x', 'y'];
+  columns = ['examinationPrice', 'consultationPrice', 'validFrom', 'validUntil'];
   actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pricelistService: PricelistService, private router: Router, private dialog: MatDialog) {}
@@ -44,7 +44,7 @@ export class PricelistTableViewComponent implements OnInit {
         window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
         this.router.navigateByUrl('');
       }
-    )
+    );
   }
 
   applyFilter(value: any) {

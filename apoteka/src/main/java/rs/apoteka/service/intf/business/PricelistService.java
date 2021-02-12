@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PricelistService {
-    List<Pricelist> findAll();
+    List<Pricelist> findAll() throws Exception;
 
     List<Pricelist> findAllParametrized(Long id, Long itemID, LocalDateTime validFrom, LocalDateTime validUntil);
 

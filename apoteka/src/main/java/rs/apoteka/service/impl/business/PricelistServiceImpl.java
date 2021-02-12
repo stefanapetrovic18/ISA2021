@@ -11,6 +11,7 @@ import rs.apoteka.service.intf.business.PricelistService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,13 +27,17 @@ public class PricelistServiceImpl implements PricelistService {
     private PharmacyService pharmacyService;
 
     @Override
-    public List<Pricelist> findAll() {
-        return pricelistRepository.findAll();
+    public List<Pricelist> findAll() throws Exception {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin == null) {
+            throw new Exception("Administrator apoteke nije ulogovan!");
+        }
+        return Collections.singletonList(admin.getPharmacy().getPricelist());
     }
 
     @Override
     public List<Pricelist> findAllParametrized(Long id, Long itemID, LocalDateTime validFrom, LocalDateTime validUntil) {
-        List<Pricelist> pricelist = findAll();
+        List<Pricelist> pricelist = pricelistRepository.findAll();
         if (id != null) {
             pricelist.removeIf(p -> !p.getId().equals(id));
         }

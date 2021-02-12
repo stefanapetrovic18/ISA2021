@@ -5,7 +5,7 @@ import rs.apoteka.entity.business.Item;
 import java.util.List;
 
 public interface ItemService {
-    List<Item> findAll();
+    List<Item> findAll() throws Exception;
 
     List<Item> findAllParametrized(Long id, Long medicineID, Double price, Double priceFrom, Double priceTo,
                                    Integer quantity, Integer quantityFrom, Integer quantityTo, Long pricelistID);

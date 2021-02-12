@@ -185,9 +185,9 @@ export class ExaminationTableViewComponent implements OnInit {
   reserve(input: Examination) {
     this.examinationService.quickReserve(input).subscribe(
       data => {
-        window.alert("Uspešna rezervacija! Molimo vas da proverite vaš email za potvrdu.");
+        window.alert('Uspešna rezervacija! Molimo vas da proverite vaš email za potvrdu.');
       }, error => {
-        window.alert("Neuspešna rezervacija!");
+        window.alert('Neuspešna rezervacija!');
       }
     );
   }
@@ -195,11 +195,11 @@ export class ExaminationTableViewComponent implements OnInit {
   cancel(input: Examination) {
     this.examinationService.cancel(input).subscribe(
       data => {
-        window.alert("Uspešno otkazivanje!");
+        window.alert('Uspešno otkazivanje!');
       }, error => {
-        window.alert("Neuspešno otkazivanje!");
+        window.alert('Neuspešno otkazivanje!');
       }
-    )
+    );
   }
 
 }

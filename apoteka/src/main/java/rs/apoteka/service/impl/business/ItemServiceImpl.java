@@ -22,14 +22,18 @@ public class ItemServiceImpl implements ItemService {
     private PharmacyAdminService pharmacyAdminService;
 
     @Override
-    public List<Item> findAll() {
-        return itemRepository.findAll();
+    public List<Item> findAll() throws Exception {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin == null) {
+            throw new Exception("Administrator apoteke nije ulogovan!");
+        }
+        return admin.getPharmacy().getPricelist().getItems();
     }
 
     @Override
     public List<Item> findAllParametrized(Long id, Long medicineID, Double price, Double priceFrom, Double priceTo,
                                           Integer quantity, Integer quantityFrom, Integer quantityTo, Long pricelistID) {
-        List<Item> items = findAll();
+        List<Item> items = itemRepository.findAll();
         if (id != null) {
             items.removeIf(i -> !i.getId().equals(id));
         }
