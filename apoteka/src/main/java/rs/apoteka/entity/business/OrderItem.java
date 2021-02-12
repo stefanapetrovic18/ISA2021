@@ -11,8 +11,8 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(optional = false)
-    @JoinColumn(name = "medicine", referencedColumnName = "id", unique = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "medicine", referencedColumnName = "id")
     private Medicine medicine;
     @Column
     private Integer quantity;
