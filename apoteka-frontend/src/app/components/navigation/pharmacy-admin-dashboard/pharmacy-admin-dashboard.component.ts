@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pharmacy-admin-dashboard',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PharmacyAdminDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+  navigate(route: string) {
+    this.router.navigateByUrl(route);
+  }
+  open(component: string) {
+    if (component === 'edit') {}
   }
 
 }

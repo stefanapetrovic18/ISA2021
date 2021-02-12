@@ -1,0 +1,13 @@
+mat-card {
+  max-width: 200px;
+  margin: 20px;
+}
+
+.navigation {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 81px);
+  max-width: 100%;
+  grid-template-columns: 250px 250px 250px;
+}

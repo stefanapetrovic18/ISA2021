@@ -1,1 +1,128 @@
-<p>patient-dashboard works!</p>
+<div class="navigation">
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Apoteka</mat-card-title>
+      <mat-card-subtitle>Lista apoteka</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pristupite listi apoteka.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('apoteka')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Pregledi</mat-card-title>
+      <mat-card-subtitle>Lista pregleda</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pristupite listi pregleda.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('pregled')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Konsultacije</mat-card-title>
+      <mat-card-subtitle>Lista konsultacija</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pristupite listi konsultacija.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('konsultacija')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Akcije/promocije</mat-card-title>
+      <mat-card-subtitle>Lista akcija/promocija</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pristupite listi akcija/promocija.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('promocija')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Pretplacen</mat-card-title>
+      <mat-card-subtitle>Lista apoteka na koje je korisnik pretplacen</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pristupite listi apoteka na koje ste pretplaceni.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('apoteka?sub=true')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Zakazi pregled</mat-card-title>
+      <mat-card-subtitle>Zakazivanje pregleda</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Otvorite dijalog za zakazivanje pregleda.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="edit-button" (click)="open('pregled')">OTVORI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Zakazi konsultaciju</mat-card-title>
+      <mat-card-subtitle>Zakazivanje konsultacija</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Otvorite dijalog za zakazivanje konsultacija.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="edit-button" (click)="open('konsultacija')">OTVORI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Promeni podatke</mat-card-title>
+      <mat-card-subtitle>Promena podataka</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Otvorite dijalog za promenu podataka.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="edit-button" (click)="open('edit')">OTVORI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Promeni lozinku</mat-card-title>
+      <mat-card-subtitle>Promena lozinke</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pristupite promeni lozinke.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('change-password')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
