@@ -31,7 +31,6 @@ export class OrderItemTableViewComponent implements OnInit {
   ngOnInit() {
     if (this.data !== undefined && this.data.length > 0) {
       this.dataSource = new MatTableDataSource(this.data);
-      console.log(this.dataSource);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     } else {

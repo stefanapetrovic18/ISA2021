@@ -34,7 +34,6 @@ export class OrderTableViewComponent implements OnInit {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {
           this.dataSource = new MatTableDataSource(this.data);
-          console.log(this.data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         } else {
@@ -68,8 +67,6 @@ export class OrderTableViewComponent implements OnInit {
   }
 
   view(input: Order) {
-    console.log(input);
-    console.log(input.items);
     this.dialog.open(OrderItemTableViewComponent, {
       data: input.items
     });
