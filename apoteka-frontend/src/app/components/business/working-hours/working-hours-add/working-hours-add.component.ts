@@ -30,26 +30,24 @@ export class WorkingHoursAddComponent implements OnInit {
       this.pharmacist = this.data;
       this.pharmacies = [];
       this.pharmacies.push(this.pharmacist.pharmacy);
-      this.workingHours.employeeID = this.pharmacist.id;
     } else if (this.data.pharmacies !== undefined) {
       this.dermatologist = this.data;
       this.pharmacies = this.dermatologist.pharmacies;
-      this.workingHours.employeeID = this.pharmacist.id;
     } else {
-      window.alert('Greška!');
-      this.close();
+      window.alert('Dodate!');
     }
+    console.log(this.data);
   }
 
   add() {
-    this.workingHoursService.create(this.workingHours).subscribe(
-      data => {
-        window.alert('Uspešno dodavanje!');
-        this.close();
-      }, error => {
-        window.alert('Neuspešno dodavanje ->' + error.message);
-      }
-    );
+    this.dialogRef.close({result: this.workingHours});
+    // this.workingHoursService.create(this.workingHours).subscribe(
+    //   data => {
+    //     window.alert('Uspešno dodavanje!');
+    //   }, error => {
+    //     window.alert('Neuspešno dodavanje ->' + error.message);
+    //   }
+    // );
   }
 
   close() {

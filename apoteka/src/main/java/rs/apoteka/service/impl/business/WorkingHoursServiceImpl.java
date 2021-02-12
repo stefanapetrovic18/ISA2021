@@ -115,7 +115,7 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
     private Boolean checkFree(WorkingHours workingHours) {
         List<WorkingHours> hours = getEmployeeWorkingHours(workingHours);
         if (hours == null) {
-            return false;
+            return true;
         }
         Boolean flag = false;
         for (WorkingHours wh : hours) {

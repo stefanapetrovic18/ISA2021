@@ -53,6 +53,8 @@
       <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>
     </mat-select>
   </mat-form-field>
+
+  <button (click)="addWH()" class="add-button" mat-button mat-raised-button>DODAJ RADNO VREME</button>
 </div>
 <div mat-dialog-actions>
   <button (click)="add()" class="add-button" mat-button mat-raised-button>DODAJ</button>

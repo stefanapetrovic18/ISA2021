@@ -1,3 +1,97 @@
-<p>
-  dermatologist-table-view works!
-</p>
+<mat-drawer-container autosize class="table-container">
+
+  <mat-drawer #drawer class="filter-sidenav" mode="side" position="end">
+    <p>Filter pretraga</p>
+    <button (click)="filter()" class="filter-button" mat-raised-button>
+      PRIMENI
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <button (click)="drawer.toggle()" class="cancel-button" mat-raised-button>
+      ZATVORI
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-drawer>
+
+  <mat-drawer-content class="page-content">
+    <div class="table-header">
+      <mat-form-field *ngIf="dataSource" class="search-input">
+        <mat-label>
+          <mat-icon>search</mat-icon>
+          Pretraga
+        </mat-label>
+        <input
+          #input
+          (keyup)="applyFilter($event.target.value)"
+          matInput
+          placeholder="Pretraga"
+        />
+      </mat-form-field>
+      <div class="action-buttons">
+        <button (click)="add()" class="add-button" mat-raised-button>
+          DODAJ
+          <mat-icon>add</mat-icon>
+        </button>
+        <button (click)="drawer.toggle()" class="filter-button" mat-raised-button>
+          FILTER
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+        <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="'view'">
+        <mat-header-cell *matHeaderCellDef>Info</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button (click)="view(element)" class="info-button" mat-raised-button>
+            INFO
+            <mat-icon>info</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="'edit'">
+        <mat-header-cell *matHeaderCellDef>Izmeni</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button (click)="edit(element)" class="edit-button" mat-raised-button>
+            IZMENI
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="'delete'">
+        <mat-header-cell *matHeaderCellDef>Ukloni</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button (click)="delete(element)" class="delete-button" mat-raised-button>
+            UKLONI
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="'rezervacija'">
+        <mat-header-cell *matHeaderCellDef>Rezervacija</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button (click)="reserve(element)" class="delete-button" mat-raised-button>
+            REZERVACIJA
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+      <mat-row *matNoDataRow>
+        <mat-cell colspan="4"
+        >Nijedan podatak ne odgovara unetom parametru.
+        </mat-cell
+        >
+      </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </mat-drawer-content>
+</mat-drawer-container>

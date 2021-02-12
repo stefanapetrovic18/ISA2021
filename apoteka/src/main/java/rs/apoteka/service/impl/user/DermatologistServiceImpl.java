@@ -1,11 +1,13 @@
 package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.repository.user.DermatologistRepository;
 import rs.apoteka.service.intf.business.PharmacyService;
+import rs.apoteka.service.intf.business.WorkingHoursService;
 import rs.apoteka.service.intf.user.DermatologistService;
 import rs.apoteka.service.intf.user.PharmacistService;
 
@@ -19,6 +21,8 @@ public class DermatologistServiceImpl implements DermatologistService {
     private DermatologistRepository dermatologistRepository;
     @Autowired
     private PharmacyService pharmacyService;
+    @Autowired
+    private WorkingHoursService workingHoursService;
 
     @Override
     public List<Dermatologist> findAll() {
@@ -85,7 +89,17 @@ public class DermatologistServiceImpl implements DermatologistService {
 
     @Override
     public Dermatologist create(Dermatologist dermatologist) {
-        return dermatologistRepository.save(dermatologist);
+        dermatologist.setEnabled(true);
+        dermatologist.setPasswordChanged(false);
+        dermatologist.setValidated(false);
+        dermatologist.setPassword(new BCryptPasswordEncoder().encode(dermatologist.getPassword()));
+//        dermatologist.getWorkingHours().forEach(wh -> workingHoursService.create(wh));
+        Dermatologist d = dermatologistRepository.save(dermatologist);
+        if (d.getWorkingHours() != null) {
+            d.getWorkingHours().forEach(wh -> wh.setEmployeeID(d.getId()));
+            d.getWorkingHours().forEach(wh -> workingHoursService.update(wh));
+        }
+        return d;
     }
 
     @Override

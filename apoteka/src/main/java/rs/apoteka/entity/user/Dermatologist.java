@@ -36,6 +36,7 @@ public class Dermatologist extends User {
     private List<Examination> appointments;
     @Column
     @ElementCollection(targetClass = WorkingHours.class)
+    @OneToMany(mappedBy = "employeeID", cascade = CascadeType.MERGE)
     //@JsonView(Views.Public.class)
     private List<WorkingHours> workingHours;
     @Column
