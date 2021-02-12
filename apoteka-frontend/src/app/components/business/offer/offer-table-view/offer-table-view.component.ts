@@ -79,9 +79,13 @@ export class OfferTableViewComponent implements OnInit {
   }
 
   delete(input: Offer) {
-    this.dialog.open(OfferDeleteComponent, {
-      data: input
-    });
+    this.offerService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   medicine(input: Offer) {
     this.router.navigateByUrl('lekovi?offerID=' + input.id);

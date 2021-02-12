@@ -130,9 +130,13 @@ export class DermatologistTableViewComponent implements OnInit {
   }
 
   delete(input: Dermatologist) {
-    this.dialog.open(DermatologistDeleteComponent, {
-      data: input
-    });
+    this.dermatologistService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   reserve(input: Dermatologist) {
     this.dialog.open(ExaminationAddComponent);

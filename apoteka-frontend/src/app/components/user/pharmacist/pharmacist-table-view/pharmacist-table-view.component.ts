@@ -129,9 +129,13 @@ export class PharmacistTableViewComponent implements OnInit {
   }
 
   delete(input: Pharmacist) {
-    this.dialog.open(PharmacistDeleteComponent, {
-      data: input
-    });
+    this.pharmacistService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   reserve(input: Pharmacist) {}
 

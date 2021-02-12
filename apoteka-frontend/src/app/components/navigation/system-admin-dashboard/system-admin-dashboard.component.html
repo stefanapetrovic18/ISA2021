@@ -1,1 +1,86 @@
-<p>system-admin-dashboard works!</p>
+<div class="navigation">
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Lekovi</mat-card-title>
+      <mat-card-subtitle>Lista lekova</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pristupite listi lekova.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('lek')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Dodaj apoteku</mat-card-title>
+      <mat-card-subtitle>Dodavanje apoteke</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Otvorite dijalog za dodavanje apoteke.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="edit-button" (click)="open('add-pharmacy')">OTVORI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Dodaj administratora apoteke</mat-card-title>
+      <mat-card-subtitle>Dodavanje administratora apoteke</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Otvorite dijalog za dodavanje administratora apoteke.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="edit-button" (click)="open('add-pharmacy-admin')">OTVORI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Dodaj dermatologa</mat-card-title>
+      <mat-card-subtitle>Dodavanje dermatologa</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Otvorite dijalog za dodavanje dermatologa.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="edit-button" (click)="open('add-dermatologist')">OTVORI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Dodaj lek</mat-card-title>
+      <mat-card-subtitle>Dodavanje leka</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Otvorite dijalog za dodavanje leka.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="edit-button" (click)="open('add-medicine')">OTVORI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Promeni lozinku</mat-card-title>
+      <mat-card-subtitle>Promena lozinke</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pristupite promeni lozinke.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('change-password')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -125,9 +125,13 @@ export class PharmacyTableViewComponent implements OnInit {
   }
 
   delete(input: Pharmacy) {
-    this.dialog.open(PharmacyDeleteComponent, {
-      data: input
-    });
+    this.pharmacyService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   reserve(input: Pharmacy) {
     this.router.navigateByUrl('farmaceut?pharmacyID=' + input.id + '&localDateTime=' + this.date);

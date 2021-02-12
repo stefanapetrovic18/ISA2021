@@ -79,9 +79,13 @@ export class PromotionTableViewComponent implements OnInit {
   }
 
   delete(input: Promotion) {
-    this.dialog.open(PromotionDeleteComponent, {
-      data: input
-    });
+    this.promotionService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
 
 }

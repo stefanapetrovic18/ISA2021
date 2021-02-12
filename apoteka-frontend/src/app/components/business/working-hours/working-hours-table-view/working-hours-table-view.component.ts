@@ -79,9 +79,13 @@ export class WorkingHoursTableViewComponent implements OnInit {
   }
 
   delete(input: WorkingHours) {
-    this.dialog.open(WorkingHoursDeleteComponent, {
-      data: input
-    });
+    this.workingHoursService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
 
 }

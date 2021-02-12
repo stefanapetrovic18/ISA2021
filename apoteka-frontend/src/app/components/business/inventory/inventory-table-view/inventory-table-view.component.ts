@@ -79,9 +79,13 @@ export class InventoryTableViewComponent implements OnInit {
   }
 
   delete(input: Inventory) {
-    this.dialog.open(InventoryDeleteComponent, {
-      data: input
-    });
+    this.inventoryService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   medicine(input: Inventory) {
     this.router.navigateByUrl('lekovi?inventoryID=' + input.id);

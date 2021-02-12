@@ -79,9 +79,13 @@ export class OrderTableViewComponent implements OnInit {
   }
 
   delete(input: Order) {
-    this.dialog.open(OrderDeleteComponent, {
-      data: input
-    });
+    this.orderService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   medicine(input: Order) {
     this.router.navigateByUrl('lekovi?orderID=' + input.id);

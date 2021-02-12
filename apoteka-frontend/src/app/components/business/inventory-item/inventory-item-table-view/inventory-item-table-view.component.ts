@@ -79,9 +79,13 @@ export class InventoryItemTableViewComponent implements OnInit {
   }
 
   delete(input: InventoryItem) {
-    this.dialog.open(InventoryItemDeleteComponent, {
-      data: input
-    });
+    this.inventoryItemService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
 
 }

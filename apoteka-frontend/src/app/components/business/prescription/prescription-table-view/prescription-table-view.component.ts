@@ -79,9 +79,13 @@ export class PrescriptionTableViewComponent implements OnInit {
   }
 
   delete(input: Prescription) {
-    this.dialog.open(PrescriptionDeleteComponent, {
-      data: input
-    });
+    this.prescriptionService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
 
 }

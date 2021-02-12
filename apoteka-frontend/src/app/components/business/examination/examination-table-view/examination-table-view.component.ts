@@ -177,9 +177,13 @@ export class ExaminationTableViewComponent implements OnInit {
   }
 
   delete(input: Examination) {
-    this.dialog.open(ExaminationDeleteComponent, {
-      data: input
-    });
+    this.examinationService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
 
   reserve(input: Examination) {

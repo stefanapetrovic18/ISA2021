@@ -86,9 +86,13 @@ export class ConsultationTableViewComponent implements OnInit {
   }
 
   delete(input: Consultation) {
-    this.dialog.open(ConsultationDeleteComponent, {
-      data: input
-    });
+    this.consultationService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   cancel(input: Consultation) {
     this.consultationService.cancel(input).subscribe(
@@ -97,7 +101,7 @@ export class ConsultationTableViewComponent implements OnInit {
       }, error => {
         window.alert('Nije otkazano!');
       }
-    )
+    );
   }
 
 }

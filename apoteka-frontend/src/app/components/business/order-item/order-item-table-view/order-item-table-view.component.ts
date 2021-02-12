@@ -71,9 +71,13 @@ export class OrderItemTableViewComponent implements OnInit {
   }
 
   delete(input: OrderItem) {
-    this.dialog.open(OrderItemDeleteComponent, {
-      data: input
-    });
+    this.orderItemService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
 
 }

@@ -79,9 +79,13 @@ export class PricelistTableViewComponent implements OnInit {
   }
 
   delete(input: Pricelist) {
-    this.dialog.open(PricelistDeleteComponent, {
-      data: input
-    });
+    this.pricelistService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
 
 }

@@ -83,9 +83,13 @@ export class MedicineTableViewComponent implements OnInit {
   }
 
   delete(input: Medicine) {
-    this.dialog.open(MedicineDeleteComponent, {
-      data: input
-    });
+    this.medicineService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   reserve(input: Medicine) {
     const r = new Reservation();

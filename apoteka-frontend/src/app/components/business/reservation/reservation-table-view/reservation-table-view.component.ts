@@ -79,9 +79,13 @@ export class ReservationTableViewComponent implements OnInit {
   }
 
   delete(input: Reservation) {
-    this.dialog.open(ReservationDeleteComponent, {
-      data: input
-    });
+    this.reservationService.delete(input.id).subscribe(
+      data => {
+        window.alert('Obrisano!');
+      }, error => {
+        window.alert('Nije obrisano!');
+      }
+    );
   }
   cancel(input: Reservation) {
     this.reservationService.cancel(input).subscribe(
