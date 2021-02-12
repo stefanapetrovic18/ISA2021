@@ -14,6 +14,7 @@ import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.ConsultationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ConsultationService;
+import rs.apoteka.service.intf.business.WorkingHoursService;
 import rs.apoteka.service.intf.user.PatientService;
 import rs.apoteka.service.intf.user.PharmacistService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
@@ -37,6 +38,8 @@ public class ConsultationServiceImpl implements ConsultationService {
     private PharmacyAdminService pharmacyAdminService;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private WorkingHoursService workingHoursService;
 
     @Override
     public List<Consultation> findAll() {
@@ -186,8 +189,8 @@ public class ConsultationServiceImpl implements ConsultationService {
     private Boolean appointmentCheck(Consultation consultation) {
         return duringWorkingHours(consultation) &&
                 appointmentFree(consultation) &&
-                !patientHasConsultation(consultation) &&
-                !patientHasExamination(consultation);
+                patientHasNoConsultation(consultation) &&
+                patientHasNoExamination(consultation);
     }
 
     private Boolean duringWorkingHours(Consultation consultation) {
@@ -195,8 +198,8 @@ public class ConsultationServiceImpl implements ConsultationService {
         DayOfWeek dayOfWeek = consultation.getConsultationDate().getDayOfWeek();
         LocalTime localTimeStart = consultation.getConsultationDate().toLocalTime();
         LocalTime localTimeEnd = consultation.getConsultationDate().plusMinutes(consultation.getDuration()).toLocalTime();
-        for (WorkingHours workingHours : consultation.getPharmacist().getWorkingHours()) {
-            if (workingHours.getPharmacy().equals(consultation.getPharmacy())) {
+        for (WorkingHours workingHours : workingHoursService.findAllByEmployeeID(consultation.getPharmacist().getId())) {
+            if (workingHours.getPharmacy().getId().equals(consultation.getPharmacy().getId())) {
                 if (dayOfWeek == workingHours.getDayOfWeek()) {
                     if (localTimeStart.isAfter(workingHours.getShiftStart()) && localTimeEnd.isBefore(workingHours.getShiftEnd())) {
                         flag = true;
@@ -204,12 +207,14 @@ public class ConsultationServiceImpl implements ConsultationService {
                 } // else: continue
             } // else: continue
         }
-        System.out.println("DWH: " + flag);
         return flag;
     }
 
     private Boolean appointmentFree(Consultation consultation) {
         Boolean flag = false;
+        if (consultation.getPharmacist().getConsultations() == null || consultation.getPharmacist().getConsultations().size() == 0) {
+            return true;
+        }
         for (Consultation cons : consultation.getPharmacist().getConsultations()) {
             if ((consultation.getConsultationDate().isBefore(cons.getConsultationDate()) &&
                     (consultation.getConsultationDate().plusMinutes(consultation.getDuration()).isBefore(
@@ -226,12 +231,14 @@ public class ConsultationServiceImpl implements ConsultationService {
                 return false;
             }
         }
-        System.out.println("AF: " + flag);
         return flag;
     }
 
-    private Boolean patientHasConsultation(Consultation consultation) {
+    private Boolean patientHasNoConsultation(Consultation consultation) {
         Boolean flag = false;
+        if (consultation.getPatient().getConsultations() == null || consultation.getPatient().getConsultations().size() == 0) {
+            return true;
+        }
         for (Consultation cons : consultation.getPatient().getConsultations()) {
             if ((consultation.getConsultationDate().isBefore(cons.getConsultationDate()) &&
                     (consultation.getConsultationDate().plusMinutes(consultation.getDuration()).isBefore(
@@ -248,12 +255,14 @@ public class ConsultationServiceImpl implements ConsultationService {
                 return false;
             }
         }
-        System.out.println("PHC: " + flag);
         return flag;
     }
 
-    private Boolean patientHasExamination(Consultation consultation) {
+    private Boolean patientHasNoExamination(Consultation consultation) {
         Boolean flag = false;
+        if (consultation.getPatient().getExaminations() == null || consultation.getPatient().getExaminations().size() == 0) {
+            return true;
+        }
         for (Examination exam : consultation.getPatient().getExaminations()) {
             if ((consultation.getConsultationDate().isBefore(exam.getExaminationDate()) &&
                     (consultation.getConsultationDate().plusMinutes(consultation.getDuration()).isBefore(
@@ -270,12 +279,14 @@ public class ConsultationServiceImpl implements ConsultationService {
                 return false;
             }
         }
-        System.out.println("PHE: " + flag);
         return flag;
     }
 
     private Boolean freeNow(Consultation consultation) {
         Boolean flag = false;
+        if (consultation.getPatient().getConsultations() == null || consultation.getPatient().getConsultations().size() == 0) {
+            return true;
+        }
         for (Consultation cons : consultation.getPatient().getConsultations()) {
             if ((consultation.getConsultationDate().isBefore(cons.getConsultationDate()) &&
                     (consultation.getConsultationDate().plusMinutes(consultation.getDuration()).isBefore(
@@ -292,7 +303,6 @@ public class ConsultationServiceImpl implements ConsultationService {
                 return false;
             }
         }
-        System.out.println("FN: " + flag);
         return flag;
     }
 }

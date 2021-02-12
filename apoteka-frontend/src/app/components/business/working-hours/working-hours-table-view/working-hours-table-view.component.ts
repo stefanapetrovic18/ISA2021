@@ -23,8 +23,8 @@ export class WorkingHoursTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: WorkingHours[];
-  columns = ['x', 'y'];
-  actions = ['view', 'edit', 'delete'];
+  columns = ['employeeID', 'dayOfWeek', 'shiftStart', 'shiftEnd'];
+  actions = ['pharmacy', 'view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private workingHoursService: WorkingHoursService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {

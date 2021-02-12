@@ -14,6 +14,7 @@ import rs.apoteka.service.intf.user.PatientService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -92,6 +93,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (patient == null) {
             return null;
         }
+        reservation.setReservationNumber(String.valueOf(new Random().nextLong()));
         reservation.setPatient(patient);
         reservation.getPharmacy().getPricelist().getItems().forEach(i -> {
             if (i.getMedicine().getId().equals(reservation.getMedicine().getId())) {

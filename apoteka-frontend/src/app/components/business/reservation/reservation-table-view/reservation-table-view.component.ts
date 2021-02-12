@@ -23,8 +23,8 @@ export class ReservationTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Reservation[];
-  columns = ['x', 'y'];
-  actions = ['view', 'edit', 'delete'];
+  columns = ['reservationNumber', 'reservationDate', 'collectionDate', 'collected'];
+  actions = ['pharmacy', 'patient', 'medicine', 'view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private reservationService: ReservationService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {

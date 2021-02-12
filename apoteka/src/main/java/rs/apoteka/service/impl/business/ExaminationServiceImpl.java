@@ -180,9 +180,9 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public Examination update(Examination examination) {
-//        if (!appointmentCheck(examination)) {
-//            return null;
-//        }
+        if (!appointmentCheck(examination)) {
+            return null;
+        }
         return examinationRepository.save(examination);
     }
 
@@ -199,8 +199,8 @@ public class ExaminationServiceImpl implements ExaminationService {
     private Boolean appointmentCheck(Examination examination) {
         return duringWorkingHours(examination) &&
                 appointmentFree(examination) &&
-                !patientHasConsultation(examination) &&
-                !patientHasExamination(examination);
+                patientHasNoConsultation(examination) &&
+                patientHasNoExamination(examination);
     }
 
     private Boolean duringWorkingHours(Examination examination) {
@@ -222,6 +222,9 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     private Boolean appointmentFree(Examination examination) {
         Boolean flag = false;
+        if (examination.getDermatologist().getAppointments() == null || examination.getDermatologist().getAppointments().size() == 0) {
+            return true;
+        }
         for (Examination exam : examination.getDermatologist().getAppointments()) {
             if ((examination.getExaminationDate().isBefore(exam.getExaminationDate()) &&
                     (examination.getExaminationDate().plusMinutes(examination.getDuration()).isBefore(
@@ -241,8 +244,11 @@ public class ExaminationServiceImpl implements ExaminationService {
         return flag;
     }
 
-    private Boolean patientHasConsultation(Examination examination) {
+    private Boolean patientHasNoConsultation(Examination examination) {
         Boolean flag = false;
+        if (examination.getPatient().getConsultations() == null || examination.getPatient().getConsultations().size() == 0) {
+            return true;
+        }
         for (Consultation cons : examination.getPatient().getConsultations()) {
             if ((examination.getExaminationDate().isBefore(cons.getConsultationDate()) &&
                     (examination.getExaminationDate().plusMinutes(examination.getDuration()).isBefore(
@@ -262,8 +268,11 @@ public class ExaminationServiceImpl implements ExaminationService {
         return flag;
     }
 
-    private Boolean patientHasExamination(Examination examination) {
+    private Boolean patientHasNoExamination(Examination examination) {
         Boolean flag = false;
+        if (examination.getPatient().getExaminations() == null || examination.getPatient().getExaminations().size() == 0) {
+            return true;
+        }
         for (Examination exam : examination.getPatient().getExaminations()) {
             if ((examination.getExaminationDate().isBefore(exam.getExaminationDate()) &&
                     (examination.getExaminationDate().plusMinutes(examination.getDuration()).isBefore(

@@ -35,6 +35,7 @@ public class Pharmacist extends User {
     private List<Consultation> consultations;
     @Column
     @ElementCollection(targetClass = WorkingHours.class)
+//    @OneToMany(mappedBy = "employeeID", cascade = CascadeType.MERGE)
     private List<WorkingHours> workingHours;
     @Column
     private Double rating;
