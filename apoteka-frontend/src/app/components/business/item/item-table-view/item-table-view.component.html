@@ -39,6 +39,10 @@
     </div>
 
     <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="Medicine">
+        <mat-header-cell *matHeaderCellDef>Medicine</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object.medicine.name }}</mat-cell>
+      </ng-container>
       <ng-container *ngFor="let column of columns" [matColumnDef]="column">
         <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
         <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>

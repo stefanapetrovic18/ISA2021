@@ -23,8 +23,8 @@ export class ItemTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Item[];
-  columns = ['x', 'y'];
-  actions = ['view', 'edit', 'delete'];
+  columns = ['price', 'quantity'];
+  actions = ['Medicine', 'view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private itemService: ItemService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
@@ -44,7 +44,7 @@ export class ItemTableViewComponent implements OnInit {
         window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
         this.router.navigateByUrl('');
       }
-    )
+    );
   }
 
   applyFilter(value: any) {
