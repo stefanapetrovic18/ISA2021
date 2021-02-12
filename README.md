@@ -12,7 +12,7 @@ Stefana Petrović - RA-114/2015
 - Java (JDK 11.0.6) - dodati u Environment variables!
 - Node.js (korišćena je verzija 10.15.0) - dodati u Environment variables!
 
-Preporučuje se praćenje
+Preporučuje se praćenje zvanične dokumentacije za instalaciju, podešavanje i pokretanje.
 
 ## Pokretanje
 
