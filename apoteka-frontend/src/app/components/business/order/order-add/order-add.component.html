@@ -1,1 +1,13 @@
-<p>order-add works!</p>
+<h1 mat-dialog-title>Dodaj narudžbinu</h1>
+<div mat-dialog-content>
+  <p>Datum isteka roka</p>
+  <mat-form-field>
+    <mat-label>Datum isteka roka</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="data.expiryDate">
+  </mat-form-field>
+  <button (click)="addItem()" class="add-button" mat-button mat-raised-button>DODAJ STAVKU</button>
+</div>
+<div mat-dialog-actions>
+  <button (click)="add()" class="add-button" mat-button mat-raised-button>POTVRDI</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>

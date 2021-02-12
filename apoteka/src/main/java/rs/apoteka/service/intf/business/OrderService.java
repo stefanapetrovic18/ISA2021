@@ -12,7 +12,7 @@ public interface OrderService {
 
     Order getOne(Long id);
 
-    Order create(Order order);
+    Order create(Order order) throws Exception;
 
     Order update(Order order);
 

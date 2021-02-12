@@ -3,8 +3,12 @@ package rs.apoteka.service.impl.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Order;
+import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.OrderRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
+import rs.apoteka.service.intf.business.OrderItemService;
 import rs.apoteka.service.intf.business.OrderService;
+import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +18,12 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    private OrderItemService orderItemService;
 
     @Override
     public List<Order> findAll() {
@@ -47,7 +57,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order create(Order order) {
+    public Order create(Order order) throws Exception {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin == null) {
+            throw new Exception("Administrator apoteke nije ulogovan!");
+        }
+        if (order.getItems() != null) {
+            order.getItems().forEach(i -> orderItemService.create(i));
+        }
+        order.setPharmacy(admin.getPharmacy());
         return orderRepository.save(order);
     }
 

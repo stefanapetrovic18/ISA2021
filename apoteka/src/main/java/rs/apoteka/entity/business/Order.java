@@ -13,7 +13,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.MERGE)
     private List<OrderItem> items;
     @Column(nullable = false)
     private LocalDateTime expiryDate;

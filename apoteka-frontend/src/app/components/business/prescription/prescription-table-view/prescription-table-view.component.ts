@@ -37,8 +37,8 @@ export class PrescriptionTableViewComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         } else {
-          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-          this.router.navigateByUrl('');
+          window.alert('Podaci ne postoje!');
+        // this.router.navigateByUrl('');
         }
       }, error => {
         window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,29 +22,22 @@ export class OrderItemTableViewComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource: MatTableDataSource<any>;
-  @Input() data: OrderItem[];
+  // @Input() data: OrderItem[];
   columns = ['quantity'];
-  actions = ['view', 'edit', 'delete', 'medicine'];
-  displayedColumns = [...this.columns, ...this.actions];
-  constructor(private orderItemService: OrderItemService, private router: Router, private dialog: MatDialog) {}
+  actions = ['medicine'];
+  displayedColumns = [...this.actions, ...this.columns];
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any, private orderItemService: OrderItemService, private router: Router,
+              private dialog: MatDialog, private dialogRef: MatDialogRef<OrderItemTableViewComponent>) {}
   ngOnInit() {
-    this.orderItemService.findAll().subscribe(
-      data => {
-        this.data = data;
-        if (this.data !== undefined && this.data.length > 0) {
-          this.dataSource = new MatTableDataSource(this.data);
-          console.log(this.dataSource);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        } else {
-          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-          this.router.navigateByUrl('');
-        }
-      }, error => {
-        window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-        this.router.navigateByUrl('');
-      }
-    );
+    if (this.data !== undefined && this.data.length > 0) {
+      this.dataSource = new MatTableDataSource(this.data);
+      console.log(this.dataSource);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    } else {
+      window.alert('Podaci ne postoje!');
+    // this.router.navigateByUrl('');
+    }
   }
 
   applyFilter(value: any) {

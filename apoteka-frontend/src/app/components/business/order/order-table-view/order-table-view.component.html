@@ -71,15 +71,6 @@
           </button>
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="'medicine'">
-        <mat-header-cell *matHeaderCellDef>Lekovi</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button class="delete-button" mat-raised-button (click)="medicine(element)">
-            LEKOVI
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

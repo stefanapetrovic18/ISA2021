@@ -12,7 +12,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(optional = false)
-    @JoinColumn(name = "medicine", referencedColumnName = "id")
+    @JoinColumn(name = "medicine", referencedColumnName = "id", unique = false)
     private Medicine medicine;
     @Column
     private Integer quantity;

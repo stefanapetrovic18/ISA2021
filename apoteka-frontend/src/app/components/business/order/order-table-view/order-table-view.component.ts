@@ -10,6 +10,7 @@ import { OrderAddComponent } from '../order-add/order-add.component';
 import { OrderDeleteComponent } from '../order-delete/order-delete.component';
 import { OrderEditComponent } from '../order-edit/order-edit.component';
 import { OrderViewComponent } from '../order-view/order-view.component';
+import {OrderItemTableViewComponent} from '../../order-item/order-item-table-view/order-item-table-view.component';
 
 @Component({
   selector: 'app-order-table-view',
@@ -23,8 +24,8 @@ export class OrderTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Order[];
-  columns = ['expiryDate', 'y'];
-  actions = ['view', 'edit', 'delete', 'medicine'];
+  columns = ['expiryDate'];
+  actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private orderService: OrderService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
@@ -33,12 +34,12 @@ export class OrderTableViewComponent implements OnInit {
         this.data = data;
         if (this.data !== undefined && this.data.length > 0) {
           this.dataSource = new MatTableDataSource(this.data);
-          console.log(this.dataSource);
+          console.log(this.data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         } else {
-          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-          this.router.navigateByUrl('');
+          window.alert('Podaci ne postoje!');
+        // this.router.navigateByUrl('');
         }
       }, error => {
         window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
@@ -67,8 +68,10 @@ export class OrderTableViewComponent implements OnInit {
   }
 
   view(input: Order) {
-    this.dialog.open(OrderViewComponent, {
-      data: input
+    console.log(input);
+    console.log(input.items);
+    this.dialog.open(OrderItemTableViewComponent, {
+      data: input.items
     });
   }
 

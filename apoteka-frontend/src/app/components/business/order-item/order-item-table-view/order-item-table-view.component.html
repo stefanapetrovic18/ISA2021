@@ -1,15 +1,15 @@
 <mat-drawer-container class="table-container" autosize>
 
   <mat-drawer #drawer class="filter-sidenav" mode="side" position="end">
-    <p>Filter pretraga</p>
-    <button class="filter-button" (click)="filter()" mat-raised-button>
-      PRIMENI
-      <mat-icon>filter_list</mat-icon>
-    </button>
-    <button class="cancel-button" (click)="drawer.toggle()" mat-raised-button>
-      ZATVORI
-      <mat-icon>clear</mat-icon>
-    </button>
+<!--    <p>Filter pretraga</p>-->
+<!--    <button class="filter-button" (click)="filter()" mat-raised-button>-->
+<!--      PRIMENI-->
+<!--      <mat-icon>filter_list</mat-icon>-->
+<!--    </button>-->
+<!--    <button class="cancel-button" (click)="drawer.toggle()" mat-raised-button>-->
+<!--      ZATVORI-->
+<!--      <mat-icon>clear</mat-icon>-->
+<!--    </button>-->
   </mat-drawer>
 
   <mat-drawer-content class="page-content">
@@ -26,19 +26,23 @@
           #input
         />
       </mat-form-field>
-      <div class="action-buttons">
-        <button class="add-button" mat-raised-button (click)="add()">
-          DODAJ
-          <mat-icon>add</mat-icon>
-        </button>
-        <button class="filter-button" mat-raised-button (click)="drawer.toggle()">
-          FILTER
-          <mat-icon>filter_list</mat-icon>
-        </button>
-      </div>
+<!--      <div class="action-buttons">-->
+<!--        <button class="add-button" mat-raised-button (click)="add()">-->
+<!--          DODAJ-->
+<!--          <mat-icon>add</mat-icon>-->
+<!--        </button>-->
+<!--        <button class="filter-button" mat-raised-button (click)="drawer.toggle()">-->
+<!--          FILTER-->
+<!--          <mat-icon>filter_list</mat-icon>-->
+<!--        </button>-->
+<!--      </div>-->
     </div>
 
     <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="medicine">
+        <mat-header-cell *matHeaderCellDef>Medicine</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object.medicine.name }}</mat-cell>
+      </ng-container>
       <ng-container *ngFor="let column of columns" [matColumnDef]="column">
         <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
         <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>

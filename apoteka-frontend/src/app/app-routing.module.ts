@@ -27,6 +27,7 @@ import { PharmacyAdminTableViewComponent } from './components/user/pharmacy-admi
 import { SupplierTableViewComponent } from './components/user/supplier/supplier-table-view/supplier-table-view.component';
 import { SystemAdminTableViewComponent } from './components/user/system-admin/system-admin-table-view/system-admin-table-view.component';
 import {ConsultationAddComponent} from './components/business/consultation/consultation-add/consultation-add.component';
+import {OrderTableViewComponent} from './components/business/order/order-table-view/order-table-view.component';
 
 
 const routes: Routes = [
@@ -138,6 +139,10 @@ const routes: Routes = [
     path: 'konsultacija/zakazivanje',
     component: ConsultationAddComponent
   },
+  {
+    path: 'narudzbina',
+    component: OrderTableViewComponent
+  }
 
 
 
