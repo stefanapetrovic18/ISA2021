@@ -2,12 +2,18 @@ package rs.apoteka.entity.business;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +40,7 @@ public class Medicine {
     @Column(nullable = false)
     private String recommendedDose;
     @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Medicine.class)
+    //@JsonIgnore
     private List<Medicine> substitutes;
 
     public Medicine() {

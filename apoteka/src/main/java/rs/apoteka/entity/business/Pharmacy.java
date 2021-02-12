@@ -1,6 +1,8 @@
 package rs.apoteka.entity.business;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
@@ -11,6 +13,9 @@ import java.util.List;
 
 @Entity
 @Table
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,28 +26,27 @@ public class Pharmacy {
     private String description;
     @Column(nullable = false)
     private String address;
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<PharmacyAdmin> admins;
-    @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     private List<Dermatologist> dermatologists;
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Pharmacist> pharmacists;
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Examination> examinations;
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Consultation> consultations;
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Promotion> promotions;
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "pharmacy")
     private List<Order> orders;
-    @JsonIgnore
+    //@JsonIgnore
     @ElementCollection(targetClass = User.class)
     private List<User> subscriptions;
     // Inventar.

@@ -1,7 +1,9 @@
 package rs.apoteka.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.Role;
@@ -18,6 +20,9 @@ import java.util.List;
 
 @Entity
 @Table
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Dermatologist extends User {
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING)
@@ -27,7 +32,7 @@ public class Dermatologist extends User {
     private LocalDateTime vacationEnd;
     @ManyToMany
     private List<Pharmacy> pharmacies;
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(mappedBy = "dermatologist", cascade = CascadeType.ALL)
     private List<Examination> appointments;
     @Column

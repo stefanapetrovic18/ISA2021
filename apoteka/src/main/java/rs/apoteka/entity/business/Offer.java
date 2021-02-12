@@ -1,5 +1,7 @@
 package rs.apoteka.entity.business;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import rs.apoteka.entity.user.Supplier;
 
 import javax.persistence.*;
@@ -7,6 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

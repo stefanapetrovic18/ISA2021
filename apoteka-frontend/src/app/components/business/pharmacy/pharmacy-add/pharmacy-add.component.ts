@@ -34,6 +34,18 @@ export class PharmacyAddComponent implements OnInit {
       }
     );
   }
+  push(input: Dermatologist) {
+    if (this.data.dermatologists === undefined || this.data.dermatologists === null) {
+      this.data.dermatologists = [];
+    }
+    this.data.dermatologists.push(input);
+  }
+  ppush(input: Pharmacist) {
+    if (this.data.pharmacists === undefined || this.data.pharmacists === null) {
+      this.data.pharmacists = [];
+    }
+    this.data.pharmacists.push(input);
+  }
 
   add() {
     this.pharmacyService.create(this.data).subscribe(

@@ -16,14 +16,14 @@
     <input matInput type="text" [(ngModel)]="data.address" required>
   </mat-form-field>
   <p>Farmaceuti</p>
-  <mat-select [(value)]="data.pharmacists">
+  <mat-select>
     <mat-option>--</mat-option>
-    <mat-option multiple *ngFor="let pharmacist of pharmacists" [value]="pharmacist">{{pharmacist.username}}</mat-option>
+    <mat-option multiple *ngFor="let pharmacist of pharmacists" [value]="pharmacist" (onSelectionChange)="ppush(pharmacist)">{{pharmacist.username}}</mat-option>
   </mat-select>
   <p>Dermatolozi</p>
-  <mat-select [(value)]="data.dermatologists">
+  <mat-select>
     <mat-option>--</mat-option>
-    <mat-option multiple *ngFor="let dermatologist of dermatologists" [value]="dermatologist">{{dermatologist.username}}</mat-option>
+    <mat-option multiple *ngFor="let dermatologist of dermatologists" [value]="dermatologist" (onSelectionChange)="push(dermatologist)">{{dermatologist.username}}</mat-option>
   </mat-select>
 </div>
 <div mat-dialog-actions>

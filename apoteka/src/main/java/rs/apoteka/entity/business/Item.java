@@ -1,9 +1,16 @@
 package rs.apoteka.entity.business;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 @Entity
 @Table
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +23,7 @@ public class Item {
     @Column
     private Integer quantity;
     @ManyToOne
+    //@JsonIgnore
     @JoinColumn(name = "pricelist", referencedColumnName = "id")
     private Pricelist pricelist;
 

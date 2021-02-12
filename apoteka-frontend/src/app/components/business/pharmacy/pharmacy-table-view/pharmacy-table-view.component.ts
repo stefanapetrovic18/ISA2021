@@ -32,8 +32,9 @@ export class PharmacyTableViewComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap.subscribe(
       params => {
-        console.log(params.get('localDateTime'));
+        console.log(params);
         if (params.get('localDateTime') !== undefined && params.get('localDateTime')) {
+          window.alert('STVARNO');
           this.actions = ['reserve consultation'];
           this.displayedColumns = [...this.columns, ...this.actions];
           this.date = new Date(params.get('localDateTime'));

@@ -1,5 +1,6 @@
 package rs.apoteka.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.Role;
@@ -19,6 +20,7 @@ public class Patient extends User {
     @Column(nullable = false)
     private Integer points;
     @OneToMany(mappedBy = "patient")
+    //@JsonIgnore
     private List<Examination> examinations;
     @OneToMany(mappedBy = "patient")
     private List<Consultation> consultations;

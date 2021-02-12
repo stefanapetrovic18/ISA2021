@@ -8,6 +8,8 @@ import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.business.PharmacyRepository;
 import rs.apoteka.service.intf.business.PharmacyService;
+import rs.apoteka.service.intf.user.DermatologistService;
+import rs.apoteka.service.intf.user.PharmacistService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +20,10 @@ import java.util.stream.Collectors;
 public class PharmacyServiceImpl implements PharmacyService {
     @Autowired
     private PharmacyRepository pharmacyRepository;
+    @Autowired
+    private PharmacistService pharmacistService;
+    @Autowired
+    private DermatologistService dermatologistService;
 
     @Override
     public List<Pharmacy> findAll() {
@@ -108,11 +114,24 @@ public class PharmacyServiceImpl implements PharmacyService {
     public Pharmacy create(Pharmacy pharmacy) {
         if (pharmacy.getPharmacists() != null && pharmacy.getPharmacists().size() > 0)
             pharmacy = removeWorkingPharmacists(pharmacy);
-        Pharmacy ph = pharmacy;
+        Pharmacy ph = pharmacyRepository.save(pharmacy);
         if (ph.getPharmacists() != null && ph.getPharmacists().size() > 0)
-            ph.getPharmacists().forEach(pharmacist -> pharmacist.setPharmacy(ph));
+            ph.getPharmacists().forEach(pharmacist -> {
+                pharmacist.setPharmacy(ph);
+                pharmacistService.update(pharmacist);
+            });
         if (ph.getDermatologists() != null && ph.getDermatologists().size() > 0)
-            ph.getDermatologists().forEach(dermatologist -> dermatologist.getPharmacies().add(ph));
+            ph.getDermatologists().forEach(dermatologist -> {
+                System.out.println(dermatologist);
+                if (dermatologist.getPharmacies() != null) {
+                    dermatologist.getPharmacies().add(ph);
+                } else {
+                    dermatologist.setPharmacies(new ArrayList<Pharmacy>() {{
+                        add(ph);
+                    }});
+                }
+//                dermatologistService.update(dermatologist);
+            });
         if (ph.getConsultations() != null && ph.getConsultations().size() > 0)
             ph.getConsultations().forEach(consultation -> consultation.setPharmacy(ph));
         if (ph.getAdmins() != null && ph.getAdmins().size() > 0) ph.getAdmins().forEach(admin -> admin.setPharmacy(ph));
@@ -120,7 +139,7 @@ public class PharmacyServiceImpl implements PharmacyService {
             ph.getExaminations().forEach(examination -> examination.setPharmacy(ph));
         if (ph.getPromotions() != null && ph.getPromotions().size() > 0)
             ph.getPromotions().forEach(consultation -> consultation.setPharmacy(ph));
-        return pharmacyRepository.save(ph);
+        return ph;
     }
 
     @Override
