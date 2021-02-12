@@ -6,7 +6,7 @@
   <p>Datum i vreme početka pregleda</p>
   <mat-form-field>
     <mat-label>Datum i vreme početka pregleda</mat-label>
-    <input matInput type="datetime" [(ngModel)]="data.examinationDate" required>
+    <input matInput type="datetime-local" [(ngModel)]="data.examinationDate" required>
   </mat-form-field>
   <p>Trajanje</p>
   <mat-form-field>
@@ -23,7 +23,7 @@
     <mat-option>--</mat-option>
     <mat-option multiple *ngFor="let dermatologist of dermatologists" [value]="dermatologist">{{dermatologist.username}}</mat-option>
   </mat-select>
-  <p>Farmaceuti</p>
+  <p>Apoteka</p>
   <mat-select [(value)]="data.pharmacy">
     <mat-option>--</mat-option>
     <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>

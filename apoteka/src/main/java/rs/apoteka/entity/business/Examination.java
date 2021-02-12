@@ -26,7 +26,7 @@ public class Examination {
     @JoinColumn(name = "dermatologist", referencedColumnName = "id")
     //@JsonView(Views.Public.class)
     private Dermatologist dermatologist;
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "patient", referencedColumnName = "id")
     //@JsonView(Views.Public.class)
     private Patient patient;

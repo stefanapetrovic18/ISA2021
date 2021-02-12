@@ -2,6 +2,7 @@ package rs.apoteka.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import rs.apoteka.entity.auth.RegistrationRequest;
@@ -30,6 +31,7 @@ public class Pharmacist extends User {
     @JoinColumn(name = "pharmacy", referencedColumnName = "id")
     private Pharmacy pharmacy;
     @OneToMany(mappedBy = "pharmacist", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Consultation> consultations;
     @Column
     @ElementCollection(targetClass = WorkingHours.class)

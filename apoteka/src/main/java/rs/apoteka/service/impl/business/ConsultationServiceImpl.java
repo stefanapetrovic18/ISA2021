@@ -113,9 +113,9 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public Consultation create(Consultation consultation) {
-        if (!appointmentCheck(consultation)) {
-            return null;
-        }
+//        if (!appointmentCheck(consultation)) {
+//            return null;
+//        }
         return consultationRepository.save(consultation);
     }
 
@@ -127,7 +127,7 @@ public class ConsultationServiceImpl implements ConsultationService {
         }
         consultation.setPatient(patient);
         consultation.setPrice(consultation.getPharmacy().getPricelist().getConsultationPrice());
-        Consultation c = update(consultation);
+        Consultation c = create(consultation);
         patient.getConsultations().add(c);
         patientService.update(patient);
         sendMail(c);
@@ -199,6 +199,7 @@ public class ConsultationServiceImpl implements ConsultationService {
                 } // else: continue
             } // else: continue
         }
+        System.out.println("DWH: " + flag);
         return flag;
     }
 
@@ -220,6 +221,7 @@ public class ConsultationServiceImpl implements ConsultationService {
                 return false;
             }
         }
+        System.out.println("AF: " + flag);
         return flag;
     }
 
@@ -241,6 +243,7 @@ public class ConsultationServiceImpl implements ConsultationService {
                 return false;
             }
         }
+        System.out.println("PHC: " + flag);
         return flag;
     }
 
@@ -262,6 +265,7 @@ public class ConsultationServiceImpl implements ConsultationService {
                 return false;
             }
         }
+        System.out.println("PHE: " + flag);
         return flag;
     }
 
@@ -283,6 +287,7 @@ public class ConsultationServiceImpl implements ConsultationService {
                 return false;
             }
         }
+        System.out.println("FN: " + flag);
         return flag;
     }
 }

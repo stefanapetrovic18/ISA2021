@@ -31,7 +31,8 @@ export class ExaminationTableViewComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap.subscribe(
       params => {
-        if (params.get('reserved') !== undefined && params.get('reserved') === 'false') {
+        console.log(params.get('pharmacyID'));
+        if (params.get('reserved') !== null && params.get('reserved') === 'false') {
           this.examinationService.findAllFree().subscribe(
             data => {
               this.data = data;
@@ -49,7 +50,7 @@ export class ExaminationTableViewComponent implements OnInit {
               this.router.navigateByUrl('');
             }
           );
-        } else if (params.get('reserved') !== undefined && params.get('reserved') === 'true') {
+        } else if (params.get('reserved') !== null && params.get('reserved') === 'true') {
           this.examinationService.findAllReserved().subscribe(
             data => {
               this.data = data;
@@ -67,7 +68,7 @@ export class ExaminationTableViewComponent implements OnInit {
               this.router.navigateByUrl('');
             }
           );
-        } else if (params.get('pharmacyID') !== undefined) {
+        } else if (params.get('pharmacyID') !== null) {
           this.examinationService.findAllByPharmacy(Number.parseInt(params.get('pharmacyID'))).subscribe(
             data => {
               this.data = data;
@@ -85,7 +86,7 @@ export class ExaminationTableViewComponent implements OnInit {
               this.router.navigateByUrl('');
             }
           );
-        } else if (params.get('patientID') !== undefined) {
+        } else if (params.get('patientID') !== null) {
           this.examinationService.findAllByPatient(Number.parseInt(params.get('patientID'))).subscribe(
             data => {
               this.data = data;
@@ -103,7 +104,7 @@ export class ExaminationTableViewComponent implements OnInit {
               this.router.navigateByUrl('');
             }
           );
-        } else if (params.get('dermatologistID') !== undefined) {
+        } else if (params.get('dermatologistID') !== null) {
           this.examinationService.findAllByDermatologist(Number.parseInt(params.get('dermatologistID'))).subscribe(
             data => {
               this.data = data;
@@ -184,8 +185,6 @@ export class ExaminationTableViewComponent implements OnInit {
   reserve(input: Examination) {
     this.examinationService.quickReserve(input).subscribe(
       data => {
-        let index = this.data.indexOf(data);
-        window.alert(index);
         window.alert("Uspešna rezervacija! Molimo vas da proverite vaš email za potvrdu.");
       }, error => {
         window.alert("Neuspešna rezervacija!");

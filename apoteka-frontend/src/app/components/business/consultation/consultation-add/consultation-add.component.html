@@ -38,10 +38,10 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</mat-header-cell>
           <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>
         </ng-container>
-        <ng-container [matColumnDef]="'price'">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Cena</mat-header-cell>
-          <mat-cell *matCellDef="let object">{{ object['pricelist'].consultationPrice }}</mat-cell>
-        </ng-container>
+<!--        <ng-container [matColumnDef]="'price'">-->
+<!--          <mat-header-cell *matHeaderCellDef mat-sort-header>Cena</mat-header-cell>-->
+<!--          <mat-cell *matCellDef="let object">{{ object['pricelist'] }}</mat-cell>-->
+<!--        </ng-container>-->
         <ng-container [matColumnDef]="'odaberi'">
           <mat-header-cell *matHeaderCellDef>Odaberi</mat-header-cell>
           <mat-cell *matCellDef="let element">
@@ -78,12 +78,12 @@
         <ng-container [matColumnDef]="'odaberi'">
           <mat-header-cell *matHeaderCellDef>Odaberi</mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <button *ngIf="pharmacyID === undefined || pharmacyID !== element.id" class="add-button" mat-raised-button (click)="setPharmacist(element)"
-                    [disabled]="pharmacyID !== undefined">
+            <button *ngIf="pharmacist === undefined" class="add-button" mat-raised-button (click)="setPharmacist(element)"
+                    [disabled]="pharmacyID === undefined">
               ODABERI
               <mat-icon>add</mat-icon>
             </button>
-            <button *ngIf="pharmacyID !== undefined && pharmacyID == element.id" class="delete-button" mat-raised-button (click)="unsetPharmacist()">
+            <button *ngIf="pharmacist !== undefined" class="delete-button" mat-raised-button (click)="unsetPharmacist()">
               PONIŠTI
               <mat-icon>remove_done</mat-icon>
             </button>

@@ -22,6 +22,7 @@ import rs.apoteka.service.intf.user.PharmacyAdminService;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,9 @@ public class ExaminationServiceImpl implements ExaminationService {
         if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
             Patient patient = patientService.findByUsername(authenticationService.getUsername());
             if (patient != null) {
-                return patient.getExaminations();
+                List<Examination> examinations = findAllFree();
+                examinations.addAll(patient.getExaminations());
+                return examinations;
             }
         } else if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACY_ADMIN"))) {
             PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
@@ -63,12 +66,12 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public List<Examination> findAllFree() {
-        return findAll().stream().filter(e -> e.getPatient() == null).collect(Collectors.toList());
+        return examinationRepository.findAll().stream().filter(e -> e.getPatient() == null).collect(Collectors.toList());
     }
 
     @Override
     public List<Examination> findAllReserved() {
-        return findAll().stream().filter(e -> e.getPatient() != null).collect(Collectors.toList());
+        return examinationRepository.findAll().stream().filter(e -> e.getPatient() != null).collect(Collectors.toList());
     }
 
     @Override
@@ -153,8 +156,9 @@ public class ExaminationServiceImpl implements ExaminationService {
         if (examination.getExaminationDate().isBefore(LocalDateTime.now().plusHours(24))) {
             throw new Exception("Nemoguće je otkazati pregled manje od 24h pre početka istog.");
         }
-        examination.getPatient().getExaminations().removeIf(e -> e.getId().equals(examination.getId()));
-        patientService.update(examination.getPatient());
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        patient.getExaminations().removeIf(e -> e.getId().equals(examination.getId()));
+        patientService.update(patient);
         examination.setPatient(null);
         return update(examination);
     }
@@ -176,9 +180,9 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public Examination update(Examination examination) {
-        if (!appointmentCheck(examination)) {
-            return null;
-        }
+//        if (!appointmentCheck(examination)) {
+//            return null;
+//        }
         return examinationRepository.save(examination);
     }
 

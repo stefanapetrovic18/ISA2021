@@ -1,14 +1,18 @@
 package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.WorkingHours;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.business.WorkingHoursRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.business.WorkingHoursService;
+import rs.apoteka.service.intf.user.DermatologistService;
+import rs.apoteka.service.intf.user.PharmacistService;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -20,6 +24,12 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
     private WorkingHoursRepository workingHoursRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private PharmacistService pharmacistService;
+    @Autowired
+    private DermatologistService dermatologistService;
 
     @Override
     public List<WorkingHours> findAll() {
@@ -67,8 +77,21 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
 
     @Override
     public WorkingHours create(WorkingHours workingHours) {
+        Pharmacist pharmacist;
+        Dermatologist dermatologist;
         if (!checkTimes(workingHours)) {
             return null;
+        }
+        if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACIST"))) {
+            pharmacist = pharmacistService.findByUsername(authenticationService.getUsername());
+            workingHours.setEmployeeID(pharmacist.getId());
+            pharmacist.getWorkingHours().add(workingHours);
+            pharmacistService.update(pharmacist);
+        } else if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_DERMATOLOGIST"))) {
+            dermatologist = dermatologistService.findByUsername(authenticationService.getUsername());
+            workingHours.setEmployeeID(dermatologist.getId());
+            dermatologist.getWorkingHours().add(workingHours);
+            dermatologistService.update(dermatologist);
         }
         return workingHoursRepository.save(workingHours);
     }
@@ -107,11 +130,12 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
     }
 
     private List<WorkingHours> getEmployeeWorkingHours(WorkingHours workingHours) {
-        User user = userService.getOne(workingHours.getEmployeeID());
-        if (user instanceof Dermatologist) {
-            return ((Dermatologist) user).getWorkingHours();
-        } else if (user instanceof Pharmacist) {
-            return ((Pharmacist) user).getWorkingHours();
+        if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACIST"))) {
+            Pharmacist pharmacist = pharmacistService.findByUsername(authenticationService.getUsername());
+            return pharmacist.getWorkingHours();
+        } else if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_DERMATOLOGIST"))) {
+            Dermatologist dermatologist = dermatologistService.findByUsername(authenticationService.getUsername());
+            return dermatologist.getWorkingHours();
         } else {
             return null;
         }

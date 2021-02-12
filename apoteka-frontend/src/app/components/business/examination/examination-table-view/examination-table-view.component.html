@@ -74,16 +74,16 @@
       <ng-container [matColumnDef]="'reserve'">
         <mat-header-cell *matHeaderCellDef>Rezerviši</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button *ngIf="element.patient === undefined" class="add-button" mat-raised-button (click)="reserve(element)">
+          <button *ngIf="element.patient === null" class="add-button" mat-raised-button (click)="reserve(element)">
             REZERVIŠI
-            <mat-icon>delete</mat-icon>
+            <mat-icon>add</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
       <ng-container [matColumnDef]="'cancel'">
         <mat-header-cell *matHeaderCellDef>Otkaži</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button *ngIf="element.patient === undefined" class="delete-button" mat-raised-button (click)="cancel(element)">
+          <button *ngIf="element.patient !== null" class="delete-button" mat-raised-button (click)="cancel(element)">
             OTKAŽI
             <mat-icon>delete</mat-icon>
           </button>

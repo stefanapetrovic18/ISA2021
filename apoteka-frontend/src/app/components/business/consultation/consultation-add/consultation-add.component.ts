@@ -34,8 +34,8 @@ export class ConsultationAddComponent implements OnInit {
   pharmacy: Pharmacy;
   pharmacist: Pharmacist;
   pharmacyID: number;
-  pharmacyColumns = ['name', 'address', 'rating'];
-  pharmacyActions = ['price', 'odaberi'];
+  pharmacyColumns = ['name', 'address', 'rating', 'pricelist.consultationPrice'];
+  pharmacyActions = ['odaberi'];
   pharmacyDisplayedColumns = [...this.pharmacyColumns, ...this.pharmacyActions];
   pharmacistColumns = ['forename', 'surname', 'rating'];
   pharmacistActions = ['odaberi'];
@@ -101,6 +101,7 @@ export class ConsultationAddComponent implements OnInit {
     );
   }
   setPharmacy(input: Pharmacy) {
+    console.log(input);
     this.pharmacyID = input.id;
     this.pharmacy = input;
   }
@@ -120,7 +121,7 @@ export class ConsultationAddComponent implements OnInit {
     c.pharmacy = this.pharmacy;
     c.consultationDate = this.date;
     c.duration = this.duration;
-    this.consultationService.create(c).subscribe(
+    this.consultationService.reserve(c).subscribe(
       data => {
         window.alert('Dodavanje je uspelo!');
       }, error => {
