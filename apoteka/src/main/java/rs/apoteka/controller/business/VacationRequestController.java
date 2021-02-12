@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/vacationRequest")
+@RequestMapping(value = "/api/vacation-request")
 public class VacationRequestController {
     @Autowired
     private VacationRequestService vacationRequestService;

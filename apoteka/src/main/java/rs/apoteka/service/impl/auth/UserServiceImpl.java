@@ -19,6 +19,7 @@ import rs.apoteka.service.intf.auth.VerificationTokenService;
 import rs.apoteka.service.intf.user.*;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 
 @Service

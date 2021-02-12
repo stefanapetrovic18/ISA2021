@@ -25,6 +25,8 @@ public class VacationRequest {
     private LocalDateTime vacationEnd;
     @Column
     private Boolean accepted;
+    @Column
+    private Boolean rejected;
 
     public VacationRequest() {
     }
@@ -71,5 +73,13 @@ public class VacationRequest {
 
     public void setAccepted(Boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public Boolean getRejected() {
+        return rejected;
+    }
+
+    public void setRejected(Boolean rejected) {
+        this.rejected = rejected;
     }
 }

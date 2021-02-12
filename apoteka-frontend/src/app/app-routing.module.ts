@@ -28,6 +28,7 @@ import { SupplierTableViewComponent } from './components/user/supplier/supplier-
 import { SystemAdminTableViewComponent } from './components/user/system-admin/system-admin-table-view/system-admin-table-view.component';
 import {ConsultationAddComponent} from './components/business/consultation/consultation-add/consultation-add.component';
 import {OrderTableViewComponent} from './components/business/order/order-table-view/order-table-view.component';
+import {VacationRequestTableViewComponent} from './components/business/vacation-request/vacation-request-table-view/vacation-request-table-view.component';
 
 
 const routes: Routes = [
@@ -142,6 +143,10 @@ const routes: Routes = [
   {
     path: 'narudzbina',
     component: OrderTableViewComponent
+  },
+  {
+    path: 'odsustvo',
+    component: VacationRequestTableViewComponent
   }
 
 

@@ -39,7 +39,7 @@ public class PharmacyAdmin extends User {
         this.setEnabled(true);
         this.setValidated(false);
         this.setRoles(new HashSet<>() {{
-            add(new Role(RoleType.ROLE_PHARMACIST));
+            add(new Role(RoleType.ROLE_PHARMACY_ADMIN));
         }});
     }
 

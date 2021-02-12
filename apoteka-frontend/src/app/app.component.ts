@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
       data: new LoginRequest()
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.userCheck();
+      // this.userCheck();
     });
   }
   logout() {
@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
     const tkn = this.token.getAuthorities();
     if (tkn.includes('ROLE_PATIENT')) {
       this.user = true;
-      this.router.navigateByUrl('dashboard/pacijent');
     } else if (tkn.includes('ROLE_DERMATOLOGIST')) {
       this.user = true;
       this.router.navigateByUrl('dashboard/dermatolog');

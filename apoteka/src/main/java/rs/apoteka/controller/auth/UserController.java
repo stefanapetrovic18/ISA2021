@@ -53,7 +53,7 @@ public class UserController {
         if (response == null) {
             return new ResponseEntity<>(gson.toJson("Neuspešna promena šifre!"), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(gson.toJson(response), HttpStatus.OK);
     }
 
     @GetMapping(value = "/confirm")

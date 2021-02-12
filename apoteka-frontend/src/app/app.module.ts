@@ -144,6 +144,8 @@ import {OfferDeleteComponent} from './components/business/offer/offer-delete/off
 import {OfferViewComponent} from './components/business/offer/offer-view/offer-view.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatChipsModule} from '@angular/material/chips';
+import { VacationRequestAddComponent } from './components/business/vacation-request/vacation-request-add/vacation-request-add.component';
+import { VacationRequestTableViewComponent } from './components/business/vacation-request/vacation-request-table-view/vacation-request-table-view.component';
 
 @NgModule({
   declarations: [
@@ -288,6 +290,8 @@ import {MatChipsModule} from '@angular/material/chips';
     OfferEditComponent,
     OfferTableViewComponent,
     OfferViewComponent,
+    VacationRequestAddComponent,
+    VacationRequestTableViewComponent,
   ],
   imports: [
     BrowserModule,

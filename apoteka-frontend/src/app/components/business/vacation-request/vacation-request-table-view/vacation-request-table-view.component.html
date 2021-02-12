@@ -1,0 +1,82 @@
+<mat-drawer-container class="table-container" autosize>
+
+  <mat-drawer #drawer class="filter-sidenav" mode="side" position="end">
+    <p>Filter pretraga</p>
+    <button class="filter-button" (click)="filter()" mat-raised-button>
+      PRIMENI
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    <button class="cancel-button" (click)="drawer.toggle()" mat-raised-button>
+      ZATVORI
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-drawer>
+
+  <mat-drawer-content class="page-content">
+    <div class="table-header">
+      <mat-form-field class="search-input" *ngIf="dataSource">
+        <mat-label>
+          <mat-icon>search</mat-icon>
+          Pretraga
+        </mat-label>
+        <input
+          (keyup)="applyFilter($event.target.value)"
+          matInput
+          placeholder="Pretraga"
+          #input
+        />
+      </mat-form-field>
+        <div class="action-buttons">
+          <button class="add-button" mat-raised-button (click)="add()">
+            DODAJ
+            <mat-icon>add</mat-icon>
+          </button>
+          <button class="filter-button" mat-raised-button (click)="drawer.toggle()">
+            FILTER
+            <mat-icon>filter_list</mat-icon>
+          </button>
+        </div>
+    </div>
+
+    <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="pharmacy">
+        <mat-header-cell *matHeaderCellDef>Pharmacy</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object.pharmacy.name }}</mat-cell>
+      </ng-container>
+      <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+        <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>
+      </ng-container>
+
+      <ng-container [matColumnDef]="'accept'">
+        <mat-header-cell *matHeaderCellDef>Prihvati</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button class="add-button" mat-raised-button (click)="accept(element)">
+            PRIHVATI
+            <mat-icon>info</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="'reject'">
+        <mat-header-cell *matHeaderCellDef>Odbij</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button class="delete-button" mat-raised-button (click)="reject(element)">
+            ODBIJ
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+      <mat-row *matNoDataRow>
+        <mat-cell colspan="4"
+        >Nijedan podatak ne odgovara unetom parametru.</mat-cell
+        >
+      </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </mat-drawer-content>
+</mat-drawer-container>

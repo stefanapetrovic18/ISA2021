@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Podnesi zahtev za odsustvom</h1>
+<div mat-dialog-content>
+  <p>Datum početka odsustva</p>
+  <mat-form-field>
+    <mat-label>Datum početka odsustva</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="data.vacationStart">
+  </mat-form-field>
+  <p>Datum kraja odsustva</p>
+  <mat-form-field>
+    <mat-label>Datum kraja odsustva</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="data.vacationEnd">
+  </mat-form-field>
+  <p *ngIf="dermatologist">Apoteka</p>
+  <mat-form-field *ngIf="dermatologist">
+    <mat-label>Apoteka</mat-label>
+    <mat-select [(value)]="data.pharmacy">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button (click)="add()" class="add-button" mat-button mat-raised-button>POTVRDI</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>
