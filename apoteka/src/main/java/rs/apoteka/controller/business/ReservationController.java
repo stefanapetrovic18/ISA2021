@@ -35,10 +35,11 @@ public class ReservationController {
             @RequestParam(required = false) Long medicineID,
             @RequestParam(required = false) Long patientID,
             @RequestParam(required = false) Boolean collected,
-            @RequestParam(required = false) String reservationNumber
+            @RequestParam(required = false) String reservationNumber,
+            @RequestParam(required = false) Boolean nonCollected
     ) throws Exception {
         return new ResponseEntity<>(reservationService.findAllParametrized(id, reservationDate, reservationDateStart, reservationDateEnd,
-                pharmacyID, medicineID, patientID, collected, reservationNumber), HttpStatus.OK);
+                pharmacyID, medicineID, patientID, collected, reservationNumber, nonCollected), HttpStatus.OK);
     }
 
     @GetMapping(value = "/search")

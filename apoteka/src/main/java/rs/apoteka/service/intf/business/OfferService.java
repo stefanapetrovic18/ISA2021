@@ -16,6 +16,8 @@ public interface OfferService {
 
     Offer accept(Offer offer) throws Exception;
 
+    Offer reject(Offer offer) throws Exception;
+
     Offer create(Offer offer);
 
     Offer update(Offer offer);

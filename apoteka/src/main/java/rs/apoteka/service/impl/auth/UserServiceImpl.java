@@ -4,23 +4,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.apoteka.auth.JWTProvider;
 import rs.apoteka.auth.JWTResponse;
 import rs.apoteka.entity.auth.*;
+import rs.apoteka.entity.business.Reservation;
 import rs.apoteka.entity.user.*;
+import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.auth.RoleRepository;
 import rs.apoteka.repository.auth.UserRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.auth.VerificationTokenService;
+import rs.apoteka.service.intf.business.ReservationService;
 import rs.apoteka.service.intf.user.*;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -49,6 +58,8 @@ public class UserServiceImpl implements UserService {
     SupplierService supplierService;
     @Autowired
     SystemAdminService systemAdminService;
+    @Autowired
+    ReservationService reservationService;
 
     @Override
     public List<User> findAll() {
@@ -142,7 +153,34 @@ public class UserServiceImpl implements UserService {
         if (!valid(user)) {
             return null;
         }
+        try {
+            penaltyCheck(user);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
         return new JWTResponse(token, user.getUsername(), user.getAuthorities());
+    }
+
+    // Provera rezervacije leka koji nije preuzet i dodela penala.
+    private void penaltyCheck(UserDetails userDetails) throws UserNotFoundException {
+        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
+            Patient patient = patientService.findByUsername(userDetails.getUsername());
+            if (patient == null) {
+                throw new UserNotFoundException();
+            }
+            List<Reservation> reservations = reservationService.findAllParametrized(null, null, null,
+                    null, null,null, patient.getId(),
+                    false, null, true);
+            if (reservations != null && !reservations.isEmpty()) {
+                reservations.removeIf(Reservation::getPenalized);
+                patient.setPoints(patient.getPoints() + reservations.size());
+                patientService.update(patient);
+                reservations.forEach(reservation -> {
+                    reservation.setPenalized(true);
+                    reservationService.update(reservation);
+                });
+            }
+        }
     }
 
     @Override
@@ -189,6 +227,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private Boolean valid(UserDetailsImpl user) {
-        return user.isAccountNonLocked();
+        return user.isAccountNonExpired();
     }
 }

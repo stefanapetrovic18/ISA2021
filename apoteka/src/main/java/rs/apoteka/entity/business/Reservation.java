@@ -45,6 +45,8 @@ public class Reservation {
     @Column(nullable = false)
     //@JsonView(Views.Public.class)
     private Boolean collected;
+    @Column(nullable = false)
+    private Boolean penalized;
 
     public Reservation() {
     }
@@ -107,5 +109,13 @@ public class Reservation {
 
     public void setCollected(Boolean collected) {
         this.collected = collected;
+    }
+
+    public Boolean getPenalized() {
+        return penalized;
+    }
+
+    public void setPenalized(Boolean penalized) {
+        this.penalized = penalized;
     }
 }

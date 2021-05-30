@@ -24,6 +24,7 @@ public class UserDetailsImpl implements UserDetails {
     private String phone; //TODO: regex
     private Boolean enabled;
     private Boolean validated;
+    private Boolean passwordChanged;
 
     public UserDetailsImpl() {
     }
@@ -40,6 +41,7 @@ public class UserDetailsImpl implements UserDetails {
         this.phone = user.getPhone();
         this.enabled = user.getEnabled();
         this.validated = user.getValidated();
+        this.passwordChanged = user.getPasswordChanged();
         this.authorities = authorities;
     }
 
@@ -72,16 +74,18 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return enabled & validated;
+        return validated;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return enabled & validated;
+        return passwordChanged;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled & validated;
+        return enabled;
     }
+
+
 }

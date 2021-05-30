@@ -44,12 +44,6 @@ public class PricelistServiceImpl implements PricelistService {
         if (itemID != null) {
             pricelist = pricelist.stream().filter(p -> p.getItems().removeIf(m -> !m.getId().equals(itemID))).collect(Collectors.toList());
         }
-        if (validFrom != null) {
-            pricelist.removeIf(p -> p.getValidFrom().isBefore(validFrom));
-        }
-        if (validUntil != null) {
-            pricelist.removeIf(p -> p.getValidUntil().isAfter(validUntil));
-        }
         return pricelist;
     }
 
@@ -64,9 +58,6 @@ public class PricelistServiceImpl implements PricelistService {
         if (admin == null) {
             throw new Exception("Administrator apoteke nije ulogovan!");
         }
-        if (!checkDates(pricelist)) {
-            return null;
-        }
         Pricelist p = pricelistRepository.save(pricelist);
         if (admin.getPharmacy() != null) {
             admin.getPharmacy().setPricelist(p);
@@ -77,14 +68,8 @@ public class PricelistServiceImpl implements PricelistService {
 
     @Override
     public Pricelist update(Pricelist pricelist) {
-        if (!checkDates(pricelist)) {
-            return null;
-        }
-        return pricelistRepository.save(pricelist);
-    }
 
-    private Boolean checkDates(Pricelist pricelist) {
-        return pricelist.getValidFrom().isBefore(pricelist.getValidUntil());
+        return pricelistRepository.save(pricelist);
     }
 
     @Override

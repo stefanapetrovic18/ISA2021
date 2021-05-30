@@ -9,6 +9,7 @@ import rs.apoteka.entity.auth.RoleType;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.entity.business.Pharmacy;
+import rs.apoteka.entity.business.Rating;
 import rs.apoteka.entity.business.WorkingHours;
 
 import javax.persistence.*;
@@ -42,6 +43,9 @@ public class Dermatologist extends User {
     @Column
     //@JsonView(Views.Public.class)
     private Double rating;
+
+    @ManyToMany
+    private List<Rating> ratings;
 
     public Dermatologist() {
     }
@@ -110,5 +114,13 @@ public class Dermatologist extends User {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

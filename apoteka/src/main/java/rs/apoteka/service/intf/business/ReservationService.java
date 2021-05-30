@@ -10,7 +10,8 @@ public interface ReservationService {
 
     List<Reservation> findAllParametrized(Long id, LocalDateTime reservationDate, LocalDateTime reservationDateStart,
                                           LocalDateTime reservationDateEnd, Long pharmacyID, Long medicineID,
-                                          Long patientID, Boolean collected, String reservationNumber);
+                                          Long patientID, Boolean collected, String reservationNumber,
+                                          Boolean nonCollected);
 
     Reservation getOne(Long id);
 

@@ -13,6 +13,7 @@ import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.entity.business.Medicine;
+import rs.apoteka.entity.business.Pharmacy;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -35,6 +36,9 @@ public class Patient extends User {
     @ManyToMany
     //@JsonView(Views.Internal.class)
     private List<Medicine> allergies;
+    @ManyToMany
+    //@JsonView(Views.Internal.class)
+    private List<Pharmacy> subscriptions;
 
     public Patient() {
     }
@@ -87,5 +91,13 @@ public class Patient extends User {
 
     public void setAllergies(List<Medicine> allergies) {
         this.allergies = allergies;
+    }
+
+    public List<Pharmacy> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Pharmacy> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }

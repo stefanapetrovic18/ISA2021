@@ -20,6 +20,10 @@ public interface PharmacyService {
 
     List<Pharmacy> findAllByPharmacistFreeAt(LocalDateTime localDateTime);
 
+    Boolean subscribe(Long id) throws Exception;
+
+    Boolean unsubscribe(Long id) throws Exception;
+
     Pharmacy create(Pharmacy pharmacy);
 
     Pharmacy update(Pharmacy pharmacy);

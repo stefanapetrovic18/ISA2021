@@ -64,6 +64,18 @@ public class PharmacyController {
         return new ResponseEntity<>(pharmacyService.findAllByPharmacistFreeAt(localDateTime), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
+    @DeleteMapping(value = "/subscribe")
+    public ResponseEntity<Boolean> subscribe(@RequestParam(value = "id") Long id) throws Exception {
+        return new ResponseEntity<>(pharmacyService.subscribe(id), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
+    @DeleteMapping(value = "/unsubscribe")
+    public ResponseEntity<Boolean> unsubscribe(@RequestParam(value = "id") Long id) throws Exception {
+        return new ResponseEntity<>(pharmacyService.unsubscribe(id), HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<Pharmacy> create(@RequestBody Pharmacy pharmacy) throws Exception {

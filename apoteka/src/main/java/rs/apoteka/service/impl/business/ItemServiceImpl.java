@@ -52,15 +52,6 @@ public class ItemServiceImpl implements ItemService {
         if (priceTo != null) {
             items.removeIf(i -> i.getPrice() > priceTo);
         }
-        if (quantity != null) {
-            items.removeIf(i -> i.getQuantity().equals(quantity));
-        }
-        if (quantityFrom != null) {
-            items.removeIf(i -> i.getQuantity() > quantityFrom);
-        }
-        if (quantityTo != null) {
-            items.removeIf(i -> i.getQuantity() > quantityTo);
-        }
         return items;
     }
 
@@ -77,7 +68,6 @@ public class ItemServiceImpl implements ItemService {
             for (Item i: pricelist.getItems()) {
                 if (i.getMedicine().getId().equals(item.getMedicine().getId())) {
                     i.setPrice(item.getPrice());
-                    i.setQuantity(item.getQuantity() + i.getQuantity());
                     return update(i);
                 }
             }

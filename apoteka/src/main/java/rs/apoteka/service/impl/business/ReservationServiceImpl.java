@@ -44,7 +44,8 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<Reservation> findAllParametrized(Long id, LocalDateTime reservationDate, LocalDateTime reservationDateStart,
                                                  LocalDateTime reservationDateEnd, Long pharmacyID, Long medicineID,
-                                                 Long patientID, Boolean collected, String reservationNumber) {
+                                                 Long patientID, Boolean collected, String reservationNumber,
+                                                 Boolean nonCollected) {
         List<Reservation> reservations = findAll();
         if (id != null) {
             reservations.removeIf(p -> !p.getId().equals(id));
@@ -73,6 +74,9 @@ public class ReservationServiceImpl implements ReservationService {
         if (reservationDateEnd != null) {
             reservations.removeIf(p -> p.getReservationDate().isAfter(reservationDateEnd));
         }
+        if (nonCollected != null && nonCollected) {
+            reservations.removeIf(p -> p.getCollectionDate().isAfter(LocalDateTime.now()));
+        }
         return reservations;
     }
 
@@ -95,7 +99,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
         reservation.setReservationNumber(String.valueOf(new Random().nextLong()));
         reservation.setPatient(patient);
-        reservation.getPharmacy().getPricelist().getItems().forEach(i -> {
+        reservation.getPharmacy().getStockpile().forEach(i -> {
             if (i.getMedicine().getId().equals(reservation.getMedicine().getId())) {
                 if (i.getQuantity() == 0) {
                     try {
@@ -120,7 +124,7 @@ public class ReservationServiceImpl implements ReservationService {
             throw new Exception("Nemoguće je otkazati rezervaciju leka manje od 24h pre preuzimanja istog.");
         }
         reservation.getPatient().getExaminations().removeIf(e -> e.getId().equals(reservation.getId()));
-        reservation.getPharmacy().getPricelist().getItems().forEach(i -> {
+        reservation.getPharmacy().getStockpile().forEach(i -> {
             if (i.getMedicine().getId().equals(reservation.getMedicine().getId())) {
                 i.setQuantity(i.getQuantity() + 1);
             }

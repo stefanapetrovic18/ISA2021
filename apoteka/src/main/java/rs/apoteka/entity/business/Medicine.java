@@ -48,6 +48,11 @@ public class Medicine {
     @JsonIgnore
     //@JsonView(Views.Internal.class)
     private List<Medicine> substitutes;
+    @Column(nullable = false)
+    private Integer loyaltyPoints;
+
+    @ManyToMany
+    private List<Rating> ratings;
 
     public Medicine() {
     }
@@ -134,5 +139,21 @@ public class Medicine {
 
     public void setSubstitutes(List<Medicine> substitutes) {
         this.substitutes = substitutes;
+    }
+
+    public Integer getLoyaltyPoints() {
+        return loyaltyPoints;
+    }
+
+    public void setLoyaltyPoints(Integer loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

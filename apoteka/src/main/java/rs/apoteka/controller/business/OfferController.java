@@ -57,6 +57,12 @@ public class OfferController {
         return new ResponseEntity<>(offerService.accept(offer), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
+    @PostMapping(value = "/reject")
+    public ResponseEntity<Offer> reject(@RequestBody Offer offer) throws Exception {
+        return new ResponseEntity<>(offerService.reject(offer), HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_SUPPLIER')")
     @PostMapping(value = "/update")
     public ResponseEntity<Offer> update(@RequestBody Offer offer) throws Exception {

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.user.Dermatologist;
+import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
 
@@ -60,14 +61,20 @@ public class Pharmacy {
     @JsonIgnore
     @ElementCollection(targetClass = User.class)
     //@JsonView(Views.Internal.class)
-    private List<User> subscriptions;
+    private List<Patient> subscriptions;
     // Inventar.
     @OneToOne
     //@JsonView(Views.Public.class)
     private Pricelist pricelist;
+    @OneToMany(mappedBy = "pharmacy")
+    //@JsonView(Views.Public.class)
+    private List<Stockpile> stockpile;
     @Column
     //@JsonView(Views.Public.class)
     private Double rating;
+
+    @ManyToMany
+    private List<Rating> ratings;
 
     public Pharmacy() {
     }
@@ -156,11 +163,11 @@ public class Pharmacy {
         this.orders = orders;
     }
 
-    public List<User> getSubscriptions() {
+    public List<Patient> getSubscriptions() {
         return subscriptions;
     }
 
-    public void setSubscriptions(List<User> subscriptions) {
+    public void setSubscriptions(List<Patient> subscriptions) {
         this.subscriptions = subscriptions;
     }
 
@@ -172,11 +179,27 @@ public class Pharmacy {
         this.pricelist = pricelist;
     }
 
+    public List<Stockpile> getStockpile() {
+        return stockpile;
+    }
+
+    public void setStockpile(List<Stockpile> stockpile) {
+        this.stockpile = stockpile;
+    }
+
     public Double getRating() {
         return rating;
     }
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

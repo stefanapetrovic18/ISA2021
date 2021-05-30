@@ -27,6 +27,8 @@ public class VacationRequest {
     private Boolean accepted;
     @Column
     private Boolean rejected;
+    @Column
+    private String rejectionReason;
 
     public VacationRequest() {
     }
@@ -81,5 +83,13 @@ public class VacationRequest {
 
     public void setRejected(Boolean rejected) {
         this.rejected = rejected;
+    }
+
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
     }
 }

@@ -1,14 +1,19 @@
 package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import rs.apoteka.entity.business.Offer;
 import rs.apoteka.entity.business.VacationRequest;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.VacationRequestRepository;
+import rs.apoteka.service.impl.auth.UserServiceImpl;
 import rs.apoteka.service.intf.auth.AuthenticationService;
+import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.business.VacationRequestService;
 import rs.apoteka.service.intf.user.DermatologistService;
 import rs.apoteka.service.intf.user.PharmacistService;
@@ -21,6 +26,8 @@ import java.util.stream.Collectors;
 @Service
 public class VacationRequestServiceImpl implements VacationRequestService {
     @Autowired
+    JavaMailSender mailSender;
+    @Autowired
     private VacationRequestRepository vacationRequestRepository;
     @Autowired
     private AuthenticationService authenticationService;
@@ -30,6 +37,8 @@ public class VacationRequestServiceImpl implements VacationRequestService {
     private PharmacistService pharmacistService;
     @Autowired
     private PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<VacationRequest> findAll() {
@@ -78,9 +87,9 @@ public class VacationRequestServiceImpl implements VacationRequestService {
     }
 
     @Override
-    public VacationRequest create(VacationRequest vacationRequest) {
+    public VacationRequest create(VacationRequest vacationRequest) throws Exception {
         if (!checkDates(vacationRequest)) {
-            return null;
+            throw new Exception("Datumi se ne poklapaju!");
         }
         Pharmacist pharmacist;
         Dermatologist dermatologist;
@@ -100,7 +109,7 @@ public class VacationRequestServiceImpl implements VacationRequestService {
     @Override
     public VacationRequest update(VacationRequest vacationRequest) throws Exception {
         if (!checkDates(vacationRequest)) {
-            return null;
+            throw new Exception("Datumi se ne poklapaju!");
         }
         if (!authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACY_ADMIN")) && vacationRequest.getAccepted()) {
             throw new Exception("Jedino administrator apoteke prihvata zahteve za odmor/odsustvo!");
@@ -118,6 +127,9 @@ public class VacationRequestServiceImpl implements VacationRequestService {
         }
         vacationRequest.setAccepted(true);
         vacationRequest.setRejected(false);
+        String email = userService.getOne(vacationRequest.getId()).getUsername();
+        String name = userService.getOne(vacationRequest.getId()).getForename();
+        sendAcceptedEmail(vacationRequest, email, name);
         return update(vacationRequest);
     }
 
@@ -131,7 +143,34 @@ public class VacationRequestServiceImpl implements VacationRequestService {
         }
         vacationRequest.setAccepted(false);
         vacationRequest.setRejected(true);
+        String email = userService.getOne(vacationRequest.getId()).getUsername();
+        String name = userService.getOne(vacationRequest.getId()).getForename();
+        sendAcceptedEmail(vacationRequest, email, name);
         return update(vacationRequest);
+    }
+
+    private void sendAcceptedEmail(VacationRequest request, String username, String name) {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(username);
+        email.setSubject("Status zahteva za godišnjim odmorom ID=" + request.getId());
+        email.setText("Poštovani/a " + name + ",\n\n" +
+                "Obaveštavamo vas da je vaš zahtev za godišnjim odmorom ID=" + request.getId() + " prihvaćen.\n\n" +
+                "Srdačan pozdrav,\n\n" +
+                "ISA");
+        mailSender.send(email);
+    }
+
+    private void sendRejectedEmail(VacationRequest request, String username, String name) {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(username);
+        email.setSubject("Status zahteva za godišnjim odmorom ID=" + request.getId());
+        email.setText("Poštovani/a " + name + ",\n\n" +
+                "Obaveštavamo vas da vaš zahtev za godišnjim odmorom ID=" + request.getId() + " nije prihvaćen.\n\n" +
+                "Razlog koji je administrator naveo:\n\n" +
+                request.getRejectionReason() + "\n\n" +
+                "Srdačan pozdrav,\n\n" +
+                "ISA");
+        mailSender.send(email);
     }
 
     private Boolean checkDates(VacationRequest vacationRequest) {

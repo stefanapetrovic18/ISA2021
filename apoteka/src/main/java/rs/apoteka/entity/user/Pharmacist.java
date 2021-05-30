@@ -11,6 +11,7 @@ import rs.apoteka.entity.auth.RoleType;
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pharmacy;
+import rs.apoteka.entity.business.Rating;
 import rs.apoteka.entity.business.WorkingHours;
 
 import javax.persistence.*;
@@ -39,6 +40,9 @@ public class Pharmacist extends User {
     private List<WorkingHours> workingHours;
     @Column
     private Double rating;
+
+    @ManyToMany
+    private List<Rating> ratings;
 
     public Pharmacist() {
     }
@@ -114,5 +118,13 @@ public class Pharmacist extends User {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

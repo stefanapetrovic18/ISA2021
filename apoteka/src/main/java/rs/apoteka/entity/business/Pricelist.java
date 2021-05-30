@@ -19,10 +19,6 @@ public class Pricelist {
     private Double consultationPrice;
     @Column(nullable = false)
     private Double examinationPrice;
-    @Column(nullable = false)
-    private LocalDateTime validFrom;
-    @Column(nullable = false)
-    private LocalDateTime validUntil;
 
     public Pricelist() {
     }
@@ -55,19 +51,4 @@ public class Pricelist {
         this.examinationPrice = examinationPrice;
     }
 
-    public LocalDateTime getValidFrom() {
-        return validFrom;
-    }
-
-    public void setValidFrom(LocalDateTime validFrom) {
-        this.validFrom = validFrom;
-    }
-
-    public LocalDateTime getValidUntil() {
-        return validUntil;
-    }
-
-    public void setValidUntil(LocalDateTime validUntil) {
-        this.validUntil = validUntil;
-    }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -17,8 +18,13 @@ public class Item {
     private Medicine medicine;
     @Column
     private Double price;
-    @Column
-    private Integer quantity;
+//    @Column
+//    private Integer quantity;
+//    // DONE: Razdvojiti cenovnik od inventara.
+    @Column(nullable = false)
+    private LocalDateTime validFrom;
+    @Column(nullable = false)
+    private LocalDateTime validUntil;
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "pricelist", referencedColumnName = "id")
@@ -47,13 +53,13 @@ public class Item {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+//    public Integer getQuantity() {
+//        return quantity;
+//    }
+//
+//    public void setQuantity(Integer quantity) {
+//        this.quantity = quantity;
+//    }
 
     public Pricelist getPricelist() {
         return pricelist;

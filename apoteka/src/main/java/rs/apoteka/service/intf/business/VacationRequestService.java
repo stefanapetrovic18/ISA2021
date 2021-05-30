@@ -13,7 +13,7 @@ public interface VacationRequestService {
 
     VacationRequest getOne(Long id);
 
-    VacationRequest create(VacationRequest vacationRequest);
+    VacationRequest create(VacationRequest vacationRequest) throws Exception;
 
     VacationRequest update(VacationRequest vacationRequest) throws Exception;
 

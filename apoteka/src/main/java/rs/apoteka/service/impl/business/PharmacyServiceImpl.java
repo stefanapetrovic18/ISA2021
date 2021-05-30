@@ -6,6 +6,7 @@ import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Item;
 import rs.apoteka.entity.business.Pharmacy;
+import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.repository.business.PharmacyRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
@@ -17,6 +18,7 @@ import rs.apoteka.service.intf.user.PharmacistService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,7 +94,7 @@ public class PharmacyServiceImpl implements PharmacyService {
         List<Pharmacy> pharmacies = new ArrayList<>();
         for (Pharmacy p:
                 findAll()) {
-            for (User u:
+            for (Patient u:
                     p.getSubscriptions()) {
                 if (u.getId().equals(user.getId())) {
                     pharmacies.add(p);
@@ -108,7 +110,7 @@ public class PharmacyServiceImpl implements PharmacyService {
         for (Pharmacy p:
              findAll()) {
             for (Item i: p.getPricelist().getItems()) {
-                if (i.getMedicine().getId().equals(medicineID) && i.getQuantity() > 0) {
+                if (i.getMedicine().getId().equals(medicineID)) {
                     pharmacies.add(p);
                 }
             }
@@ -131,6 +133,54 @@ public class PharmacyServiceImpl implements PharmacyService {
             }
         }
         return pharmacies;
+    }
+
+    @Override
+    public Boolean subscribe(Long id) throws Exception {
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        if (patient == null) {
+            throw new Exception("Pacijent nije ulogovan!");
+        }
+        Pharmacy pharmacy = getOne(id);
+        if (pharmacy == null) {
+            throw new Exception("Apoteka ne postoji!");
+        }
+        AtomicReference<Boolean> subscribed = new AtomicReference<>(false);
+        patient.getSubscriptions().forEach(p -> {
+            if (p.getId().equals(id)) {
+                subscribed.set(true);
+            }
+        });
+        pharmacy.getSubscriptions().forEach(p -> {
+            if (p.getId().equals(patient.getId())) {
+                subscribed.set(true);
+            }
+        });
+        if (subscribed.get()) {
+            throw new Exception("Već ste pretplaćeni!");
+        }
+        patient.getSubscriptions().add(pharmacy);
+        pharmacy.getSubscriptions().add(patient);
+        patientService.update(patient);
+        update(pharmacy);
+        return true;
+    }
+
+    @Override
+    public Boolean unsubscribe(Long id) throws Exception {
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        if (patient == null) {
+            throw new Exception("Pacijent nije ulogovan!");
+        }
+        Pharmacy pharmacy = getOne(id);
+        if (pharmacy == null) {
+            throw new Exception("Apoteka ne postoji!");
+        }
+        patient.getSubscriptions().removeIf(p -> p.getId().equals(pharmacy.getId()));
+        pharmacy.getSubscriptions().removeIf(p -> p.getId().equals(patient.getId()));
+        patientService.update(patient);
+        update(pharmacy);
+        return true;
     }
 
     @Override
