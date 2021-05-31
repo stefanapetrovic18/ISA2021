@@ -23,6 +23,7 @@ import java.util.List;
 public class Supplier extends User {
 
     @OneToOne
+
     private Inventory inventory;
     @OneToMany
     @JsonIgnore

@@ -15,7 +15,7 @@ public class Inventory {
     private Long id;
     @OneToMany
     private List<InventoryItem> items;
-    @OneToOne
+    @OneToOne(mappedBy = "inventory")
     private Supplier supplier;
 
     public Inventory() {
