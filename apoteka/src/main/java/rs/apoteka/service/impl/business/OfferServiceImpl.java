@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Offer;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.OfferRepository;

@@ -2,9 +2,11 @@ package rs.apoteka.service.intf.business;
 
 import rs.apoteka.dto.ComplaintResponse;
 import rs.apoteka.entity.business.Complaint;
-import rs.apoteka.exception.*;
+import rs.apoteka.exception.AuthMismatchException;
+import rs.apoteka.exception.ComplaintResolvedException;
+import rs.apoteka.exception.InvalidComplaintException;
+import rs.apoteka.exception.UserNotFoundException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ComplaintService {

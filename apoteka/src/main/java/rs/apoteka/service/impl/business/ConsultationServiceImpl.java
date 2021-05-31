@@ -11,6 +11,7 @@ import rs.apoteka.entity.business.WorkingHours;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
+import rs.apoteka.exception.AppointmentBookedException;
 import rs.apoteka.repository.business.ConsultationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ConsultationService;
@@ -115,15 +116,15 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation create(Consultation consultation) {
+    public Consultation create(Consultation consultation) throws AppointmentBookedException {
         if (!appointmentCheck(consultation)) {
-            return null;
+            throw new AppointmentBookedException();
         }
         return consultationRepository.save(consultation);
     }
 
     @Override
-    public Consultation reserve(Consultation consultation) {
+    public Consultation reserve(Consultation consultation) throws AppointmentBookedException {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
             return null;
@@ -169,10 +170,10 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation update(Consultation consultation) {
-//        if (!appointmentCheck(consultation)) {
-//            return null;
-//        }
+    public Consultation update(Consultation consultation) throws AppointmentBookedException {
+        if (!appointmentCheck(consultation)) {
+            throw new AppointmentBookedException();
+        }
         return consultationRepository.save(consultation);
     }
 
@@ -193,6 +194,7 @@ public class ConsultationServiceImpl implements ConsultationService {
                 patientHasNoExamination(consultation);
     }
 
+    // Provera da li je konsultacija u vreme radnih sati farmaceuta.
     private Boolean duringWorkingHours(Consultation consultation) {
         Boolean flag = false;
         DayOfWeek dayOfWeek = consultation.getConsultationDate().getDayOfWeek();
@@ -210,9 +212,10 @@ public class ConsultationServiceImpl implements ConsultationService {
         return flag;
     }
 
+    // Provera da se termini farmaceuta ne poklapaju sa njegovim prethodno zakazanim terminima.
     private Boolean appointmentFree(Consultation consultation) {
         Boolean flag = false;
-        if (consultation.getPharmacist().getConsultations() == null || consultation.getPharmacist().getConsultations().size() == 0) {
+        if (consultation.getPharmacist().getConsultations() == null || consultation.getPharmacist().getConsultations().isEmpty()) {
             return true;
         }
         for (Consultation cons : consultation.getPharmacist().getConsultations()) {
@@ -234,9 +237,10 @@ public class ConsultationServiceImpl implements ConsultationService {
         return flag;
     }
 
+    // Provera da se termin konsultacije ne poklapa sa pacijentovim prethodno zakazanim konsultacijama.
     private Boolean patientHasNoConsultation(Consultation consultation) {
         Boolean flag = false;
-        if (consultation.getPatient().getConsultations() == null || consultation.getPatient().getConsultations().size() == 0) {
+        if (consultation.getPatient().getConsultations() == null || consultation.getPatient().getConsultations().isEmpty()) {
             return true;
         }
         for (Consultation cons : consultation.getPatient().getConsultations()) {
@@ -258,9 +262,10 @@ public class ConsultationServiceImpl implements ConsultationService {
         return flag;
     }
 
+    // Provera da se termin konsultacije ne poklapa sa pacijentovim prethodno zakazanim pregledima.
     private Boolean patientHasNoExamination(Consultation consultation) {
         Boolean flag = false;
-        if (consultation.getPatient().getExaminations() == null || consultation.getPatient().getExaminations().size() == 0) {
+        if (consultation.getPatient().getExaminations() == null || consultation.getPatient().getExaminations().isEmpty()) {
             return true;
         }
         for (Examination exam : consultation.getPatient().getExaminations()) {
@@ -282,9 +287,10 @@ public class ConsultationServiceImpl implements ConsultationService {
         return flag;
     }
 
+    // Provera da li je pregled u toku.
     private Boolean freeNow(Consultation consultation) {
         Boolean flag = false;
-        if (consultation.getPatient().getConsultations() == null || consultation.getPatient().getConsultations().size() == 0) {
+        if (consultation.getPatient().getConsultations() == null || consultation.getPatient().getConsultations().isEmpty()) {
             return true;
         }
         for (Consultation cons : consultation.getPatient().getConsultations()) {

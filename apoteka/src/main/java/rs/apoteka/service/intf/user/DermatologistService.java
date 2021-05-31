@@ -1,6 +1,5 @@
 package rs.apoteka.service.intf.user;
 
-import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Dermatologist;
 
 import java.time.LocalDateTime;

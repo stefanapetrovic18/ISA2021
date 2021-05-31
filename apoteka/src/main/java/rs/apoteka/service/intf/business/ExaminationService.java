@@ -1,6 +1,7 @@
 package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Examination;
+import rs.apoteka.exception.AppointmentBookedException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,13 +19,13 @@ public interface ExaminationService {
 
     Examination getOne(Long id);
 
-    Examination create(Examination examination);
+    Examination create(Examination examination) throws AppointmentBookedException;
 
-    Examination quickReserve(Examination examination);
+    Examination quickReserve(Examination examination) throws AppointmentBookedException;
 
     Examination cancel(Examination examination) throws Exception;
 
-    Examination update(Examination examination);
+    Examination update(Examination examination) throws AppointmentBookedException;
 
     Boolean delete(Long id);
 }

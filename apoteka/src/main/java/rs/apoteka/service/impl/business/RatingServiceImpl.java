@@ -6,7 +6,6 @@ import rs.apoteka.entity.business.*;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
-import rs.apoteka.exception.AuthMismatchException;
 import rs.apoteka.exception.InvalidRatingException;
 import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.business.RatingRepository;
@@ -43,6 +42,7 @@ public class RatingServiceImpl implements RatingService {
     private AuthenticationService authenticationService;
     @Autowired
     private ReservationService reservationService;
+
     @Override
     public List<Rating> findAll() {
         return ratingRepository.findAll();
@@ -95,11 +95,11 @@ public class RatingServiceImpl implements RatingService {
 
     private Double calculateRating(List<Rating> ratings) {
         Double sum = 0.0;
-        for (Rating r:
+        for (Rating r :
                 ratings) {
             sum += r.getRating();
         }
-        return sum/ratings.size();
+        return sum / ratings.size();
     }
 
     @Override
@@ -255,7 +255,7 @@ public class RatingServiceImpl implements RatingService {
     @Override
     // Proverava da li je pacijent rezervisao i preuzeo lek.
     public Boolean reservedSpecificMedicine(Patient patient, Medicine medicine) {
-        for (Reservation res: reservationService.findAllParametrized(null, null, null,
+        for (Reservation res : reservationService.findAllParametrized(null, null, null,
                 null, null, medicine.getId(),
                 patient.getId(), true, null, null)) {
             if (res.getCollectionDate().isBefore(LocalDateTime.now())) {
@@ -268,7 +268,7 @@ public class RatingServiceImpl implements RatingService {
     @Override
     // Proverava da li je pacijent imao pregled kod dermatologa.
     public Boolean hadExaminationAtDermatologist(Patient patient, Dermatologist dermatologist) {
-        for (Examination exam: patient.getExaminations()) {
+        for (Examination exam : patient.getExaminations()) {
             if (exam.getDermatologist().getId().equals(dermatologist.getId()) && exam.getExaminationDate().isBefore(LocalDateTime.now())) {
                 return true;
             }
@@ -279,7 +279,7 @@ public class RatingServiceImpl implements RatingService {
     @Override
     // Proverava da li je pacijent imao konsultacije kod farmaceuta.
     public Boolean hadConsultationAtPharmacist(Patient patient, Pharmacist pharmacist) {
-        for (Consultation cons: patient.getConsultations()) {
+        for (Consultation cons : patient.getConsultations()) {
             if (cons.getPharmacist().getId().equals(pharmacist.getId()) && cons.getConsultationDate().isBefore(LocalDateTime.now())) {
                 return true;
             }
@@ -291,19 +291,19 @@ public class RatingServiceImpl implements RatingService {
     // Proverava da li je pacijent koristio usluge apoteke.
     public Boolean usedPharmacy(Patient patient, Pharmacy pharmacy) {
         // Ukoliko je bio na konsultaciji u ovoj apoteci, uslov je zadovoljen.
-        for (Consultation c: patient.getConsultations()) {
+        for (Consultation c : patient.getConsultations()) {
             if (c.getPharmacy().getId().equals(pharmacy.getId()) && c.getConsultationDate().isBefore(LocalDateTime.now())) {
                 return true;
             }
         }
         // Ukoliko je bio na pregledu u ovoj apoteci, uslov je zadovoljen.
-        for (Examination e: patient.getExaminations()) {
+        for (Examination e : patient.getExaminations()) {
             if (e.getPharmacy().getId().equals(pharmacy.getId()) && e.getExaminationDate().isBefore(LocalDateTime.now())) {
                 return true;
             }
         }
         // Ukoliko je rezervisao i preuzeo lek u ovoj apoteci, uslov je zadovoljen.
-        for (Reservation r: reservationService.findAllParametrized(null, null, null,
+        for (Reservation r : reservationService.findAllParametrized(null, null, null,
                 null, null, null,
                 patient.getId(), true, null, null)) {
             if (r.getPharmacy().getId().equals(pharmacy.getId()) && r.getCollectionDate().isBefore(LocalDateTime.now())) {

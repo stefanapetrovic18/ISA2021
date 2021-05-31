@@ -92,9 +92,9 @@ public class PharmacyServiceImpl implements PharmacyService {
     public List<Pharmacy> findSubs() {
         User user = authenticationService.getUser();
         List<Pharmacy> pharmacies = new ArrayList<>();
-        for (Pharmacy p:
+        for (Pharmacy p :
                 findAll()) {
-            for (Patient u:
+            for (Patient u :
                     p.getSubscriptions()) {
                 if (u.getId().equals(user.getId())) {
                     pharmacies.add(p);
@@ -107,9 +107,9 @@ public class PharmacyServiceImpl implements PharmacyService {
     @Override
     public List<Pharmacy> findAllContainingMedicine(Long medicineID) {
         List<Pharmacy> pharmacies = new ArrayList<>();
-        for (Pharmacy p:
-             findAll()) {
-            for (Item i: p.getPricelist().getItems()) {
+        for (Pharmacy p :
+                findAll()) {
+            for (Item i : p.getPricelist().getItems()) {
                 if (i.getMedicine().getId().equals(medicineID)) {
                     pharmacies.add(p);
                 }

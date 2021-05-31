@@ -10,8 +10,8 @@ import rs.apoteka.entity.business.Examination;
 import rs.apoteka.entity.business.WorkingHours;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
-import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
+import rs.apoteka.exception.AppointmentBookedException;
 import rs.apoteka.repository.business.ExaminationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ExaminationService;
@@ -22,7 +22,6 @@ import rs.apoteka.service.intf.user.PharmacyAdminService;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -130,15 +129,15 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     @Override
-    public Examination create(Examination examination) {
+    public Examination create(Examination examination) throws AppointmentBookedException {
         if (!appointmentCheck(examination)) {
-            return null;
+            throw new AppointmentBookedException();
         }
         return examinationRepository.save(examination);
     }
 
     @Override
-    public Examination quickReserve(Examination examination) {
+    public Examination quickReserve(Examination examination) throws AppointmentBookedException {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
             return null;
@@ -179,9 +178,9 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     @Override
-    public Examination update(Examination examination) {
+    public Examination update(Examination examination) throws AppointmentBookedException {
         if (!appointmentCheck(examination)) {
-            return null;
+            throw new AppointmentBookedException();
         }
         return examinationRepository.save(examination);
     }
@@ -203,13 +202,14 @@ public class ExaminationServiceImpl implements ExaminationService {
                 patientHasNoExamination(examination);
     }
 
+    // Provera da li je pregled za vreme radnih sati dermatologa.
     private Boolean duringWorkingHours(Examination examination) {
         Boolean flag = false;
         DayOfWeek dayOfWeek = examination.getExaminationDate().getDayOfWeek();
         LocalTime localTimeStart = examination.getExaminationDate().toLocalTime();
         LocalTime localTimeEnd = examination.getExaminationDate().plusMinutes(examination.getDuration()).toLocalTime();
         for (WorkingHours workingHours : examination.getDermatologist().getWorkingHours()) {
-            if (workingHours.getPharmacy().equals(examination.getPharmacy())) {
+            if (workingHours.getPharmacy().getId().equals(examination.getPharmacy().getId())) {
                 if (dayOfWeek == workingHours.getDayOfWeek()) {
                     if (localTimeStart.isAfter(workingHours.getShiftStart()) && localTimeEnd.isBefore(workingHours.getShiftEnd())) {
                         flag = true;
@@ -220,9 +220,10 @@ public class ExaminationServiceImpl implements ExaminationService {
         return flag;
     }
 
+    // Provera da se termini dermatologa ne poklapaju sa njegovim prethodno zakazanim pregledima.
     private Boolean appointmentFree(Examination examination) {
         Boolean flag = false;
-        if (examination.getDermatologist().getAppointments() == null || examination.getDermatologist().getAppointments().size() == 0) {
+        if (examination.getDermatologist().getAppointments() == null || examination.getDermatologist().getAppointments().isEmpty()) {
             return true;
         }
         for (Examination exam : examination.getDermatologist().getAppointments()) {
@@ -244,9 +245,10 @@ public class ExaminationServiceImpl implements ExaminationService {
         return flag;
     }
 
+    // Provera da se termin pregleda ne poklapa sa pacijentovim prethodno zakazanim konsultacijama.
     private Boolean patientHasNoConsultation(Examination examination) {
         Boolean flag = false;
-        if (examination.getPatient().getConsultations() == null || examination.getPatient().getConsultations().size() == 0) {
+        if (examination.getPatient().getConsultations() == null || examination.getPatient().getConsultations().isEmpty()) {
             return true;
         }
         for (Consultation cons : examination.getPatient().getConsultations()) {
@@ -268,9 +270,10 @@ public class ExaminationServiceImpl implements ExaminationService {
         return flag;
     }
 
+    // Provera da se termin pregleda ne poklapa sa pacijentovim prethodno zakazanim pregledima.
     private Boolean patientHasNoExamination(Examination examination) {
         Boolean flag = false;
-        if (examination.getPatient().getExaminations() == null || examination.getPatient().getExaminations().size() == 0) {
+        if (examination.getPatient().getExaminations() == null || examination.getPatient().getExaminations().isEmpty()) {
             return true;
         }
         for (Examination exam : examination.getPatient().getExaminations()) {
@@ -292,6 +295,7 @@ public class ExaminationServiceImpl implements ExaminationService {
         return flag;
     }
 
+    // Provera da li je pregled u toku.
     private Boolean freeNow(Examination examination) {
         Boolean flag = false;
         for (Examination exam : examination.getPatient().getExaminations()) {

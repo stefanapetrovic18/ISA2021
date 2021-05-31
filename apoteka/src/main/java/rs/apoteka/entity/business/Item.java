@@ -1,8 +1,6 @@
 package rs.apoteka.entity.business;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +16,7 @@ public class Item {
     private Medicine medicine;
     @Column
     private Double price;
-//    @Column
+    //    @Column
 //    private Integer quantity;
 //    // DONE: Razdvojiti cenovnik od inventara.
     @Column(nullable = false)

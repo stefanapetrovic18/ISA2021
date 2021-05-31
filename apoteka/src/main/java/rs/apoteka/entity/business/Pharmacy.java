@@ -1,10 +1,6 @@
 package rs.apoteka.entity.business;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;

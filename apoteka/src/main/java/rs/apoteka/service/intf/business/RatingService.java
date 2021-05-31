@@ -10,7 +10,6 @@ import rs.apoteka.exception.AuthMismatchException;
 import rs.apoteka.exception.InvalidRatingException;
 import rs.apoteka.exception.UserNotFoundException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RatingService {
@@ -19,18 +18,24 @@ public interface RatingService {
     List<Rating> findAllParametrized(Long id, Long patientID, Long medicineID, Long dermatologistID, Long pharmacistID, Long pharmacyID);
 
     Double calculatePharmacyRating(Long id);
+
     Double calculatePharmacistRating(Long id);
+
     Double calculateDermatologistRating(Long id);
+
     Double calculateMedicineRating(Long id);
 
     Rating getOne(Long id);
 
     Rating create(Rating rating);
 
-    public Rating rateMedicine(Rating rating, Long id) throws UserNotFoundException, AuthMismatchException, InvalidRatingException;
-    public Rating ratePharmacist(Rating rating, Long id) throws UserNotFoundException, AuthMismatchException, InvalidRatingException;
-    public Rating rateDermatologist(Rating rating, Long id) throws UserNotFoundException, AuthMismatchException, InvalidRatingException;
-    public Rating ratePharmacy(Rating rating, Long id) throws UserNotFoundException, AuthMismatchException, InvalidRatingException;
+    Rating rateMedicine(Rating rating, Long id) throws UserNotFoundException, AuthMismatchException, InvalidRatingException;
+
+    Rating ratePharmacist(Rating rating, Long id) throws UserNotFoundException, AuthMismatchException, InvalidRatingException;
+
+    Rating rateDermatologist(Rating rating, Long id) throws UserNotFoundException, AuthMismatchException, InvalidRatingException;
+
+    Rating ratePharmacy(Rating rating, Long id) throws UserNotFoundException, AuthMismatchException, InvalidRatingException;
 
     // Proverava da li je pacijent rezervisao i preuzeo lek.
     Boolean reservedSpecificMedicine(Patient patient, Medicine medicine);

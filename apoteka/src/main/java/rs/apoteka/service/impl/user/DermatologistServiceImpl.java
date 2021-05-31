@@ -9,7 +9,6 @@ import rs.apoteka.repository.user.DermatologistRepository;
 import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.business.WorkingHoursService;
 import rs.apoteka.service.intf.user.DermatologistService;
-import rs.apoteka.service.intf.user.PharmacistService;
 
 import java.time.LocalDateTime;
 import java.util.List;

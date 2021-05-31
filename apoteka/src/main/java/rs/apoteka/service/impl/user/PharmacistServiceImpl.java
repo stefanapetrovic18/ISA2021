@@ -9,7 +9,6 @@ import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Pharmacist;
-import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.user.PharmacistRepository;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.business.PharmacyService;

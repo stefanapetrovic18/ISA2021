@@ -22,6 +22,7 @@ public class StockpileServiceImpl implements StockpileService {
     private PharmacyAdminService pharmacyAdminService;
     @Autowired
     private AuthenticationService authenticationService;
+
     @Override
     public List<Stockpile> findAll() {
         return stockpileRepository.findAll();

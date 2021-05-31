@@ -65,7 +65,7 @@ public class ItemServiceImpl implements ItemService {
         PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
         Pricelist pricelist = admin.getPharmacy().getPricelist();
         if (pricelist != null) {
-            for (Item i: pricelist.getItems()) {
+            for (Item i : pricelist.getItems()) {
                 if (i.getMedicine().getId().equals(item.getMedicine().getId())) {
                     i.setPrice(item.getPrice());
                     return update(i);

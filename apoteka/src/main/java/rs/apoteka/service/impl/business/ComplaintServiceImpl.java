@@ -6,14 +6,15 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.apoteka.dto.ComplaintResponse;
 import rs.apoteka.entity.auth.User;
-import rs.apoteka.entity.auth.VerificationToken;
 import rs.apoteka.entity.business.Complaint;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
-import rs.apoteka.entity.user.SystemAdmin;
-import rs.apoteka.exception.*;
+import rs.apoteka.exception.AuthMismatchException;
+import rs.apoteka.exception.ComplaintResolvedException;
+import rs.apoteka.exception.InvalidComplaintException;
+import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.business.ComplaintRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ComplaintService;
@@ -47,6 +48,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     private PharmacyService pharmacyService;
     @Autowired
     private SystemAdminService systemAdminService;
+
     @Override
     public List<Complaint> findAll() {
         return complaintRepository.findAll();

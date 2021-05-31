@@ -1,6 +1,7 @@
 package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Consultation;
+import rs.apoteka.exception.AppointmentBookedException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,13 +15,13 @@ public interface ConsultationService {
 
     Consultation getOne(Long id);
 
-    Consultation create(Consultation consultation);
+    Consultation create(Consultation consultation) throws AppointmentBookedException;
 
-    Consultation reserve(Consultation consultation);
+    Consultation reserve(Consultation consultation) throws AppointmentBookedException;
 
     Consultation cancel(Consultation consultation) throws Exception;
 
-    Consultation update(Consultation consultation);
+    Consultation update(Consultation consultation) throws AppointmentBookedException;
 
     Boolean delete(Long id);
 }

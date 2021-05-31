@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,12 +23,8 @@ import rs.apoteka.service.intf.auth.VerificationTokenService;
 import rs.apoteka.service.intf.business.ReservationService;
 import rs.apoteka.service.intf.user.*;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -169,7 +164,7 @@ public class UserServiceImpl implements UserService {
                 throw new UserNotFoundException();
             }
             List<Reservation> reservations = reservationService.findAllParametrized(null, null, null,
-                    null, null,null, patient.getId(),
+                    null, null, null, patient.getId(),
                     false, null, true);
             if (reservations != null && !reservations.isEmpty()) {
                 reservations.removeIf(Reservation::getPenalized);

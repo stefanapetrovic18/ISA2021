@@ -1,10 +1,6 @@
 package rs.apoteka.entity.business;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
