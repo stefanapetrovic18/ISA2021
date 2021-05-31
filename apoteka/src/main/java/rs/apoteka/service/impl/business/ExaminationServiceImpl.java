@@ -11,7 +11,7 @@ import rs.apoteka.entity.business.WorkingHours;
 import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.PharmacyAdmin;
-import rs.apoteka.exception.AppointmentBookedException;
+import rs.apoteka.exception.AppointmentBookingException;
 import rs.apoteka.repository.business.ExaminationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ExaminationService;
@@ -129,15 +129,15 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     @Override
-    public Examination create(Examination examination) throws AppointmentBookedException {
+    public Examination create(Examination examination) throws AppointmentBookingException {
         if (!appointmentCheck(examination)) {
-            throw new AppointmentBookedException();
+            throw new AppointmentBookingException();
         }
         return examinationRepository.save(examination);
     }
 
     @Override
-    public Examination quickReserve(Examination examination) throws AppointmentBookedException {
+    public Examination quickReserve(Examination examination) throws AppointmentBookingException {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
             return null;
@@ -178,9 +178,9 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     @Override
-    public Examination update(Examination examination) throws AppointmentBookedException {
+    public Examination update(Examination examination) throws AppointmentBookingException {
         if (!appointmentCheck(examination)) {
-            throw new AppointmentBookedException();
+            throw new AppointmentBookingException();
         }
         return examinationRepository.save(examination);
     }

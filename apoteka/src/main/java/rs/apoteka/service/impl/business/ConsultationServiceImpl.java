@@ -11,7 +11,7 @@ import rs.apoteka.entity.business.WorkingHours;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
-import rs.apoteka.exception.AppointmentBookedException;
+import rs.apoteka.exception.AppointmentBookingException;
 import rs.apoteka.repository.business.ConsultationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ConsultationService;
@@ -116,15 +116,15 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation create(Consultation consultation) throws AppointmentBookedException {
+    public Consultation create(Consultation consultation) throws AppointmentBookingException {
         if (!appointmentCheck(consultation)) {
-            throw new AppointmentBookedException();
+            throw new AppointmentBookingException();
         }
         return consultationRepository.save(consultation);
     }
 
     @Override
-    public Consultation reserve(Consultation consultation) throws AppointmentBookedException {
+    public Consultation reserve(Consultation consultation) throws AppointmentBookingException {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
             return null;
@@ -170,9 +170,9 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation update(Consultation consultation) throws AppointmentBookedException {
+    public Consultation update(Consultation consultation) throws AppointmentBookingException {
         if (!appointmentCheck(consultation)) {
-            throw new AppointmentBookedException();
+            throw new AppointmentBookingException();
         }
         return consultationRepository.save(consultation);
     }
