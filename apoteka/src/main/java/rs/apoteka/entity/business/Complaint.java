@@ -16,6 +16,8 @@ public class Complaint {
     @ManyToOne(optional = false)
     @JoinColumn(name = "patient", referencedColumnName = "id")
     private Patient patient;
+    @Column(nullable = false)
+    private Boolean resolved;
 
     public Long getId() {
         return id;
@@ -35,5 +37,13 @@ public class Complaint {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public Boolean getResolved() {
+        return resolved;
+    }
+
+    public void setResolved(Boolean resolved) {
+        this.resolved = resolved;
     }
 }

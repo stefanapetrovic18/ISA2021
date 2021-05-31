@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 public class VerificationTokenServiceImpl implements VerificationTokenService {
     @Autowired
-    JavaMailSender mailSender;
+    private JavaMailSender mailSender;
     @Autowired
     private VerificationTokenRepository verificationTokenRepository;
     @Autowired
@@ -66,7 +66,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(user.getUsername());
         email.setSubject("Potvrda registracije");
-        email.setText("Postovani/a " + user.getForename() + ",\n\n" +
+        email.setText("Poštovani/a " + user.getForename() + ",\n\n" +
                 "Hvala vam što ste odabrali baš nas.\n\n" +
                 "Da biste potvrdili vašu registraciju, molimo vas da kliknete na link ispod.\n\n" +
                 "http://localhost:4200/confirm?token=" + token.getToken() + "\n\n" +

@@ -75,26 +75,22 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Double calculatePharmacyRating(Long id) {
-        List<Rating> ratings = findAllParametrized(null, null, null, null, null, id);
-        return calculateRating(ratings);
+        return calculateRating(findAllParametrized(null, null, null, null, null, id));
     }
 
     @Override
     public Double calculatePharmacistRating(Long id) {
-        List<Rating> ratings = findAllParametrized(null, null, null, null, id, null);
-        return calculateRating(ratings);
+        return calculateRating(findAllParametrized(null, null, null, null, id, null));
     }
 
     @Override
     public Double calculateDermatologistRating(Long id) {
-        List<Rating> ratings = findAllParametrized(null, null, null, id, null, null);
-        return calculateRating(ratings);
+        return calculateRating(findAllParametrized(null, null, null, id, null, null));
     }
 
     @Override
     public Double calculateMedicineRating(Long id) {
-        List<Rating> ratings = findAllParametrized(null, null, id, null, null, null);
-        return calculateRating(ratings);
+        return calculateRating(findAllParametrized(null, null, id, null, null, null));
     }
 
     private Double calculateRating(List<Rating> ratings) {
@@ -256,8 +252,9 @@ public class RatingServiceImpl implements RatingService {
         return patientService.findByUsername(authenticationService.getUsername());
     }
 
+    @Override
     // Proverava da li je pacijent rezervisao i preuzeo lek.
-    private Boolean reservedSpecificMedicine(Patient patient, Medicine medicine) {
+    public Boolean reservedSpecificMedicine(Patient patient, Medicine medicine) {
         for (Reservation res: reservationService.findAllParametrized(null, null, null,
                 null, null, medicine.getId(),
                 patient.getId(), true, null, null)) {
@@ -268,8 +265,9 @@ public class RatingServiceImpl implements RatingService {
         return false;
     }
 
+    @Override
     // Proverava da li je pacijent imao pregled kod dermatologa.
-    private Boolean hadExaminationAtDermatologist(Patient patient, Dermatologist dermatologist) {
+    public Boolean hadExaminationAtDermatologist(Patient patient, Dermatologist dermatologist) {
         for (Examination exam: patient.getExaminations()) {
             if (exam.getDermatologist().getId().equals(dermatologist.getId()) && exam.getExaminationDate().isBefore(LocalDateTime.now())) {
                 return true;
@@ -278,8 +276,9 @@ public class RatingServiceImpl implements RatingService {
         return false;
     }
 
+    @Override
     // Proverava da li je pacijent imao konsultacije kod farmaceuta.
-    private Boolean hadConsultationAtPharmacist(Patient patient, Pharmacist pharmacist) {
+    public Boolean hadConsultationAtPharmacist(Patient patient, Pharmacist pharmacist) {
         for (Consultation cons: patient.getConsultations()) {
             if (cons.getPharmacist().getId().equals(pharmacist.getId()) && cons.getConsultationDate().isBefore(LocalDateTime.now())) {
                 return true;
@@ -288,8 +287,9 @@ public class RatingServiceImpl implements RatingService {
         return false;
     }
 
+    @Override
     // Proverava da li je pacijent koristio usluge apoteke.
-    private Boolean usedPharmacy(Patient patient, Pharmacy pharmacy) {
+    public Boolean usedPharmacy(Patient patient, Pharmacy pharmacy) {
         // Ukoliko je bio na konsultaciji u ovoj apoteci, uslov je zadovoljen.
         for (Consultation c: patient.getConsultations()) {
             if (c.getPharmacy().getId().equals(pharmacy.getId()) && c.getConsultationDate().isBefore(LocalDateTime.now())) {
@@ -322,7 +322,27 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Boolean delete(Long id) {
+        Rating rating = getOne(id);
+        if (rating == null) {
+            return false;
+        }
+        pharmacyService.findAll().forEach(p -> {
+            p.getRatings().removeIf(r -> r.getId().equals(id));
+            pharmacyService.update(p);
+        });
+        dermatologistService.findAll().forEach(d -> {
+            d.getRatings().removeIf(r -> r.getId().equals(id));
+            dermatologistService.update(d);
+        });
+        pharmacistService.findAll().forEach(p -> {
+            p.getRatings().removeIf(r -> r.getId().equals(id));
+            pharmacistService.update(p);
+        });
+        medicineService.findAll().forEach(m -> {
+            m.getRatings().removeIf(r -> r.getId().equals(id));
+            medicineService.update(m);
+        });
         ratingRepository.deleteById(id);
-        return true;
+        return getOne(id) == null;
     }
 }

@@ -76,7 +76,7 @@ public class RatingController {
         return new ResponseEntity<>(ratingService.update(rating), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Boolean> delete(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(ratingService.delete(id), HttpStatus.OK);
