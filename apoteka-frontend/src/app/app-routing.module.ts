@@ -30,6 +30,7 @@ import {ConsultationAddComponent} from './components/business/consultation/consu
 import {OrderTableViewComponent} from './components/business/order/order-table-view/order-table-view.component';
 import {VacationRequestTableViewComponent} from './components/business/vacation-request/vacation-request-table-view/vacation-request-table-view.component';
 import { OfferTableViewComponent } from './components/business/offer/offer-table-view/offer-table-view.component';
+import { RoleGuardService } from './auth/role-guard.service';
 
 
 const routes: Routes = [
@@ -43,19 +44,29 @@ const routes: Routes = [
   },
   {
     path: 'change-password',
-    component: ChangePasswordComponent
+    component: ChangePasswordComponent,
+    canActivate: [RoleGuardService]
   },
   {
     path: 'konsultacija',
-    component: ConsultationTableViewComponent
+    component: ConsultationTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PATIENT', 'ROLE_PHARMACIST']
+    }
   },
   {
     path: 'pregled',
-    component: ExaminationTableViewComponent
+    component: ExaminationTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PATIENT', 'ROLE_DERMATOLOGIST']
+    }
   },
   {
     path: 'stavka',
-    component: ItemTableViewComponent
+    component: ItemTableViewComponent,
+    canActivate: [RoleGuardService]
   },
   {
     path: 'lek',
@@ -63,7 +74,11 @@ const routes: Routes = [
   },
   {
     path: 'ponuda',
-    component: OfferTableViewComponent
+    component: OfferTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_SUPPLIER', 'ROLE_PHARMACIST']
+    }
   },
   {
     path: 'apoteka',
@@ -71,71 +86,136 @@ const routes: Routes = [
   },
   {
     path: 'recept',
-    component: PrescriptionTableViewComponent
+    component: PrescriptionTableViewComponent,
+    canActivate: [RoleGuardService]
   },
   {
     path: 'cenovnik',
-    component: PricelistTableViewComponent
+    component: PricelistTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_PHARMACY_ADMIN'
+    }
   },
   {
     path: 'promocija',
-    component: PromotionTableViewComponent
+    component: PromotionTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PATIENT']
+    }
   },
   {
     path: 'rezervacija',
-    component: ReservationTableViewComponent
+    component: ReservationTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PATIENT']
+    }
   },
   {
     path: 'radni-sati',
-    component: WorkingHoursTableViewComponent
+    component: WorkingHoursTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PHARMACIST', 'ROLE_DERMATOLOGIST']
+    }
   },
   {
     path: 'dermatolog',
-    component: DermatologistTableViewComponent
+    component: DermatologistTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PATIENT', 'ROLE_DERMATOLOGIST']
+    }
   },
   {
     path: 'pacijent',
-    component: PatientTableViewComponent
+    component: PatientTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PATIENT']
+    }
   },
   {
     path: 'farmaceut',
-    component: PharmacistTableViewComponent
+    component: PharmacistTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PHARMACIST', 'ROLE_PHARMACIST']
+    }
   },
   {
     path: 'administrator-apoteke',
-    component: PharmacyAdminTableViewComponent
+    component: PharmacyAdminTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN']
+    }
   },
   {
     path: 'dobavljac',
-    component: SupplierTableViewComponent
+    component: SupplierTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_SUPPLIER']
+    }
   },
   {
     path: 'administrator-sistema',
-    component: SystemAdminTableViewComponent
+    component: SystemAdminTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_SYSTEM_ADMIN'
+    }
   },
   {
     path: 'dashboard/dermatolog',
-    component: DermatologistDashboardComponent
+    component: DermatologistDashboardComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_DERMATOLOGIST'
+    }
   },
   {
     path: 'dashboard/pacijent',
-    component: PatientDashboardComponent
+    component: PatientDashboardComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_PATIENT'
+    }
   },
   {
     path: 'dashboard/farmaceut',
-    component: PharmacistDashboardComponent
+    component: PharmacistDashboardComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_PHARMACIST'
+    }
   },
   {
     path: 'dashboard/administrator-apoteke',
-    component: PharmacyAdminDashboardComponent
+    component: PharmacyAdminDashboardComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_PHARMACY_ADMIN'
+    }
   },
   {
     path: 'dashboard/dobavljac',
-    component: SupplierDashboardComponent
+    component: SupplierDashboardComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_SUPPLIER'
+    }
   },
   {
     path: 'dashboard/administrator-sistema',
-    component: SystemAdminDashboardComponent
+    component: SystemAdminDashboardComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_SYSTEM_ADMIN'
+    }
   },
   {
     path: 'dashboard/visitor',
@@ -143,15 +223,27 @@ const routes: Routes = [
   },
   {
     path: 'konsultacija/zakazivanje',
-    component: ConsultationAddComponent
+    component: ConsultationAddComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_PATIENT'
+    }
   },
   {
     path: 'narudzbina',
-    component: OrderTableViewComponent
+    component: OrderTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_SUPPLIER']
+    }
   },
   {
     path: 'odsustvo',
-    component: VacationRequestTableViewComponent
+    component: VacationRequestTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PHARMACIST', 'ROLE_DERMATOLOGIST']
+    }
   }
 
 
