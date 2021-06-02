@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {SupplierDeleteComponent} from './supplier-delete.component';
 
@@ -7,7 +7,7 @@ describe('SupplierDeleteComponent', () => {
   let component: SupplierDeleteComponent;
   let fixture: ComponentFixture<SupplierDeleteComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SupplierDeleteComponent]
     })

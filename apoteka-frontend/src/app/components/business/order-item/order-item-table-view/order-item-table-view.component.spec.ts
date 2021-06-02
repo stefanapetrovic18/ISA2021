@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OrderItemTableViewComponent } from './order-item-table-view.component';
 
@@ -6,7 +6,7 @@ describe('OrderItemTableViewComponent', () => {
   let component: OrderItemTableViewComponent;
   let fixture: ComponentFixture<OrderItemTableViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ OrderItemTableViewComponent ]
     })

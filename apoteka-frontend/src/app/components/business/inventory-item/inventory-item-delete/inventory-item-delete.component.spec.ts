@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { InventoryItemDeleteComponent } from './inventory-item-delete.component';
 
@@ -6,7 +6,7 @@ describe('InventoryItemDeleteComponent', () => {
   let component: InventoryItemDeleteComponent;
   let fixture: ComponentFixture<InventoryItemDeleteComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ InventoryItemDeleteComponent ]
     })

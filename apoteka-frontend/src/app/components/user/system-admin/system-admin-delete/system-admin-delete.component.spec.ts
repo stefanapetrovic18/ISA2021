@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {SystemAdminDeleteComponent} from './system-admin-delete.component';
 
@@ -7,7 +7,7 @@ describe('SystemAdminDeleteComponent', () => {
   let component: SystemAdminDeleteComponent;
   let fixture: ComponentFixture<SystemAdminDeleteComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SystemAdminDeleteComponent]
     })

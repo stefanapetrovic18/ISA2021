@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {PharmacistViewComponent} from './pharmacist-view.component';
 
@@ -7,7 +7,7 @@ describe('PharmacistViewComponent', () => {
   let component: PharmacistViewComponent;
   let fixture: ComponentFixture<PharmacistViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [PharmacistViewComponent]
     })

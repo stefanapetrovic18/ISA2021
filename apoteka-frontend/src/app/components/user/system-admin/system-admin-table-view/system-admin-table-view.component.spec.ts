@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {SystemAdminTableViewComponent} from './system-admin-table-view.component';
 
@@ -7,7 +7,7 @@ describe('SystemAdminTableViewComponent', () => {
   let component: SystemAdminTableViewComponent;
   let fixture: ComponentFixture<SystemAdminTableViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SystemAdminTableViewComponent]
     })
