@@ -5,6 +5,4 @@ export class Pricelist {
   id: number;
   examinationPrice: number;
   consultationPrice: number;
-  validFrom: Date;
-  validUntil: Date;
 }

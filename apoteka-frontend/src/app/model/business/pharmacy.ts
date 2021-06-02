@@ -1,4 +1,3 @@
-import {User} from '../auth/user';
 import {Dermatologist} from '../user/dermatologist';
 import {Pharmacist} from '../user/pharmacist';
 import {PharmacyAdmin} from '../user/pharmacy-admin';
@@ -7,6 +6,9 @@ import {Examination} from './examination';
 import {Pricelist} from './pricelist';
 import {Promotion} from './promotion';
 import {Order} from './order';
+import { Patient } from '../user/patient';
+import { Stockpile } from './stockpile';
+import { Rating } from './rating';
 
 export class Pharmacy {
   id: number;
@@ -20,7 +22,9 @@ export class Pharmacy {
   consultations: Consultation[];
   orders: Order[];
   promotions: Promotion[];
-  subscriptions: User[];
+  subscriptions: Patient[];
   pricelist: Pricelist;
+  stockpile: Stockpile[];
   rating: number;
+  ratings: Rating[];
 }

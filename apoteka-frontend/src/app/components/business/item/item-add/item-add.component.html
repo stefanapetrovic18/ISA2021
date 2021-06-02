@@ -5,10 +5,15 @@
     <mat-label>Cena leka</mat-label>
     <input matInput type="number" [(ngModel)]="data.price">
   </mat-form-field>
-  <p>Količina</p>
+  <p>Početak važenja cene</p>
   <mat-form-field>
-    <mat-label>Količina</mat-label>
-    <input matInput type="number" [(ngModel)]="data.quantity">
+    <mat-label>Početak važenja cene</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="data.validFrom">
+  </mat-form-field>
+  <p>Kraj važenja cene</p>
+  <mat-form-field>
+    <mat-label>Kraj važenja cene</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="data.validUntil">
   </mat-form-field>
   <p>Lek</p>
   <mat-form-field>

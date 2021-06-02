@@ -6,10 +6,7 @@ import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.Role;
 import rs.apoteka.entity.auth.RoleType;
 import rs.apoteka.entity.auth.User;
-import rs.apoteka.entity.business.Consultation;
-import rs.apoteka.entity.business.Examination;
-import rs.apoteka.entity.business.Medicine;
-import rs.apoteka.entity.business.Pharmacy;
+import rs.apoteka.entity.business.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -29,10 +26,10 @@ public class Patient extends User {
     //@JsonView(Views.Internal.class)
     @JsonIgnore
     private List<Consultation> consultations;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Medicine.class)
     //@JsonView(Views.Internal.class)
     private List<Medicine> allergies;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Pharmacy.class)
     //@JsonView(Views.Internal.class)
     private List<Pharmacy> subscriptions;
 

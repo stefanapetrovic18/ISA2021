@@ -10,16 +10,6 @@
     <mat-label>Cena pregleda</mat-label>
     <input matInput type="number" [(ngModel)]="data.examinationPrice">
   </mat-form-field>
-  <p>Datum početka važenja</p>
-  <mat-form-field>
-    <mat-label>Datum početka važenja</mat-label>
-    <input matInput type="datetime-local" [(ngModel)]="data.validFrom">
-  </mat-form-field>
-  <p>Datum kraja važenja</p>
-  <mat-form-field>
-    <mat-label>Datum kraja važenja</mat-label>
-    <input matInput type="datetime-local" [(ngModel)]="data.validUntil">
-  </mat-form-field>
   <button (click)="addItem()" class="add-button" mat-button mat-raised-button>DODAJ STAVKU</button>
 </div>
 <div mat-dialog-actions>

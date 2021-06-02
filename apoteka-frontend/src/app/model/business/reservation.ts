@@ -11,4 +11,5 @@ export class Reservation {
   patient: Patient;
   medicine: Medicine;
   collected: boolean;
+  penalized: boolean;
 }

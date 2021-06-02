@@ -44,7 +44,7 @@ public class Dermatologist extends User {
     //@JsonView(Views.Public.class)
     private Double rating;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Rating.class)
     private List<Rating> ratings;
 
     public Dermatologist() {

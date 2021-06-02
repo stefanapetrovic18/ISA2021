@@ -9,4 +9,5 @@ export class VacationRequest {
   vacationEnd: Date;
   accepted: boolean;
   rejected: boolean;
+  rejectionReason: string;
 }

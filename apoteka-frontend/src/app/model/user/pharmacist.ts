@@ -1,6 +1,7 @@
 import {User} from '../auth/user';
 import {Consultation} from '../business/consultation';
 import {Pharmacy} from '../business/pharmacy';
+import { Rating } from '../business/rating';
 import {WorkingHours} from '../business/working-hours';
 
 export class Pharmacist extends User {
@@ -10,4 +11,5 @@ export class Pharmacist extends User {
   consultations: Consultation[];
   workingHours: WorkingHours[];
   rating: number;
+  ratings: Rating[];
 }

@@ -23,7 +23,7 @@ export class ItemTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Item[];
-  columns = ['price', 'quantity'];
+  columns = ['price'];
   actions = ['Medicine', 'view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private itemService: ItemService, private router: Router, private dialog: MatDialog) {}

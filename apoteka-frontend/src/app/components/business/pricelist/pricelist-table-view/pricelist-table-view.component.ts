@@ -23,7 +23,7 @@ export class PricelistTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Pricelist[];
-  columns = ['examinationPrice', 'consultationPrice', 'validFrom', 'validUntil'];
+  columns = ['examinationPrice', 'consultationPrice'];
   actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pricelistService: PricelistService, private router: Router, private dialog: MatDialog) {}

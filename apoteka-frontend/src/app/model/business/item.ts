@@ -5,6 +5,7 @@ export class Item {
   id: number;
   medicine: Medicine;
   price: number;
-  quantity: number;
   pricelist: Pricelist;
+  validFrom: Date;
+  validUntil: Date;
 }

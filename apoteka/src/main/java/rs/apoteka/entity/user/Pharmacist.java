@@ -39,7 +39,7 @@ public class Pharmacist extends User {
     @Column
     private Double rating;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Rating.class)
     private List<Rating> ratings;
 
     public Pharmacist() {

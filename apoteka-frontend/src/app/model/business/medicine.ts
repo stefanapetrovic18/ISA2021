@@ -1,3 +1,5 @@
+import { Rating } from "./rating";
+
 export class Medicine {
   id: number;
   name: string;
@@ -10,4 +12,5 @@ export class Medicine {
   ingredients: string[];
   recommendedDose: string;
   substitutes: Medicine[];
+  ratings: Rating[];
 }
