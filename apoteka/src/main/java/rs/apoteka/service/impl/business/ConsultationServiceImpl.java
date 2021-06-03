@@ -21,6 +21,7 @@ import rs.apoteka.service.intf.user.PharmacistService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -107,6 +108,22 @@ public class ConsultationServiceImpl implements ConsultationService {
         if (priceTo != null) {
             consultations.removeIf(c -> c.getPrice() > priceTo);
         }
+        return consultations;
+    }
+
+    @Override
+    public List<Consultation> findAllByPharmacyIDAndDateRange(Long pharmacyID, LocalDate dateFrom, LocalDate dateUntil) {
+        List<Consultation> consultations = consultationRepository.findAll();
+        if (pharmacyID != null) {
+            consultations.removeIf(e -> e.getPharmacy().getId().equals(pharmacyID));
+        }
+        if (dateFrom != null) {
+            consultations.removeIf(e -> e.getConsultationDate().isBefore(dateFrom.atStartOfDay()));
+        }
+        if (dateUntil != null) {
+            consultations.removeIf(e -> e.getConsultationDate().isAfter(dateUntil.atStartOfDay()));
+        }
+        consultations.removeIf(e -> e.getConsultationDate().plusMinutes(Long.parseLong(e.getDuration().toString())).isAfter(LocalDateTime.now()));
         return consultations;
     }
 

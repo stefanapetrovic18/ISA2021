@@ -10,6 +10,7 @@ import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ItemService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -53,6 +54,23 @@ public class ItemServiceImpl implements ItemService {
             items.removeIf(i -> i.getPrice() > priceTo);
         }
         return items;
+    }
+
+    @Override
+    public Double getPriceAtDate(List<Item> items, Long medicineID, LocalDate priceFrom, LocalDate priceUntil) {
+        if (medicineID != null) {
+            items.removeIf(i -> !i.getMedicine().getId().equals(medicineID));
+        }
+        if (items == null || items.isEmpty()) {
+            return 0.0;
+        }
+        if (priceFrom != null && priceUntil != null) {
+            items.removeIf(i -> i.getValidFrom().isAfter(priceUntil.atStartOfDay()) || i.getValidUntil().isAfter(priceFrom.atStartOfDay()));
+        }
+        if (items.isEmpty()) {
+            return 0.0;
+        }
+        return items.get(0).getPrice();
     }
 
     @Override

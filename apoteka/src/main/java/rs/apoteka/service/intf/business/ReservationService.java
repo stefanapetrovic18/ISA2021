@@ -2,6 +2,7 @@ package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Reservation;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,6 +13,8 @@ public interface ReservationService {
                                           LocalDateTime reservationDateEnd, Long pharmacyID, Long medicineID,
                                           Long patientID, Boolean collected, String reservationNumber,
                                           Boolean nonCollected);
+
+    List<Reservation> findAllByPharmacyIDAndDateRange(Long pharmacyID, LocalDate dateFrom, LocalDate dateUntil);
 
     Reservation getOne(Long id);
 

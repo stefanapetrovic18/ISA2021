@@ -12,6 +12,7 @@ import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ReservationService;
 import rs.apoteka.service.intf.user.PatientService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
@@ -76,6 +77,22 @@ public class ReservationServiceImpl implements ReservationService {
         if (nonCollected != null && nonCollected) {
             reservations.removeIf(p -> p.getCollectionDate().isAfter(LocalDateTime.now()));
         }
+        return reservations;
+    }
+
+    @Override
+    public List<Reservation> findAllByPharmacyIDAndDateRange(Long pharmacyID, LocalDate dateFrom, LocalDate dateUntil) {
+        List<Reservation> reservations = findAll();
+        if (pharmacyID != null) {
+            reservations.removeIf(e -> e.getPharmacy().getId().equals(pharmacyID));
+        }
+        if (dateFrom != null) {
+            reservations.removeIf(e -> e.getReservationDate().isBefore(dateFrom.atStartOfDay()));
+        }
+        if (dateUntil != null) {
+            reservations.removeIf(e -> e.getReservationDate().isAfter(dateUntil.atStartOfDay()));
+        }
+        reservations.removeIf(e -> !e.getCollected());
         return reservations;
     }
 

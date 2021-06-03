@@ -51,7 +51,23 @@ public class Item {
         this.price = price;
     }
 
-//    public Integer getQuantity() {
+    public LocalDateTime getValidFrom() {
+        return validFrom;
+    }
+
+    public void setValidFrom(LocalDateTime validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public LocalDateTime getValidUntil() {
+        return validUntil;
+    }
+
+    public void setValidUntil(LocalDateTime validUntil) {
+        this.validUntil = validUntil;
+    }
+
+    //    public Integer getQuantity() {
 //        return quantity;
 //    }
 //

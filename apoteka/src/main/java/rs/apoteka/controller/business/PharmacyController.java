@@ -6,9 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import rs.apoteka.dto.BusinessReport;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.service.intf.business.PharmacyService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -65,15 +67,25 @@ public class PharmacyController {
     }
 
     @PreAuthorize("hasRole('ROLE_PATIENT')")
-    @DeleteMapping(value = "/subscribe")
+    @GetMapping(value = "/subscribe")
     public ResponseEntity<Boolean> subscribe(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(pharmacyService.subscribe(id), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_PATIENT')")
-    @DeleteMapping(value = "/unsubscribe")
+    @GetMapping(value = "/unsubscribe")
     public ResponseEntity<Boolean> unsubscribe(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(pharmacyService.unsubscribe(id), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
+    @GetMapping(value = "/business-report")
+    public ResponseEntity<BusinessReport> getBusinessReport(
+            @RequestParam(required = true) LocalDate profitFrom,
+            @RequestParam(required = true) LocalDate profitUntil,
+            @RequestParam(required = true) Integer year
+    ) throws Exception {
+        return new ResponseEntity<>(pharmacyService.getBusinessReport(profitFrom, profitUntil, year), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")

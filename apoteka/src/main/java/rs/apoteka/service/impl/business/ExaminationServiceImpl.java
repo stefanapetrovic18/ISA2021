@@ -20,6 +20,7 @@ import rs.apoteka.service.intf.user.PatientService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -120,6 +121,22 @@ public class ExaminationServiceImpl implements ExaminationService {
         if (quickReservation != null) {
             examinations.removeIf(e -> e.getQuickReservation() != quickReservation);
         }
+        return examinations;
+    }
+
+    @Override
+    public List<Examination> findAllByPharmacyIDAndDateRange(Long pharmacyID, LocalDate dateFrom, LocalDate dateUntil) {
+        List<Examination> examinations = examinationRepository.findAll();
+        if (pharmacyID != null) {
+            examinations.removeIf(e -> e.getPharmacy().getId().equals(pharmacyID));
+        }
+        if (dateFrom != null) {
+            examinations.removeIf(e -> e.getExaminationDate().isBefore(dateFrom.atStartOfDay()));
+        }
+        if (dateUntil != null) {
+            examinations.removeIf(e -> e.getExaminationDate().isAfter(dateUntil.atStartOfDay()));
+        }
+        examinations.removeIf(e -> e.getExaminationDate().plusMinutes(Long.parseLong(e.getDuration().toString())).isAfter(LocalDateTime.now()));
         return examinations;
     }
 

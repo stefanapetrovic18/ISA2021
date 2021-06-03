@@ -2,6 +2,7 @@ package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Item;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ItemService {
@@ -9,6 +10,8 @@ public interface ItemService {
 
     List<Item> findAllParametrized(Long id, Long medicineID, Double price, Double priceFrom, Double priceTo,
                                    Integer quantity, Integer quantityFrom, Integer quantityTo, Long pricelistID);
+
+    Double getPriceAtDate(List<Item> items, Long medicineID, LocalDate priceFrom, LocalDate priceUntil);
 
     Item getOne(Long id);
 

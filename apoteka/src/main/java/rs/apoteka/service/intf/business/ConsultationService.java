@@ -3,6 +3,7 @@ package rs.apoteka.service.intf.business;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.exception.AppointmentBookingException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,6 +13,8 @@ public interface ConsultationService {
     List<Consultation> findAllParametrized(Long id, LocalDateTime consultationDate, Long pharmacistID, Long pharmacyID,
                                            Long patientID, Integer duration, Double price, Integer durationFrom,
                                            Integer durationTo, Double priceFrom, Double priceTo);
+
+    List<Consultation> findAllByPharmacyIDAndDateRange(Long pharmacyID, LocalDate dateFrom, LocalDate dateUntil);
 
     Consultation getOne(Long id);
 

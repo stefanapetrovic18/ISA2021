@@ -2,20 +2,26 @@ package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rs.apoteka.dto.*;
 import rs.apoteka.entity.auth.User;
-import rs.apoteka.entity.business.Consultation;
-import rs.apoteka.entity.business.Item;
-import rs.apoteka.entity.business.Pharmacy;
+import rs.apoteka.entity.business.*;
+import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
+import rs.apoteka.entity.user.PharmacyAdmin;
+import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.business.PharmacyRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
-import rs.apoteka.service.intf.business.PharmacyService;
+import rs.apoteka.service.intf.business.*;
 import rs.apoteka.service.intf.user.DermatologistService;
 import rs.apoteka.service.intf.user.PatientService;
 import rs.apoteka.service.intf.user.PharmacistService;
+import rs.apoteka.service.intf.user.PharmacyAdminService;
 
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -33,6 +39,20 @@ public class PharmacyServiceImpl implements PharmacyService {
     private AuthenticationService authenticationService;
     @Autowired
     private DermatologistService dermatologistService;
+    @Autowired
+    private PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    private PricelistService pricelistService;
+    @Autowired
+    private ExaminationService examinationService;
+    @Autowired
+    private ConsultationService consultationService;
+    @Autowired
+    private ReservationService reservationService;
+    @Autowired
+    private StockpileService stockpileService;
+    @Autowired
+    private ItemService itemService;
 
     @Override
     public List<Pharmacy> findAll() {
@@ -184,6 +204,146 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
     @Override
+    public BusinessReport getBusinessReport(LocalDate profitFrom, LocalDate profitUntil, Integer year) throws UserNotFoundException {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin == null) {
+            throw new UserNotFoundException();
+        }
+        Pharmacy pharmacy = getOne(admin.getPharmacy().getId());
+        if (pharmacy == null) {
+            throw new EntityNotFoundException();
+        }
+        // Izvestaj o poslovanju.
+        BusinessReport businessReport = new BusinessReport();
+        businessReport.setPharmacyName(pharmacy.getName());
+
+        // Izvestaj o prosecnim ocenama.
+        RatingReport ratingReport = new RatingReport();
+        ratingReport.setPharmacyRating(pharmacy.getRating());
+        // Ocene dermatologa.
+        List<DermatologistRating> dermatologistRatings = new ArrayList<>();
+        List<Dermatologist> dermatologists = dermatologistService.findAllByPharmaciesContaining(pharmacy.getId());
+        if (dermatologists != null && !dermatologists.isEmpty()) {
+            dermatologists.forEach(d -> {
+                DermatologistRating dermatologistRating = new DermatologistRating();
+                dermatologistRating.setDermatologistName(d.getForename() + " " + d.getSurname());
+                dermatologistRating.setDermatologistRating(d.getRating());
+                dermatologistRatings.add(dermatologistRating);
+            });
+        }
+        ratingReport.setDermatologistRatings(dermatologistRatings);
+        // Ocene farmaceuta.
+        List<PharmacistRating> pharmacistRatings = new ArrayList<>();
+        List<Pharmacist> pharmacists = pharmacistService.findAllParametrized(null, null, pharmacy.getId(),
+                null, null, null, null, null, null);
+        if (pharmacists != null && !pharmacists.isEmpty()) {
+            pharmacists.forEach(p -> {
+                PharmacistRating pharmacistRating = new PharmacistRating();
+                pharmacistRating.setPharmacistName(p.getForename() + " " + p.getSurname());
+                pharmacistRating.setPharmacistRating(p.getRating());
+                pharmacistRatings.add(pharmacistRating);
+            });
+        }
+        ratingReport.setPharmacistRatings(pharmacistRatings);
+        businessReport.setRatingReport(ratingReport);
+
+        // Izvestaj o prihodu.
+        IncomeReport incomeReport = new IncomeReport();
+        incomeReport.setReportFrom(profitFrom);
+        incomeReport.setReportUntil(profitUntil);
+        incomeReport.setIncome(calculateIncome(pharmacy, profitFrom, profitUntil));
+        businessReport.setIncomeReport(incomeReport);
+
+        // Izvestaj o prodaji lekova.
+        businessReport.setMonthlyMedicineSales(getMedicineSpendingDuringYear(pharmacy.getId(), year));
+        // Izvestaj o odrzanim pregledima.
+        businessReport.setMonthlyExaminations(getExaminationsDuringYear(pharmacy.getId(), year));
+        // Izvestaj o odrzanim konsultacijama.
+        businessReport.setMonthlyConsultations(getConsultationsDuringYear(pharmacy.getId(), year));
+
+        return businessReport;
+    }
+
+    private List<Integer> getConsultationsDuringYear(Long pharmacyID, Integer year) {
+        List<Integer> spending = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            spending.add(getConsultationsDuringMonth(pharmacyID, i+1, year));
+        }
+        return spending;
+    }
+
+    private Integer getConsultationsDuringMonth(Long pharmacyID, Integer month, Integer year) {
+        Integer spending = 0;
+        List<Consultation> consultations = consultationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                LocalDate.of(year, month, 1),
+                LocalDate.of(year, month + 1, 1));
+        if (consultations != null && !consultations.isEmpty()) {
+            spending += consultations.size();
+        }
+        return spending;
+    }
+
+    private List<Integer> getExaminationsDuringYear(Long pharmacyID, Integer year) {
+        List<Integer> spending = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            spending.add(getExaminationsDuringMonth(pharmacyID, i+1, year));
+        }
+        return spending;
+    }
+
+    private Integer getExaminationsDuringMonth(Long pharmacyID, Integer month, Integer year) {
+        Integer spending = 0;
+        List<Examination> examinations = examinationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                LocalDate.of(year, month, 1),
+                LocalDate.of(year, month + 1, 1));
+        if (examinations != null && !examinations.isEmpty()) {
+            spending += examinations.size();
+        }
+        return spending;
+    }
+
+    private List<Integer> getMedicineSpendingDuringYear(Long pharmacyID, Integer year) {
+        List<Integer> spending = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            spending.add(getMedicineSpendingDuringMonth(pharmacyID, i+1, year));
+        }
+        return spending;
+    }
+
+    private Integer getMedicineSpendingDuringMonth(Long pharmacyID, Integer month, Integer year) {
+        Integer spending = 0;
+        List<Reservation> reservations = reservationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                LocalDate.of(year, month, 1),
+                LocalDate.of(year, month + 1, 1));
+        if (reservations != null && !reservations.isEmpty()) {
+            spending += reservations.size();
+        }
+        return spending;
+    }
+
+    private Double calculateIncome(Pharmacy pharmacy, LocalDate from, LocalDate until) {
+        Double income = 0.0;
+        Pricelist pricelist = pharmacy.getPricelist();
+        List<Examination> examinations = examinationService.findAllByPharmacyIDAndDateRange(pharmacy.getId(), from, until);
+        if (examinations != null) {
+            income += examinations.size() * pricelist.getExaminationPrice();
+        }
+        List<Consultation> consultations = consultationService.findAllByPharmacyIDAndDateRange(pharmacy.getId(), from, until);
+        if (consultations != null) {
+            income += consultations.size() * pricelist.getConsultationPrice();
+        }
+        List<Reservation> reservations = reservationService.findAllByPharmacyIDAndDateRange(pharmacy.getId(), from, until);
+        if (reservations != null && !reservations.isEmpty()) {
+            Double medicineIncome = 0.0;
+            for (Reservation r: reservations) {
+                medicineIncome += itemService.getPriceAtDate(pricelist.getItems(), r.getMedicine().getId(), from, until);
+            }
+            income += medicineIncome;
+        }
+        return income;
+    }
+
+    @Override
     public Pharmacy create(Pharmacy pharmacy) {
         if (pharmacy.getPharmacists() != null && pharmacy.getPharmacists().size() > 0)
             pharmacy = removeWorkingPharmacists(pharmacy);
@@ -223,7 +383,7 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     public Pharmacy removeWorkingPharmacists(Pharmacy pharmacy) {
         for (Pharmacy ph : findAll()) {
-            if (!ph.equals(pharmacy)) {
+            if (!ph.getId().equals(pharmacy.getId())) {
                 // Farmaceut je zaposlen u drugoj apoteci.
                 // Izbaci ga iz liste zaposlenih u ovoj apoteci.
                 pharmacy.getPharmacists().removeIf(pharmacist -> ph.getPharmacists().contains(pharmacist));
