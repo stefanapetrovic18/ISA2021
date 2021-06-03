@@ -61,5 +61,14 @@ export class PharmacyService {
     const params = new HttpParams().set('id', id.toString());
     return this.http.delete<boolean>(this.URL + 'delete', {params});
   }
+  // https://nominatim.openstreetmap.org/search?format=json&q=address
+  public getCoordinatesFromAddress(address: string): Observable<any> {
+    const params = new HttpParams()
+          .set('format', 'json')
+          .append('q', address);
+          // .append('viewbox', '-25.0000%2C70.0000%2C50.0000%2C40.0000')
+          // .append('bounded', '1');
+    return this.http.get<any>('https://nominatim.openstreetmap.org/search', {params});
+  }
 
 }

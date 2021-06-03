@@ -32,6 +32,7 @@ import {VacationRequestTableViewComponent} from './components/business/vacation-
 import { OfferTableViewComponent } from './components/business/offer/offer-table-view/offer-table-view.component';
 import { RoleGuardService } from './auth/role-guard.service';
 import { BusinessReportComponent } from './components/business/pharmacy/business-report/business-report.component';
+import { PharmacyViewComponent } from './components/business/pharmacy/pharmacy-view/pharmacy-view.component';
 
 
 const routes: Routes = [
@@ -84,6 +85,10 @@ const routes: Routes = [
   {
     path: 'apoteka',
     component: PharmacyTableViewComponent
+  },
+  {
+    path: 'apoteka/profil',
+    component: PharmacyViewComponent
   },
   {
     path: 'recept',

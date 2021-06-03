@@ -69,7 +69,7 @@ public class Pharmacy {
     //@JsonView(Views.Public.class)
     private Double rating;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Rating.class)
     private List<Rating> ratings;
 
     public Pharmacy() {
