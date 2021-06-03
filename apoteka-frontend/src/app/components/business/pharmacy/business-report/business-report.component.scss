@@ -1,0 +1,67 @@
+.monthly-card {
+  max-width: 400px;
+  // padding: 5px;
+  margin: 10px;
+}
+
+.quarterly-card {
+  max-width: 400px;
+  // padding: 5px;
+  margin: 10px;
+}
+
+.yearly-card {
+  max-width: 400px;
+  // padding: 5px;
+  margin: 10px;
+}
+
+.income-card {
+  max-width: 400px;
+  // padding: 5px;
+  margin: 10px;
+}
+
+mat-tab {
+  display: flex;
+}
+
+mat-grid-tile {
+  padding-top: 250px !important;
+}
+
+mat-tab-group {
+  width: 100%;
+}
+
+.tables {
+  display: flex;
+}
+
+#t1 {
+  width: 50%;
+  margin: 5px;
+}
+
+#t2 {
+  width: 50%;
+  margin: 5px;
+}
+
+mat-tab-body {
+  display: flex !important;
+  flex-flow: row wrap !important;
+}
+
+.mat-tab-body-content {
+  display: flex !important;
+  flex-flow: row wrap !important;
+}
+
+.report-content {
+  display: flex;
+}
+
+td {
+  min-width: 100px;
+}

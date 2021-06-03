@@ -33,8 +33,8 @@ export class PharmacyService {
 
   public getBusinessReport(profitFrom: Date, profitUntil: Date, year: number): Observable<BusinessReport> {
     const params = new HttpParams()
-      .set('profitFrom', new Date(profitFrom).toISOString())
-      .append('profitUntil', new Date(profitUntil).toISOString())
+      .set('profitFrom', profitFrom.toISOString().substr(0, 10))
+      .append('profitUntil', profitUntil.toISOString().substr(0, 10))
       .append('year', year.toString());
     return this.http.get<BusinessReport>(this.URL + 'business-report', {params});
   }

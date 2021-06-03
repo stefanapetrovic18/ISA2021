@@ -150,6 +150,7 @@ import { BusinessReportComponent } from './components/business/pharmacy/business
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -327,7 +328,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatChipsModule,
     MatDatepickerModule,
     MatProgressBarModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatGridListModule
   ],
   providers: [
     {

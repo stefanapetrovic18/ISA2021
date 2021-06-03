@@ -81,8 +81,8 @@ public class PharmacyController {
     @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @GetMapping(value = "/business-report")
     public ResponseEntity<BusinessReport> getBusinessReport(
-            @RequestParam(required = true) LocalDate profitFrom,
-            @RequestParam(required = true) LocalDate profitUntil,
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate profitFrom,
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate profitUntil,
             @RequestParam(required = true) Integer year
     ) throws Exception {
         return new ResponseEntity<>(pharmacyService.getBusinessReport(profitFrom, profitUntil, year), HttpStatus.OK);

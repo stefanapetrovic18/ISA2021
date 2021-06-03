@@ -128,7 +128,7 @@ public class ExaminationServiceImpl implements ExaminationService {
     public List<Examination> findAllByPharmacyIDAndDateRange(Long pharmacyID, LocalDate dateFrom, LocalDate dateUntil) {
         List<Examination> examinations = examinationRepository.findAll();
         if (pharmacyID != null) {
-            examinations.removeIf(e -> e.getPharmacy().getId().equals(pharmacyID));
+            examinations.removeIf(e -> !e.getPharmacy().getId().equals(pharmacyID));
         }
         if (dateFrom != null) {
             examinations.removeIf(e -> e.getExaminationDate().isBefore(dateFrom.atStartOfDay()));

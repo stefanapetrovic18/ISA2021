@@ -50,3 +50,13 @@ button {
   background-color: #880e4f;
   color: white;
 }
+
+mat-tab-body {
+  display: flex !important;
+  flex-flow: row wrap !important;
+}
+
+.mat-tab-body-content {
+  display: flex !important;
+  flex-flow: row wrap !important;
+}

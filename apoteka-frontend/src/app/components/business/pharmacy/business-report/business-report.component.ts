@@ -30,12 +30,15 @@ export class BusinessReportComponent implements OnInit {
     this.pharmacyService.getBusinessReport(this.profitFrom, this.profitUntil, this.year).subscribe(
       data => {
         this.report = data;
+        this.yearlyMedicineSales = 0;
         this.report.monthlyMedicineSales.forEach(s => {
           this.yearlyMedicineSales += s;
         });
+        this.yearlyExaminations = 0;
         this.report.monthlyExaminations.forEach(s => {
           this.yearlyExaminations += s;
         });
+        this.yearlyConsultations = 0;
         this.report.monthlyConsultations.forEach(s => {
           this.yearlyConsultations += s;
         });

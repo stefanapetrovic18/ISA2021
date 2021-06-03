@@ -40,997 +40,991 @@
       </table>
     </form>
   </mat-card>
-
-  <mat-card class="yearly-card" *ngIf="report.pharmacyName !== undefined">
-    <mat-card-header>
-      <mat-card-title>Godišnja potrošnja</mat-card-title>
-      <mat-card-subtitle>po kategorijama, {{year}}. godina</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <table>
-        <tr>
-          <td>
-            Potrošnja lekova
-          </td>
-          <td>
-            <mat-progress-bar mode="determinate"
-              (value)="yearlyMedicineSales / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100"
-            ></mat-progress-bar>
-          </td>
-          <td>
-            {{yearlyMedicineSales}} kom.
-          </td>
-          <td>
-            {{yearlyMedicineSales / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}%
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Održani pregledi
-          </td>
-          <td>
-            <mat-progress-bar mode="determinate"
-              (value)="yearlyExaminations / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100"
-            ></mat-progress-bar>
-          </td>
-          <td>
-            {{yearlyExaminations}} kom.
-          </td>
-          <td>
-            {{yearlyExaminations / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}%
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Održana savetovanja
-          </td>
-          <td>
-            <mat-progress-bar mode="determinate"
-              (value)="yearlyConsultations / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100"
-            ></mat-progress-bar>
-          </td>
-          <td>
-            {{yearlyConsultations}} kom.
-          </td>
-          <td>
-            {{yearlyConsultations / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}%
-          </td>
-        </tr>
-        <tr *ngIf="report.ratingReport !== undefined">
-          <td>
-            Prosečna ocena
-          </td>
-          <td>
-            <mat-progress-bar mode="determinate"
-              (value)="report.ratingReport.pharmacyRating / 5 * 100"
-            ></mat-progress-bar>
-          </td>
-          <td>
-            {{report.ratingReport.pharmacyRating}}
-            <mat-icon aria-hidden="false">grade</mat-icon> / 5.00
-            <mat-icon aria-hidden="false">grade</mat-icon>
-          </td>
-          <td>
-            {{report.ratingReport.pharmacyRating / 5 * 100}}%
-          </td>
-        </tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="income-card" *ngIf="report.pharmacyName !== undefined">
-    <mat-card-header>
-      <mat-card-title>Ukupan prihod</mat-card-title>
-      <mat-card-subtitle>za period, {{report.incomeReport.reportFrom}} - {{report.incomeReport.reportUntil}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <table>
-        <tr>
-          <td>
-            <mat-progress-bar mode="determinate"
-              (value)="100"
-            ></mat-progress-bar>
-          </td>
-          <td>
-            {{report.incomeReport.income}} RSD
-          </td>
-        </tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-tab-group *ngIf="report.pharmacyName !== undefined">
-
-    <mat-tab label="Kvartalni">
-
-      <mat-card class="quarterly-card">
+  <div class="report-content">
+    <div class="fixed-cards">
+      <mat-card class="yearly-card" *ngIf="report.pharmacyName !== undefined">
         <mat-card-header>
-          <mat-card-title>Prodaja lekova</mat-card-title>
-          <mat-card-subtitle>po kvartalima</mat-card-subtitle>
+          <mat-card-title>Godišnja potrošnja</mat-card-title>
+          <mat-card-subtitle>po kategorijama, {{year}}. godina</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <table>
             <tr>
               <td>
-                Prvi kvartal (Jan-Mar)
+                Potrošnja lekova
               </td>
               <td>
                 <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyMedicineSales[0] + report.monthlyMedicineSales[1] + report.monthlyMedicineSales[2]) / yearlyMedicineSales * 100"
+                  value="{{yearlyMedicineSales / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}"
                 ></mat-progress-bar>
               </td>
               <td>
-                {{report.monthlyMedicineSales[0] + report.monthlyMedicineSales[1] + report.monthlyMedicineSales[2]}} kom.
+                {{yearlyMedicineSales}} kom.
               </td>
               <td>
-                {{(report.monthlyMedicineSales[0] + report.monthlyMedicineSales[1] + report.monthlyMedicineSales[2]) / yearlyMedicineSales * 100}}%
+                {{yearlyMedicineSales / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}%
               </td>
             </tr>
             <tr>
               <td>
-                Drugi kvartal (Apr-Jun)
+                Održani pregledi
               </td>
               <td>
                 <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyMedicineSales[3] + report.monthlyMedicineSales[4] + report.monthlyMedicineSales[5]) / yearlyMedicineSales * 100"
+                  value="{{yearlyExaminations / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}"
                 ></mat-progress-bar>
               </td>
               <td>
-                {{report.monthlyMedicineSales[3] + report.monthlyMedicineSales[4] + report.monthlyMedicineSales[5]}} kom.
+                {{yearlyExaminations}} kom.
               </td>
               <td>
-                {{(report.monthlyMedicineSales[3] + report.monthlyMedicineSales[4] + report.monthlyMedicineSales[5]) / yearlyMedicineSales * 100}}%
+                {{yearlyExaminations / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}%
               </td>
             </tr>
             <tr>
               <td>
-                Treći kvartal (Jul-Sep)
+                Održana savetovanja
               </td>
               <td>
                 <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyMedicineSales[6] + report.monthlyMedicineSales[7] + report.monthlyMedicineSales[8]) / yearlyMedicineSales * 100"
+                  value="{{yearlyConsultations / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}"
                 ></mat-progress-bar>
               </td>
               <td>
-                {{report.monthlyMedicineSales[6] + report.monthlyMedicineSales[7] + report.monthlyMedicineSales[8]}} kom.
+                {{yearlyConsultations}} kom.
               </td>
               <td>
-                {{(report.monthlyMedicineSales[6] + report.monthlyMedicineSales[7] + report.monthlyMedicineSales[8]) / yearlyMedicineSales * 100}}%
+                {{yearlyConsultations / (yearlyMedicineSales + yearlyExaminations + yearlyConsultations) * 100}}%
               </td>
             </tr>
-            <tr>
+            <tr *ngIf="report.ratingReport !== undefined">
               <td>
-                Četvrti kvartal (Okt-Dec)
+                Prosečna ocena
               </td>
               <td>
                 <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyMedicineSales[9] + report.monthlyMedicineSales[10] + report.monthlyMedicineSales[11]) / yearlyMedicineSales * 100"
+                  value="{{report.ratingReport.pharmacyRating / 5 * 100}}"
                 ></mat-progress-bar>
               </td>
               <td>
-                {{report.monthlyMedicineSales[9] + report.monthlyMedicineSales[10] + report.monthlyMedicineSales[11]}} kom.
+                {{report.ratingReport.pharmacyRating}}
+                <mat-icon aria-hidden="false">grade</mat-icon> / 5.00
+                <mat-icon aria-hidden="false">grade</mat-icon>
               </td>
               <td>
-                {{(report.monthlyMedicineSales[9] + report.monthlyMedicineSales[10] + report.monthlyMedicineSales[11]) / yearlyMedicineSales * 100}}%
+                {{report.ratingReport.pharmacyRating / 5 * 100}}%
               </td>
             </tr>
           </table>
         </mat-card-content>
       </mat-card>
 
-      <mat-card class="quarterly-card">
+      <mat-card class="income-card" *ngIf="report.pharmacyName !== undefined">
         <mat-card-header>
-          <mat-card-title>Održani pregledi</mat-card-title>
-          <mat-card-subtitle>po kvartalima</mat-card-subtitle>
+          <mat-card-title>Ukupan prihod</mat-card-title>
+          <mat-card-subtitle>za period, {{report.incomeReport.reportFrom}} - {{report.incomeReport.reportUntil}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <table>
             <tr>
               <td>
-                Prvi kvartal (Jan-Mar)
-              </td>
-              <td>
                 <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyExaminations[0] + report.monthlyExaminations[1] + report.monthlyExaminations[2]) / yearlyExaminations * 100"
+                  value="{{100"
                 ></mat-progress-bar>
               </td>
               <td>
-                {{report.monthlyExaminations[0] + report.monthlyExaminations[1] + report.monthlyExaminations[2]}} kom.
-              </td>
-              <td>
-                {{(report.monthlyExaminations[0] + report.monthlyExaminations[1] + report.monthlyExaminations[2]) / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Drugi kvartal (Apr-Jun)
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyExaminations[3] + report.monthlyExaminations[4] + report.monthlyExaminations[5]) / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[3] + report.monthlyExaminations[4] + report.monthlyExaminations[5]}} kom.
-              </td>
-              <td>
-                {{(report.monthlyExaminations[3] + report.monthlyExaminations[4] + report.monthlyExaminations[5]) / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Treći kvartal (Jul-Sep)
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyExaminations[6] + report.monthlyExaminations[7] + report.monthlyExaminations[8]) / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[6] + report.monthlyExaminations[7] + report.monthlyExaminations[8]}} kom.
-              </td>
-              <td>
-                {{(report.monthlyExaminations[6] + report.monthlyExaminations[7] + report.monthlyExaminations[8]) / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Četvrti kvartal (Okt-Dec)
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyExaminations[9] + report.monthlyExaminations[10] + report.monthlyExaminations[11]) / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[9] + report.monthlyExaminations[10] + report.monthlyExaminations[11]}} kom.
-              </td>
-              <td>
-                {{(report.monthlyExaminations[9] + report.monthlyExaminations[10] + report.monthlyExaminations[11]) / yearlyExaminations * 100}}%
+                {{report.incomeReport.income}} RSD
               </td>
             </tr>
           </table>
         </mat-card-content>
       </mat-card>
+    </div>
+    <mat-tab-group *ngIf="report.pharmacyName !== undefined">
 
-      <mat-card class="quarterly-card">
-        <mat-card-header>
-          <mat-card-title>Održana savetovanja</mat-card-title>
-          <mat-card-subtitle>po kvartalima</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <table>
-            <tr>
-              <td>
-                Prvi kvartal (Jan-Mar)
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyConsultations[0] + report.monthlyConsultations[1] + report.monthlyConsultations[2]) / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[0] + report.monthlyConsultations[1] + report.monthlyConsultations[2]}} kom.
-              </td>
-              <td>
-                {{(report.monthlyConsultations[0] + report.monthlyConsultations[1] + report.monthlyConsultations[2]) / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Drugi kvartal (Apr-Jun)
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyConsultations[3] + report.monthlyConsultations[4] + report.monthlyConsultations[5]) / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[3] + report.monthlyConsultations[4] + report.monthlyConsultations[5]}} kom.
-              </td>
-              <td>
-                {{(report.monthlyConsultations[3] + report.monthlyConsultations[4] + report.monthlyConsultations[5]) / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Treći kvartal (Jul-Sep)
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyConsultations[6] + report.monthlyConsultations[7] + report.monthlyConsultations[8]) / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[6] + report.monthlyConsultations[7] + report.monthlyConsultations[8]}} kom.
-              </td>
-              <td>
-                {{(report.monthlyConsultations[6] + report.monthlyConsultations[7] + report.monthlyConsultations[8]) / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Četvrti kvartal (Okt-Dec)
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="(report.monthlyConsultations[9] + report.monthlyConsultations[10] + report.monthlyConsultations[11]) / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[9] + report.monthlyConsultations[10] + report.monthlyConsultations[11]}} kom.
-              </td>
-              <td>
-                {{(report.monthlyConsultations[9] + report.monthlyConsultations[10] + report.monthlyConsultations[11]) / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
+      <mat-tab label="Kvartalni">
 
-    </mat-tab>
+            <mat-card class="quarterly-card">
+              <mat-card-header>
+                <mat-card-title>Prodaja lekova</mat-card-title>
+                <mat-card-subtitle>po kvartalima</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <table>
+                  <tr>
+                    <td>
+                      Prvi kvartal (Jan-Mar)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyMedicineSales[0] + report.monthlyMedicineSales[1] + report.monthlyMedicineSales[2]) / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[0] + report.monthlyMedicineSales[1] + report.monthlyMedicineSales[2]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyMedicineSales[0] + report.monthlyMedicineSales[1] + report.monthlyMedicineSales[2]) / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Drugi kvartal (Apr-Jun)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyMedicineSales[3] + report.monthlyMedicineSales[4] + report.monthlyMedicineSales[5]) / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[3] + report.monthlyMedicineSales[4] + report.monthlyMedicineSales[5]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyMedicineSales[3] + report.monthlyMedicineSales[4] + report.monthlyMedicineSales[5]) / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Treći kvartal (Jul-Sep)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyMedicineSales[6] + report.monthlyMedicineSales[7] + report.monthlyMedicineSales[8]) / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[6] + report.monthlyMedicineSales[7] + report.monthlyMedicineSales[8]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyMedicineSales[6] + report.monthlyMedicineSales[7] + report.monthlyMedicineSales[8]) / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Četvrti kvartal (Okt-Dec)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyMedicineSales[9] + report.monthlyMedicineSales[10] + report.monthlyMedicineSales[11]) / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[9] + report.monthlyMedicineSales[10] + report.monthlyMedicineSales[11]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyMedicineSales[9] + report.monthlyMedicineSales[10] + report.monthlyMedicineSales[11]) / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
 
-    <mat-tab label="Mesečni">
+            <mat-card class="quarterly-card">
+              <mat-card-header>
+                <mat-card-title>Održani pregledi</mat-card-title>
+                <mat-card-subtitle>po kvartalima</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <table>
+                  <tr>
+                    <td>
+                      Prvi kvartal (Jan-Mar)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyExaminations[0] + report.monthlyExaminations[1] + report.monthlyExaminations[2]) / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[0] + report.monthlyExaminations[1] + report.monthlyExaminations[2]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyExaminations[0] + report.monthlyExaminations[1] + report.monthlyExaminations[2]) / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Drugi kvartal (Apr-Jun)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyExaminations[3] + report.monthlyExaminations[4] + report.monthlyExaminations[5]) / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[3] + report.monthlyExaminations[4] + report.monthlyExaminations[5]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyExaminations[3] + report.monthlyExaminations[4] + report.monthlyExaminations[5]) / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Treći kvartal (Jul-Sep)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyExaminations[6] + report.monthlyExaminations[7] + report.monthlyExaminations[8]) / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[6] + report.monthlyExaminations[7] + report.monthlyExaminations[8]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyExaminations[6] + report.monthlyExaminations[7] + report.monthlyExaminations[8]) / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Četvrti kvartal (Okt-Dec)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyExaminations[9] + report.monthlyExaminations[10] + report.monthlyExaminations[11]) / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[9] + report.monthlyExaminations[10] + report.monthlyExaminations[11]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyExaminations[9] + report.monthlyExaminations[10] + report.monthlyExaminations[11]) / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
 
-      <mat-card class="monthly-card">
-        <mat-card-header>
-          <mat-card-title>Prodaja lekova</mat-card-title>
-          <mat-card-subtitle>po mesecima</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <table>
-            <tr>
-              <td>
-                Januar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[0] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[0]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[0] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Februar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[1] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[1]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[1] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Mart
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[2] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[2]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[2] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                April
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[3] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[3]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[3] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Maj
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[4] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[4]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[4] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Jun
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[5] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[5]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[5] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Jul
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[6] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[6]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[6] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Avgust
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[7] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[7]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[7] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Septembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[8] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[8]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[8] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Oktobar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[9] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[9]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[9] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Novembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[10] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[10]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[10] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Decembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyMedicineSales[11] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[11]}} kom.
-              </td>
-              <td>
-                {{report.monthlyMedicineSales[11] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
+            <mat-card class="quarterly-card">
+              <mat-card-header>
+                <mat-card-title>Održana savetovanja</mat-card-title>
+                <mat-card-subtitle>po kvartalima</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <table>
+                  <tr>
+                    <td>
+                      Prvi kvartal (Jan-Mar)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyConsultations[0] + report.monthlyConsultations[1] + report.monthlyConsultations[2]) / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[0] + report.monthlyConsultations[1] + report.monthlyConsultations[2]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyConsultations[0] + report.monthlyConsultations[1] + report.monthlyConsultations[2]) / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Drugi kvartal (Apr-Jun)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyConsultations[3] + report.monthlyConsultations[4] + report.monthlyConsultations[5]) / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[3] + report.monthlyConsultations[4] + report.monthlyConsultations[5]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyConsultations[3] + report.monthlyConsultations[4] + report.monthlyConsultations[5]) / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Treći kvartal (Jul-Sep)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyConsultations[6] + report.monthlyConsultations[7] + report.monthlyConsultations[8]) / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[6] + report.monthlyConsultations[7] + report.monthlyConsultations[8]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyConsultations[6] + report.monthlyConsultations[7] + report.monthlyConsultations[8]) / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Četvrti kvartal (Okt-Dec)
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{(report.monthlyConsultations[9] + report.monthlyConsultations[10] + report.monthlyConsultations[11]) / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[9] + report.monthlyConsultations[10] + report.monthlyConsultations[11]}} kom.
+                    </td>
+                    <td>
+                      {{(report.monthlyConsultations[9] + report.monthlyConsultations[10] + report.monthlyConsultations[11]) / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
 
-      <mat-card class="monthly-card">
-        <mat-card-header>
-          <mat-card-title>Održani pregledi</mat-card-title>
-          <mat-card-subtitle>po mesecima</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <table>
-            <tr>
-              <td>
-                Januar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[0] / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[0]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[0] / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Februar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[1] / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[1]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[1] / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Mart
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[2] / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[2]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[2] / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                April
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[3] / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[3]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[3] / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Maj
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[4] / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[4]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[4] / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Jun
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[5] / yearlyExaminations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[5]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[5] / yearlyExaminations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Jul
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[6] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[6]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[6] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Avgust
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[7] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[7]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[7] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Septembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[8] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[8]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[8] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Oktobar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[9] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[9]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[9] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Novembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[10] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[10]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[10] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Decembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyExaminations[11] / yearlyMedicineSales * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyExaminations[11]}} kom.
-              </td>
-              <td>
-                {{report.monthlyExaminations[11] / yearlyMedicineSales * 100}}%
-              </td>
-            </tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
+      </mat-tab>
 
-      <mat-card class="monthly-card">
-        <mat-card-header>
-          <mat-card-title>Održana savetovanja</mat-card-title>
-          <mat-card-subtitle>po mesecima</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <table>
-            <tr>
-              <td>
-                Januar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[0] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[0]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[0] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Februar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[1] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[1]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[1] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Mart
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[2] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[2]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[2] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                April
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[3] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[3]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[3] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Maj
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[4] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[4]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[4] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Jun
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[5] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[5]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[5] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Jul
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[6] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[6]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[6] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Avgust
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[7] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[7]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[7] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Septembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[8] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[8]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[8] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Oktobar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[9] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[9]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[9] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Novembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[10] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[10]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[10] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Decembar
-              </td>
-              <td>
-                <mat-progress-bar mode="determinate"
-                  (value)="report.monthlyConsultations[11] / yearlyConsultations * 100"
-                ></mat-progress-bar>
-              </td>
-              <td>
-                {{report.monthlyConsultations[11]}} kom.
-              </td>
-              <td>
-                {{report.monthlyConsultations[11] / yearlyConsultations * 100}}%
-              </td>
-            </tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
+      <mat-tab label="Mesečni">
 
-    </mat-tab>
+            <mat-card class="monthly-card">
+              <mat-card-header>
+                <mat-card-title>Prodaja lekova</mat-card-title>
+                <mat-card-subtitle>po mesecima</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <table>
+                  <tr>
+                    <td>
+                      Januar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[0] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[0]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[0] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Februar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[1] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[1]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[1] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Mart
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[2] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[2]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[2] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      April
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[3] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[3]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[3] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Maj
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[4] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[4]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[4] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Jun
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[5] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[5]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[5] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Jul
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[6] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[6]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[6] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Avgust
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[7] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[7]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[7] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Septembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[8] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[8]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[8] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Oktobar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[9] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[9]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[9] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Novembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[10] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[10]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[10] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Decembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyMedicineSales[11] / yearlyMedicineSales * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[11]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyMedicineSales[11] / yearlyMedicineSales * 100}}%
+                    </td>
+                  </tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
 
-  </mat-tab-group>
+            <mat-card class="monthly-card">
+              <mat-card-header>
+                <mat-card-title>Održani pregledi</mat-card-title>
+                <mat-card-subtitle>po mesecima</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <table>
+                  <tr>
+                    <td>
+                      Januar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[0] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[0]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[0] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Februar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[1] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[1]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[1] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Mart
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[2] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[2]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[2] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      April
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[3] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[3]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[3] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Maj
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[4] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[4]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[4] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Jun
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[5] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[5]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[5] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Jul
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[6] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[6]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[6] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Avgust
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[7] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[7]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[7] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Septembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[8] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[8]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[8] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Oktobar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[9] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[9]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[9] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Novembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[10] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[10]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[10] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Decembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyExaminations[11] / yearlyExaminations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[11]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyExaminations[11] / yearlyExaminations * 100}}%
+                    </td>
+                  </tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
 
-  <table mat-table [dataSource]="report.ratingReport.pharmacistRatings" class="mat-elevation-z8"
-  *ngIf="report.ratingReport !== undefined && report.ratingReport.pharmacistRatings !== undefined">
+            <mat-card class="monthly-card">
+              <mat-card-header>
+                <mat-card-title>Održana savetovanja</mat-card-title>
+                <mat-card-subtitle>po mesecima</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <table>
+                  <tr>
+                    <td>
+                      Januar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[0] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[0]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[0] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Februar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[1] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[1]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[1] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Mart
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[2] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[2]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[2] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      April
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[3] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[3]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[3] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Maj
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[4] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[4]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[4] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Jun
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[5] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[5]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[5] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Jul
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[6] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[6]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[6] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Avgust
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[7] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[7]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[7] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Septembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[8] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[8]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[8] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Oktobar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[9] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[9]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[9] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Novembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[10] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[10]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[10] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Decembar
+                    </td>
+                    <td>
+                      <mat-progress-bar mode="determinate"
+                        value="{{report.monthlyConsultations[11] / yearlyConsultations * 100}}"
+                      ></mat-progress-bar>
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[11]}} kom.
+                    </td>
+                    <td>
+                      {{report.monthlyConsultations[11] / yearlyConsultations * 100}}%
+                    </td>
+                  </tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+      </mat-tab>
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="Ime i prezime">
-      <th mat-header-cell *matHeaderCellDef>Ime i prezime</th>
-      <td mat-cell *matCellDef="let element"> {{element.pharmacistName}} </td>
-      <td mat-footer-cell *matFooterCellDef>Prosečna ocena</td>
-    </ng-container>
-    <ng-container matColumnDef="Ocena">
-      <th mat-header-cell *matHeaderCellDef>Ocena</th>
-      <td mat-cell *matCellDef="let element"> {{element.pharmacistRating}} </td>
-      <td mat-footer-cell *matFooterCellDef> {{getAveragePharmacistRating()}} </td>
-    </ng-container>
+    </mat-tab-group>
+  </div>
 
-    <tr mat-header-row *matHeaderRowDef="pharmacistDisplayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: pharmacistDisplayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="pharmacistDisplayedColumns"></tr>
-  </table>
+  <div class="tables">
+    <table mat-table [dataSource]="report.ratingReport.dermatologistRatings" class="mat-elevation-z8" id="t1"
+    *ngIf="report.ratingReport !== undefined && report.ratingReport.dermatologistRatings !== undefined">
 
-  <table mat-table [dataSource]="report.ratingReport.dermatologistRatings" class="mat-elevation-z8"
-  *ngIf="report.ratingReport !== undefined && report.ratingReport.dermatologistRatings !== undefined">
+      <ng-container matColumnDef="dermatologistName">
+        <th mat-header-cell *matHeaderCellDef>Dermatolog</th>
+        <td mat-cell *matCellDef="let element"> {{element.dermatologistName}} </td>
+        <td mat-footer-cell *matFooterCellDef><b>Prosečna ocena</b></td>
+      </ng-container>
+      <ng-container matColumnDef="dermatologistRating">
+        <th mat-header-cell *matHeaderCellDef>Ocena</th>
+        <td mat-cell *matCellDef="let element"> {{element.dermatologistRating}} </td>
+        <td mat-footer-cell *matFooterCellDef> <b>{{getAverageDermatologistRating()}}</b> </td>
+      </ng-container>
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+      <tr mat-header-row *matHeaderRowDef="dermatologistDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: dermatologistDisplayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="dermatologistDisplayedColumns"></tr>
+    </table>
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="Ime i prezime">
-      <th mat-header-cell *matHeaderCellDef>Ime i prezime</th>
-      <td mat-cell *matCellDef="let element"> {{element.dermatologistName}} </td>
-      <td mat-footer-cell *matFooterCellDef>Prosečna ocena</td>
-    </ng-container>
-    <ng-container matColumnDef="Ocena">
-      <th mat-header-cell *matHeaderCellDef>Ocena</th>
-      <td mat-cell *matCellDef="let element"> {{element.dermatologistRating}} </td>
-      <td mat-footer-cell *matFooterCellDef> {{getAverageDermatologistRating()}} </td>
-    </ng-container>
+    <table mat-table [dataSource]="report.ratingReport.pharmacistRatings" class="mat-elevation-z8" id="t2"
+    *ngIf="report.ratingReport !== undefined && report.ratingReport.pharmacistRatings !== undefined">
 
-    <tr mat-header-row *matHeaderRowDef="dermatologistDisplayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: dermatologistDisplayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="dermatologistDisplayedColumns"></tr>
-  </table>
+      <ng-container matColumnDef="pharmacistName">
+        <th mat-header-cell *matHeaderCellDef>Farmaceut</th>
+        <td mat-cell *matCellDef="let element"> {{element.pharmacistName}} </td>
+        <td mat-footer-cell *matFooterCellDef><b>Prosečna ocena</b></td>
+      </ng-container>
+      <ng-container matColumnDef="pharmacistRating">
+        <th mat-header-cell *matHeaderCellDef>Ocena</th>
+        <td mat-cell *matCellDef="let element"> {{element.pharmacistRating}} </td>
+        <td mat-footer-cell *matFooterCellDef> <b>{{getAveragePharmacistRating()}}</b> </td>
+      </ng-container>
 
-
+      <tr mat-header-row *matHeaderRowDef="pharmacistDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: pharmacistDisplayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="pharmacistDisplayedColumns"></tr>
+    </table>
+  </div>
 
 </div>

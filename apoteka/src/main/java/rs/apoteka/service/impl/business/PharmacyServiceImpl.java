@@ -274,9 +274,16 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     private Integer getConsultationsDuringMonth(Long pharmacyID, Integer month, Integer year) {
         Integer spending = 0;
-        List<Consultation> consultations = consultationService.findAllByPharmacyIDAndDateRange(pharmacyID,
-                LocalDate.of(year, month, 1),
-                LocalDate.of(year, month + 1, 1));
+        List<Consultation> consultations = new ArrayList<>();
+        if (month != 12) {
+            consultations = consultationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                    LocalDate.of(year, month, 1),
+                    LocalDate.of(year, month + 1, 1));
+        } else {
+            consultations = consultationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                    LocalDate.of(year, month, 1),
+                    LocalDate.of(year + 1, 1, 1));
+        }
         if (consultations != null && !consultations.isEmpty()) {
             spending += consultations.size();
         }
@@ -293,9 +300,16 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     private Integer getExaminationsDuringMonth(Long pharmacyID, Integer month, Integer year) {
         Integer spending = 0;
-        List<Examination> examinations = examinationService.findAllByPharmacyIDAndDateRange(pharmacyID,
-                LocalDate.of(year, month, 1),
-                LocalDate.of(year, month + 1, 1));
+        List<Examination> examinations = new ArrayList<>();
+        if (month != 12) {
+            examinations = examinationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                    LocalDate.of(year, month, 1),
+                    LocalDate.of(year, month + 1, 1));
+        } else {
+            examinations = examinationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                    LocalDate.of(year, month, 1),
+                    LocalDate.of(year + 1, 1, 1));
+        }
         if (examinations != null && !examinations.isEmpty()) {
             spending += examinations.size();
         }
@@ -312,9 +326,16 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     private Integer getMedicineSpendingDuringMonth(Long pharmacyID, Integer month, Integer year) {
         Integer spending = 0;
-        List<Reservation> reservations = reservationService.findAllByPharmacyIDAndDateRange(pharmacyID,
-                LocalDate.of(year, month, 1),
-                LocalDate.of(year, month + 1, 1));
+        List<Reservation> reservations = new ArrayList<>();
+        if (month != 12) {
+            reservations = reservationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                    LocalDate.of(year, month, 1),
+                    LocalDate.of(year, month + 1, 1));
+        } else {
+            reservations = reservationService.findAllByPharmacyIDAndDateRange(pharmacyID,
+                    LocalDate.of(year, month, 1),
+                    LocalDate.of(year + 1, 1, 1));
+        }
         if (reservations != null && !reservations.isEmpty()) {
             spending += reservations.size();
         }

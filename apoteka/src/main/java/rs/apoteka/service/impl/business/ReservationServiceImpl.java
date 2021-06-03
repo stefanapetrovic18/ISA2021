@@ -84,7 +84,7 @@ public class ReservationServiceImpl implements ReservationService {
     public List<Reservation> findAllByPharmacyIDAndDateRange(Long pharmacyID, LocalDate dateFrom, LocalDate dateUntil) {
         List<Reservation> reservations = findAll();
         if (pharmacyID != null) {
-            reservations.removeIf(e -> e.getPharmacy().getId().equals(pharmacyID));
+            reservations.removeIf(e -> !e.getPharmacy().getId().equals(pharmacyID));
         }
         if (dateFrom != null) {
             reservations.removeIf(e -> e.getReservationDate().isBefore(dateFrom.atStartOfDay()));

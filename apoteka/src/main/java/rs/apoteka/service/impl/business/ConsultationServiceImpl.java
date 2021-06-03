@@ -115,7 +115,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     public List<Consultation> findAllByPharmacyIDAndDateRange(Long pharmacyID, LocalDate dateFrom, LocalDate dateUntil) {
         List<Consultation> consultations = consultationRepository.findAll();
         if (pharmacyID != null) {
-            consultations.removeIf(e -> e.getPharmacy().getId().equals(pharmacyID));
+            consultations.removeIf(e -> !e.getPharmacy().getId().equals(pharmacyID));
         }
         if (dateFrom != null) {
             consultations.removeIf(e -> e.getConsultationDate().isBefore(dateFrom.atStartOfDay()));
