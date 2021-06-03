@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import { ComplaintResponse } from 'src/app/dto/ComplaintResponse';
+import { ComplaintResponse } from 'src/app/dto/complaint-response';
 import {Complaint} from 'src/app/model/business/complaint';
 
 const httpOptions = {

@@ -1,6 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import { BusinessReport } from 'src/app/dto/business-report';
 import {Pharmacy} from 'src/app/model/business/pharmacy';
 
 const httpOptions = {
@@ -28,6 +29,14 @@ export class PharmacyService {
   public getOne(id: number): Observable<Pharmacy> {
     const params = new HttpParams().set('id', id.toString());
     return this.http.get<Pharmacy>(this.URL + 'search', {params});
+  }
+
+  public getBusinessReport(profitFrom: Date, profitUntil: Date, year: number): Observable<BusinessReport> {
+    const params = new HttpParams()
+      .set('profitFrom', new Date(profitFrom).toISOString())
+      .append('profitUntil', new Date(profitUntil).toISOString())
+      .append('year', year.toString());
+    return this.http.get<BusinessReport>(this.URL + 'business-report', {params});
   }
 
   public findAllContainingMedicine(medicineID: number): Observable<Pharmacy[]> {

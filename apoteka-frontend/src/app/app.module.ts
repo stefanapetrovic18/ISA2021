@@ -146,6 +146,10 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatChipsModule} from '@angular/material/chips';
 import { VacationRequestAddComponent } from './components/business/vacation-request/vacation-request-add/vacation-request-add.component';
 import { VacationRequestTableViewComponent } from './components/business/vacation-request/vacation-request-table-view/vacation-request-table-view.component';
+import { BusinessReportComponent } from './components/business/pharmacy/business-report/business-report.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -239,6 +243,7 @@ import { VacationRequestTableViewComponent } from './components/business/vacatio
     PharmacyAdminEditComponent,
     PharmacyAdminTableViewComponent,
     PharmacyAdminViewComponent,
+    BusinessReportComponent,
 
     SupplierAddComponent,
     SupplierDeleteComponent,
@@ -319,7 +324,10 @@ import { VacationRequestTableViewComponent } from './components/business/vacatio
     MatCardModule,
     MatStepperModule,
     ReactiveFormsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDatepickerModule,
+    MatProgressBarModule,
+    MatNativeDateModule
   ],
   providers: [
     {

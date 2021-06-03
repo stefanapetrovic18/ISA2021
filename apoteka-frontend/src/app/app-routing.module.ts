@@ -31,6 +31,7 @@ import {OrderTableViewComponent} from './components/business/order/order-table-v
 import {VacationRequestTableViewComponent} from './components/business/vacation-request/vacation-request-table-view/vacation-request-table-view.component';
 import { OfferTableViewComponent } from './components/business/offer/offer-table-view/offer-table-view.component';
 import { RoleGuardService } from './auth/role-guard.service';
+import { BusinessReportComponent } from './components/business/pharmacy/business-report/business-report.component';
 
 
 const routes: Routes = [
@@ -244,7 +245,15 @@ const routes: Routes = [
     data: {
       expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PHARMACIST', 'ROLE_DERMATOLOGIST']
     }
-  }
+  },
+  {
+    path: 'izvestaj',
+    component: BusinessReportComponent,
+    // canActivate: [RoleGuardService],
+    // data: {
+    //   expectedRole: 'ROLE_PHARMACY_ADMIN'
+    // }
+  },
 
 
 
