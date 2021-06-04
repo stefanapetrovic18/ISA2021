@@ -22,6 +22,11 @@ export class MedicineService {
     return this.http.get<Medicine[]>(this.URL);
   }
 
+  public findAllByPharmacyID(pharmacyID: number): Observable<Medicine[]> {
+    const params = new HttpParams().set('pharmacyID', pharmacyID.toString());
+    return this.http.get<Medicine[]>(this.URL + 'search/pharmacy', {params})
+  }
+
   public getOne(id: number): Observable<Medicine> {
     const params = new HttpParams().set('id', id.toString());
     return this.http.get<Medicine>(this.URL + 'search', {params});

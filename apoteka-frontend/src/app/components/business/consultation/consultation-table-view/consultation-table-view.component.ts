@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { Consultation } from 'src/app/model/business/consultation';
@@ -29,29 +29,53 @@ export class ConsultationTableViewComponent implements OnInit {
   actions = ['patient', 'pharmacy', 'pharmacist', 'view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private consultationService: ConsultationService, private router: Router, private dialog: MatDialog,
-    private token: TokenStorageService) {}
+    private token: TokenStorageService, private route: ActivatedRoute) {}
   ngOnInit() {
     if (this.token.getAuthorities().includes('ROLE_PATIENT')) {
       this.actions.push('cancel');
       this.displayedColumns = [...this.columns, ...this.actions];
     }
-    this.consultationService.findAll().subscribe(
-      data => {
-        this.data = data;
-        if (this.data !== undefined && this.data.length > 0) {
-          this.dataSource = new MatTableDataSource(this.data);
-          console.log(this.dataSource);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        } else {
-          window.alert('Podaci ne postoje!');
-        // this.router.navigateByUrl('');
+    let pharmacyID;
+    this.route.queryParams.subscribe(params => {
+      pharmacyID = params['pharmacyID'];
+    });
+    if (pharmacyID !== undefined && pharmacyID !== null) {
+      this.consultationService.findAllByPharmacy(pharmacyID).subscribe(
+        data => {
+          this.data = data;
+          if (this.data !== undefined && this.data.length > 0) {
+            this.dataSource = new MatTableDataSource(this.data);
+            console.log(this.dataSource);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          } else {
+            window.alert('Podaci ne postoje!');
+          // this.router.navigateByUrl('');
+          }
+        }, error => {
+          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+          this.router.navigateByUrl('');
         }
-      }, error => {
-        window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-        this.router.navigateByUrl('');
-      }
-    )
+      );
+    } else {
+      this.consultationService.findAll().subscribe(
+        data => {
+          this.data = data;
+          if (this.data !== undefined && this.data.length > 0) {
+            this.dataSource = new MatTableDataSource(this.data);
+            console.log(this.dataSource);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          } else {
+            window.alert('Podaci ne postoje!');
+          // this.router.navigateByUrl('');
+          }
+        }, error => {
+          window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+          this.router.navigateByUrl('');
+        }
+      );
+    }
   }
 
   applyFilter(value: any) {

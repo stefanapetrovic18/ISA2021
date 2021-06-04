@@ -44,6 +44,11 @@ public class MedicineController {
         return new ResponseEntity<>(medicineService.getOne(id), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/search/pharmacy")
+    public ResponseEntity<List<Medicine>> findByPharmacy(@RequestParam(value = "pharmacyID") Long pharmacyID) throws Exception {
+        return new ResponseEntity<>(medicineService.findByPharmacy(pharmacyID), HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<Medicine> create(@RequestBody Medicine medicine) throws Exception {

@@ -15,6 +15,7 @@ import rs.apoteka.exception.AppointmentBookingException;
 import rs.apoteka.repository.business.ExaminationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ExaminationService;
+import rs.apoteka.service.intf.business.WorkingHoursService;
 import rs.apoteka.service.intf.user.DermatologistService;
 import rs.apoteka.service.intf.user.PatientService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
@@ -38,6 +39,8 @@ public class ExaminationServiceImpl implements ExaminationService {
     private PharmacyAdminService pharmacyAdminService;
     @Autowired
     private DermatologistService dermatologistService;
+    @Autowired
+    private WorkingHoursService workingHoursService;
     @Autowired
     private JavaMailSender mailSender;
 
@@ -66,7 +69,9 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public List<Examination> findAllFree() {
-        return examinationRepository.findAll().stream().filter(e -> e.getPatient() == null).collect(Collectors.toList());
+        return examinationRepository.findAll().stream().filter(e -> e.getPatient() == null).collect(Collectors.toList())
+                .stream().filter(e -> e.getExaminationDate().isAfter(LocalDateTime.now()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -83,22 +88,22 @@ public class ExaminationServiceImpl implements ExaminationService {
             examinations.removeIf(e -> !e.getId().equals(id));
         }
         if (examinationDate != null) {
-            examinations.removeIf(e -> e.getExaminationDate().equals(examinationDate));
+            examinations.removeIf(e -> !e.getExaminationDate().equals(examinationDate));
         }
         if (dermatologistID != null) {
-            examinations.removeIf(e -> e.getDermatologist().getId().equals(dermatologistID));
+            examinations.removeIf(e -> !e.getDermatologist().getId().equals(dermatologistID));
         }
         if (pharmacyID != null) {
-            examinations.removeIf(e -> e.getPharmacy().getId().equals(pharmacyID));
+            examinations.removeIf(e -> !e.getPharmacy().getId().equals(pharmacyID));
         }
         if (patientID != null) {
-            examinations.removeIf(e -> e.getPatient().getId().equals(patientID));
+            examinations.removeIf(e -> !e.getPatient().getId().equals(patientID));
         }
         if (duration != null) {
-            examinations.removeIf(e -> e.getDuration().equals(duration));
+            examinations.removeIf(e -> !e.getDuration().equals(duration));
         }
         if (price != null) {
-            examinations.removeIf(e -> e.getPrice().equals(price));
+            examinations.removeIf(e -> !e.getPrice().equals(price));
         }
         if (durationFrom != null) {
             examinations.removeIf(e -> e.getDuration() < durationFrom);
@@ -205,7 +210,7 @@ public class ExaminationServiceImpl implements ExaminationService {
     @Override
     public Boolean delete(Long id) {
         Examination examination = getOne(id);
-        if (!freeNow(examination)) {
+        if (!patientFreeNow(examination) || !dermatologistFreeNow(examination)) {
             return false;
         }
         examinationRepository.deleteById(id);
@@ -221,12 +226,21 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     // Provera da li je pregled za vreme radnih sati dermatologa.
     private Boolean duringWorkingHours(Examination examination) {
+        System.out.println("Za vreme radnih sati:");
         Boolean flag = false;
         DayOfWeek dayOfWeek = examination.getExaminationDate().getDayOfWeek();
         LocalTime localTimeStart = examination.getExaminationDate().toLocalTime();
         LocalTime localTimeEnd = examination.getExaminationDate().plusMinutes(examination.getDuration()).toLocalTime();
-        for (WorkingHours workingHours : examination.getDermatologist().getWorkingHours()) {
+        System.out.println(dayOfWeek.toString());
+        System.out.println(localTimeStart.toString());
+        System.out.println(localTimeEnd.toString());
+        for (WorkingHours workingHours : workingHoursService.findAllByEmployeeID(examination.getDermatologist().getId())) {
+            System.out.println(workingHours.getPharmacy().getId() + " ?= " + examination.getPharmacy());
             if (workingHours.getPharmacy().getId().equals(examination.getPharmacy().getId())) {
+                System.out.println("----------------");
+                System.out.println(workingHours.getDayOfWeek().toString());
+                System.out.println(workingHours.getShiftStart().toString());
+                System.out.println(workingHours.getShiftEnd().toString());
                 if (dayOfWeek == workingHours.getDayOfWeek()) {
                     if (localTimeStart.isAfter(workingHours.getShiftStart()) && localTimeEnd.isBefore(workingHours.getShiftEnd())) {
                         flag = true;
@@ -234,13 +248,16 @@ public class ExaminationServiceImpl implements ExaminationService {
                 } // else: continue
             } // else: continue
         }
+        System.out.println(flag);
         return flag;
     }
 
     // Provera da se termini dermatologa ne poklapaju sa njegovim prethodno zakazanim pregledima.
     private Boolean appointmentFree(Examination examination) {
+        System.out.println("Slobodan termin (dermatolog):");
         Boolean flag = false;
         if (examination.getDermatologist().getAppointments() == null || examination.getDermatologist().getAppointments().isEmpty()) {
+            System.out.println("C1: " + true);
             return true;
         }
         for (Examination exam : examination.getDermatologist().getAppointments()) {
@@ -249,23 +266,27 @@ public class ExaminationServiceImpl implements ExaminationService {
                             exam.getExaminationDate())
                     ))
                     ||
-                    (examination.getExaminationDate().isAfter(exam.getExaminationDate()) &&
+                    (examination.getExaminationDate().isAfter(exam.getExaminationDate().plusMinutes(exam.getDuration())) &&
                             (examination.getExaminationDate().plusMinutes(examination.getDuration())).isAfter(
                                     exam.getExaminationDate()))) {
                 // Termini se ne poklapaju.
                 flag = true;
             } else {
                 // Termini se poklapaju, greska.
+                System.out.println("C2: " + false);
                 return false;
             }
         }
+        System.out.println("EXIT: " + flag);
         return flag;
     }
 
     // Provera da se termin pregleda ne poklapa sa pacijentovim prethodno zakazanim konsultacijama.
     private Boolean patientHasNoConsultation(Examination examination) {
+        System.out.println("Slobodan termin (savetovanje):");
         Boolean flag = false;
         if (examination.getPatient().getConsultations() == null || examination.getPatient().getConsultations().isEmpty()) {
+            System.out.println("C1: " + true);
             return true;
         }
         for (Consultation cons : examination.getPatient().getConsultations()) {
@@ -274,23 +295,27 @@ public class ExaminationServiceImpl implements ExaminationService {
                             cons.getConsultationDate())
                     ))
                     ||
-                    (examination.getExaminationDate().isAfter(cons.getConsultationDate()) &&
+                    (examination.getExaminationDate().isAfter(cons.getConsultationDate().plusMinutes(cons.getDuration())) &&
                             (examination.getExaminationDate().plusMinutes(examination.getDuration())).isAfter(
                                     cons.getConsultationDate()))) {
                 // Termini se ne poklapaju.
                 flag = true;
             } else {
                 // Termini se poklapaju, greska.
+                System.out.println("C2: " + false);
                 return false;
             }
         }
+        System.out.println("EXIT: " + flag);
         return flag;
     }
 
     // Provera da se termin pregleda ne poklapa sa pacijentovim prethodno zakazanim pregledima.
     private Boolean patientHasNoExamination(Examination examination) {
+        System.out.println("Slobodan termin (pregled, pacijent):");
         Boolean flag = false;
         if (examination.getPatient().getExaminations() == null || examination.getPatient().getExaminations().isEmpty()) {
+            System.out.println("C1: " + true);
             return true;
         }
         for (Examination exam : examination.getPatient().getExaminations()) {
@@ -299,21 +324,24 @@ public class ExaminationServiceImpl implements ExaminationService {
                             exam.getExaminationDate())
                     ))
                     ||
-                    (examination.getExaminationDate().isAfter(exam.getExaminationDate()) &&
+                    (examination.getExaminationDate().isAfter(exam.getExaminationDate().plusMinutes(exam.getDuration())) &&
                             (examination.getExaminationDate().plusMinutes(examination.getDuration())).isAfter(
                                     exam.getExaminationDate()))) {
                 // Termini se ne poklapaju.
                 flag = true;
             } else {
                 // Termini se poklapaju, greska.
+                System.out.println("C2: " + false);
                 return false;
             }
         }
+        System.out.println("EXIT: " + flag);
         return flag;
     }
 
     // Provera da li je pregled u toku.
-    private Boolean freeNow(Examination examination) {
+    private Boolean patientFreeNow(Examination examination) {
+        System.out.println("Pregled u toku (pacijent):");
         Boolean flag = false;
         for (Examination exam : examination.getPatient().getExaminations()) {
             if ((examination.getExaminationDate().isBefore(exam.getExaminationDate()) &&
@@ -328,9 +356,36 @@ public class ExaminationServiceImpl implements ExaminationService {
                 flag = true;
             } else {
                 // Termini se poklapaju, greska.
+                System.out.println("C2: " + false);
                 return false;
             }
         }
+        System.out.println("EXIT: " + flag);
+        return flag;
+    }
+
+    // Provera da li je pregled u toku.
+    private Boolean dermatologistFreeNow(Examination examination) {
+        System.out.println("Pregled u toku (dermatolog):");
+        Boolean flag = false;
+        for (Examination exam : examination.getDermatologist().getAppointments()) {
+            if ((examination.getExaminationDate().isBefore(exam.getExaminationDate()) &&
+                    (examination.getExaminationDate().plusMinutes(examination.getDuration()).isBefore(
+                            LocalDateTime.now())
+                    ))
+                    ||
+                    (examination.getExaminationDate().isAfter(exam.getExaminationDate()) &&
+                            (examination.getExaminationDate().plusMinutes(examination.getDuration())).isAfter(
+                                    LocalDateTime.now()))) {
+                // Termini se ne poklapaju.
+                flag = true;
+            } else {
+                // Termini se poklapaju, greska.
+                System.out.println("C2: " + false);
+                return false;
+            }
+        }
+        System.out.println("EXIT: " + flag);
         return flag;
     }
 }

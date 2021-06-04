@@ -51,6 +51,8 @@ public class Medicine {
 
     @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Rating.class)
     private List<Rating> ratings;
+    @Column
+    private Double rating;
 
     public Medicine() {
     }
@@ -145,5 +147,13 @@ public class Medicine {
 
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 }

@@ -11,6 +11,8 @@ public interface MedicineService {
                                        Boolean prescriptionNecessary, String sideEffects, String ingredient,
                                        String recommendedDose);
 
+    List<Medicine> findByPharmacy(Long pharmacyID);
+
     List<Medicine> findSubstitutes(Long id);
 
     Medicine getOne(Long id);

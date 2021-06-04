@@ -38,7 +38,7 @@ export class ExaminationService {
 
   public findAllByPharmacy(id: number): Observable<Examination[]> {
     const params = new HttpParams().set('pharmacyID', id.toString());
-    return this.http.get<Examination[]>(this.URL + 'search', {params});
+    return this.http.get<Examination[]>(this.URL + 'filter', {params});
   }
 
   public findAllByPatient(id: number): Observable<Examination[]> {

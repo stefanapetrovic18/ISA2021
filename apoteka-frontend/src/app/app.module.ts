@@ -154,6 +154,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { ComplaintAnswerComponent } from './components/business/complaint/complaint-answer/complaint-answer.component';
 import { ComplaintAddComponent } from './components/business/complaint/complaint-add/complaint-add.component';
 import { ComplaintTableViewComponent } from './components/business/complaint/complaint-table-view/complaint-table-view.component';
+import { PharmacyPageComponent } from './components/business/pharmacy/pharmacy-page/pharmacy-page.component';
 
 @NgModule({
   declarations: [
@@ -303,7 +304,8 @@ import { ComplaintTableViewComponent } from './components/business/complaint/com
     VacationRequestTableViewComponent,
     ComplaintAnswerComponent,
     ComplaintAddComponent,
-    ComplaintTableViewComponent
+    ComplaintTableViewComponent,
+    PharmacyPageComponent
   ],
   imports: [
     BrowserModule,

@@ -7,9 +7,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Reservation;
 import rs.apoteka.entity.user.Patient;
+import rs.apoteka.exception.DataMismatchException;
+import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.business.ReservationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ReservationService;
+import rs.apoteka.service.intf.business.StockpileService;
 import rs.apoteka.service.intf.user.PatientService;
 
 import java.time.LocalDate;
@@ -26,6 +29,8 @@ public class ReservationServiceImpl implements ReservationService {
     private AuthenticationService authenticationService;
     @Autowired
     private PatientService patientService;
+    @Autowired
+    private StockpileService stockpileService;
     @Autowired
     private JavaMailSender mailSender;
 
@@ -75,7 +80,7 @@ public class ReservationServiceImpl implements ReservationService {
             reservations.removeIf(p -> p.getReservationDate().isAfter(reservationDateEnd));
         }
         if (nonCollected != null && nonCollected) {
-            reservations.removeIf(p -> p.getCollectionDate().isAfter(LocalDateTime.now()));
+            reservations.removeIf(p -> p.getCollectionDate() != null && p.getCollectionDate().isAfter(LocalDateTime.now()));
         }
         return reservations;
     }
@@ -104,6 +109,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation create(Reservation reservation) {
         reservation.setCollected(false);
+        reservation.setPenalized(false);
         return reservationRepository.save(reservation);
     }
 
@@ -125,9 +131,14 @@ public class ReservationServiceImpl implements ReservationService {
                     }
                 }
                 i.setQuantity(i.getQuantity() - 1);
+                try {
+                    stockpileService.update(i);
+                } catch (UserNotFoundException | DataMismatchException e) {
+                    e.printStackTrace();
+                }
             }
         });
-        Reservation r = reservationRepository.save(reservation);
+        Reservation r = create(reservation);
 //        patient.().add(r);
         patientService.update(patient);
         sendMail(r);

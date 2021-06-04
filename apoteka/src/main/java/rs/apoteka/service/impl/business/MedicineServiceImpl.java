@@ -3,15 +3,21 @@ package rs.apoteka.service.impl.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Medicine;
+import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.repository.business.MedicineRepository;
 import rs.apoteka.service.intf.business.MedicineService;
+import rs.apoteka.service.intf.business.PharmacyService;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MedicineServiceImpl implements MedicineService {
     @Autowired
     private MedicineRepository medicineRepository;
+    @Autowired
+    private PharmacyService pharmacyService;
 
     @Override
     public List<Medicine> findAll() {
@@ -53,6 +59,21 @@ public class MedicineServiceImpl implements MedicineService {
         if (recommendedDose != null) {
             medicine.removeIf(m -> !m.getRecommendedDose().contains(recommendedDose));
         }
+        return medicine;
+    }
+
+    @Override
+    public List<Medicine> findByPharmacy(Long pharmacyID) {
+        Pharmacy pharmacy = pharmacyService.getOne(pharmacyID);
+        if (pharmacy == null) {
+            throw new EntityNotFoundException();
+        }
+        List<Medicine> medicine = new ArrayList<>();
+        pharmacy.getStockpile().forEach(s -> {
+            if (s.getQuantity() > 0) {
+                medicine.add(s.getMedicine());
+            }
+        });
         return medicine;
     }
 

@@ -26,6 +26,16 @@ export class PharmacyService {
     return this.http.get<Pharmacy[]>(this.URL + 'subs');
   }
 
+  public subscribe(id: number): Observable<Pharmacy> {
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<Pharmacy>(this.URL + 'subscribe', {params});
+  }
+
+  public unsubscribe(id: number): Observable<Pharmacy> {
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<Pharmacy>(this.URL + 'unsubscribe', {params});
+  }
+
   public getOne(id: number): Observable<Pharmacy> {
     const params = new HttpParams().set('id', id.toString());
     return this.http.get<Pharmacy>(this.URL + 'search', {params});

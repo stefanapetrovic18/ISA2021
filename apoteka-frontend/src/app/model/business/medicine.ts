@@ -13,4 +13,5 @@ export class Medicine {
   recommendedDose: string;
   substitutes: Medicine[];
   ratings: Rating[];
+  rating: number;
 }

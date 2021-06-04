@@ -7,7 +7,7 @@ import { ComplaintService } from 'src/app/service/business/complaint.service';
 @Component({
   selector: 'app-complaint-answer',
   templateUrl: './complaint-answer.component.html',
-  styleUrls: ['./complaint-answer.component.css']
+  styleUrls: ['./complaint-answer.component.scss']
 })
 export class ComplaintAnswerComponent implements OnInit {
   data = new ComplaintResponse();

@@ -76,13 +76,13 @@ public class StockpileServiceImpl implements StockpileService {
 
     @Override
     public Stockpile update(Stockpile stockpile) throws UserNotFoundException, DataMismatchException {
-        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
-        if (admin == null) {
-            throw new UserNotFoundException();
-        }
-        if (!stockpile.getPharmacy().getId().equals(admin.getPharmacy().getId())) {
-            throw new DataMismatchException("Administrator apoteke ne može da izmeni zalihe tuđe apoteke.");
-        }
+//        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+//        if (admin == null) {
+//            throw new UserNotFoundException();
+//        }
+//        if (!stockpile.getPharmacy().getId().equals(admin.getPharmacy().getId())) {
+//            throw new DataMismatchException("Administrator apoteke ne može da izmeni zalihe tuđe apoteke.");
+//        }
         Stockpile s = getOne(stockpile.getId());
         if (s == null) {
             throw new EntityNotFoundException("Zalihe ne postoje.");

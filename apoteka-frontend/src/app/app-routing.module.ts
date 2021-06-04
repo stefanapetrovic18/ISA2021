@@ -34,6 +34,7 @@ import { RoleGuardService } from './auth/role-guard.service';
 import { BusinessReportComponent } from './components/business/pharmacy/business-report/business-report.component';
 import { PharmacyViewComponent } from './components/business/pharmacy/pharmacy-view/pharmacy-view.component';
 import { ComplaintTableViewComponent } from './components/business/complaint/complaint-table-view/complaint-table-view.component';
+import { PharmacyPageComponent } from './components/business/pharmacy/pharmacy-page/pharmacy-page.component';
 
 
 const routes: Routes = [
@@ -259,10 +260,18 @@ const routes: Routes = [
     // data: {
     //   expectedRole: 'ROLE_PHARMACY_ADMIN'
     // }
-  },,
+  },
   {
     path: 'zalba',
     component: ComplaintTableViewComponent,
+    // canActivate: [RoleGuardService],
+    // data: {
+    //   expectedRole: 'ROLE_PHARMACY_ADMIN'
+    // }
+  },
+  {
+    path: 'apoteka/prikaz',
+    component: PharmacyPageComponent,
     // canActivate: [RoleGuardService],
     // data: {
     //   expectedRole: 'ROLE_PHARMACY_ADMIN'

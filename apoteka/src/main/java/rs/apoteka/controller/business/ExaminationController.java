@@ -37,7 +37,7 @@ public class ExaminationController {
     @GetMapping(value = "/filter")
     public ResponseEntity<List<Examination>> findAllParametrized(
             @RequestParam(required = false) Long id,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime consultationDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime consultationDate,
             @RequestParam(required = false) Long dermatologistID,
             @RequestParam(required = false) Long pharmacyID,
             @RequestParam(required = false) Long patientID,

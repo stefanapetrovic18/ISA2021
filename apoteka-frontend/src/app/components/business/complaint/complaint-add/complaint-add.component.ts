@@ -12,7 +12,7 @@ import { PharmacistService } from 'src/app/service/user/pharmacist.service';
 @Component({
   selector: 'app-complaint-add',
   templateUrl: './complaint-add.component.html',
-  styleUrls: ['./complaint-add.component.css']
+  styleUrls: ['./complaint-add.component.scss']
 })
 export class ComplaintAddComponent implements OnInit {
   data = new Complaint();

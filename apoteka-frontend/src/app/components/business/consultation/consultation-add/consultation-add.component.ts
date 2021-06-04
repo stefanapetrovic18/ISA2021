@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {PharmacyService} from '../../../../service/business/pharmacy.service';
 import {PharmacistService} from '../../../../service/user/pharmacist.service';
 import {DermatologistService} from '../../../../service/user/dermatologist.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
@@ -33,7 +33,7 @@ export class ConsultationAddComponent implements OnInit {
   pharmacists: Pharmacist[];
   pharmacy: Pharmacy;
   pharmacist: Pharmacist;
-  pharmacyID: number;
+  @Input() pharmacyID: number;
   pharmacyColumns = ['name', 'address', 'rating', 'pricelist.consultationPrice'];
   pharmacyActions = ['odaberi'];
   pharmacyDisplayedColumns = [...this.pharmacyColumns, ...this.pharmacyActions];
@@ -43,7 +43,8 @@ export class ConsultationAddComponent implements OnInit {
 
   constructor(private router: Router, /*private dialogRef: MatDialogRef<ConsultationAddComponent>,*/
               private formBuilder: FormBuilder, private pharmacyService: PharmacyService,
-              private pharmacistService: PharmacistService, private consultationService: ConsultationService) { }
+              private pharmacistService: PharmacistService, private consultationService: ConsultationService,
+              @Inject(MAT_DIALOG_DATA) public data: {pharmacyID: number}) { }
 
   ngOnInit() {
     this.firstFormGroup = this.formBuilder.group({
@@ -56,6 +57,9 @@ export class ConsultationAddComponent implements OnInit {
     this.thirdFormGroup = this.formBuilder.group({
       thirdCtrl: ''
     });
+    if (this.data !== undefined && this.data.pharmacyID !== undefined) {
+      this.pharmacyID = this.data.pharmacyID;
+    }
   }
 
   search() {
@@ -70,12 +74,18 @@ export class ConsultationAddComponent implements OnInit {
     this.pharmacyService.findAll().subscribe(
       data => {
         this.pharmacies = data;
-        console.log(data);
         if (this.pharmacies !== undefined && this.pharmacies.length > 0) {
           this.pharmacyDataSource = new MatTableDataSource(this.pharmacies);
-          console.log(this.pharmacyDataSource);
           this.pharmacyDataSource.paginator = this.paginator;
           this.pharmacyDataSource.sort = this.sort;
+          console.log('ID: ' + this.pharmacyID);
+          if (this.pharmacyID !== undefined) {
+            this.pharmacies.forEach(p => {
+              if (p.id === this.pharmacyID) {
+                this.setPharmacy(p);
+              }
+            });
+          }
         } else {
           window.alert('Podaci ne postoje!');
         }

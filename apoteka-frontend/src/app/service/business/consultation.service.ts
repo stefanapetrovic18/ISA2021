@@ -28,6 +28,11 @@ export class ConsultationService {
     return this.http.get<Consultation>(this.URL + 'search', {params});
   }
 
+  public findAllByPharmacy(pharmacyID: number): Observable<Consultation[]> {
+    const params = new HttpParams().set('pharmacyID', pharmacyID.toString());
+    return this.http.get<Consultation[]>(this.URL + 'filter', {params});
+  }
+
   public create(consultation: Consultation): Observable<Consultation> {
     return this.http.post<Consultation>(this.URL + 'create', consultation, httpOptions);
   }

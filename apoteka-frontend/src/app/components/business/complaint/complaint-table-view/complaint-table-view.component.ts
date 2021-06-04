@@ -13,7 +13,7 @@ import { ComplaintAnswerComponent } from '../complaint-answer/complaint-answer.c
 @Component({
   selector: 'app-complaint-table-view',
   templateUrl: './complaint-table-view.component.html',
-  styleUrls: ['./complaint-table-view.component.css']
+  styleUrls: ['./complaint-table-view.component.scss']
 })
 export class ComplaintTableViewComponent implements OnInit {
 

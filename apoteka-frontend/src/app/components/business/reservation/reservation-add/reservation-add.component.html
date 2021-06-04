@@ -1,17 +1,20 @@
-<h1 mat-dialog-title>Dodaj apoteku u rezervaciju leka</h1>
+<h1 mat-dialog-title>Izaberi apoteku i datum za rezervaciju leka</h1>
 <div mat-dialog-content>
-  <p>Apoteka</p>
-  <mat-form-field>
+  <p *ngIf="showPharmacyField">Apoteka</p>
+  <mat-form-field *ngIf="showPharmacyField">
     <mat-label>Apoteka</mat-label>
     <mat-select [(value)]="output">
       <mat-option>--</mat-option>
-      <mat-option *ngFor="let pharmacy of data" [value]="pharmacy">{{pharmacy.name}}</mat-option>
+      <mat-option *ngFor="let pharmacy of pharmacies" [value]="pharmacy">{{pharmacy.name}}</mat-option>
     </mat-select>
   </mat-form-field>
   <p>Datum preuzimanja</p>
   <mat-form-field>
     <mat-label>Datum preuzimanja</mat-label>
     <input matInput type="datetime-local" [(ngModel)]="date">
+    <!-- <input matInput [matDatepicker]="picker" [(ngModel)]="date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker> -->
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

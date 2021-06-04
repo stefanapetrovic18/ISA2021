@@ -27,9 +27,9 @@ public class ReservationController {
     @GetMapping(value = "/filter")
     public ResponseEntity<List<Reservation>> findAllParametrized(
             @RequestParam(required = false) Long id,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationDateStart,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationDateEnd,
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationDate,
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationDateStart,
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationDateEnd,
             @RequestParam(required = false) Long pharmacyID,
             @RequestParam(required = false) Long medicineID,
             @RequestParam(required = false) Long patientID,
