@@ -26,6 +26,7 @@ import rs.apoteka.service.intf.user.PharmacistService;
 import rs.apoteka.service.intf.user.SystemAdminService;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -94,6 +95,12 @@ public class ComplaintServiceImpl implements ComplaintService {
         if (!ratingService.hadConsultationAtPharmacist(patient, pharmacist)) {
             throw new InvalidComplaintException("Korisnik nije imao konsultaciju kod farmaceuta.");
         }
+        complaint.setText(
+                complaint.getText() + "\n\n" +
+                        "ID farmaceuta: " + pharmacist.getId() + "\n\n" +
+                        "ID pacijenta: " + patient.getId() + "\n\n" +
+                        "Datum podnošenja: " + LocalDateTime.now().toString()
+        );
         return create(complaint);
     }
 
@@ -112,6 +119,12 @@ public class ComplaintServiceImpl implements ComplaintService {
         if (!ratingService.hadExaminationAtDermatologist(patient, dermatologist)) {
             throw new InvalidComplaintException("Korisnik nije imao pregled kod dermatologa.");
         }
+        complaint.setText(
+                complaint.getText() + "\n\n" +
+                        "ID dermatologa: " + dermatologist.getId() + "\n\n" +
+                        "ID pacijenta: " + patient.getId() + "\n\n" +
+                        "Datum podnošenja: " + LocalDateTime.now().toString()
+        );
         return create(complaint);
     }
 
@@ -130,6 +143,12 @@ public class ComplaintServiceImpl implements ComplaintService {
         if (!ratingService.usedPharmacy(patient, pharmacy)) {
             throw new InvalidComplaintException("Korisnik nije koristio usluge apoteke.");
         }
+        complaint.setText(
+                complaint.getText() + "\n\n" +
+                        "ID apoteke: " + pharmacy.getId() + "\n\n" +
+                        "ID pacijenta: " + patient.getId() + "\n\n" +
+                        "Datum podnošenja: " + LocalDateTime.now().toString()
+        );
         return create(complaint);
     }
 

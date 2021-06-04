@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Odgovori na žalbu</h1>
+<div mat-dialog-content>
+  <p>Odgovor</p>
+  <mat-form-field>
+    <mat-label>Odgovor</mat-label>
+    <input [(ngModel)]="data.text" matInput placeholder="Odgovor" type="text"/>
+  </mat-form-field>
+<div mat-dialog-actions>
+  <button (click)="answer()" class="add-button" mat-button mat-raised-button>ODGOVORI</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>

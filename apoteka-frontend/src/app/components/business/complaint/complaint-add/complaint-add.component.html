@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Dodaj žalbu</h1>
+<div mat-dialog-content>
+  <p>Tekst</p>
+  <mat-form-field>
+    <mat-label>Tekst</mat-label>
+    <input [(ngModel)]="data.text" matInput placeholder="Tekst" type="text"/>
+  </mat-form-field>
+  <p>Tip</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Tip</mat-label>
+    <select matNativeControl name="type">
+      <option [value]="type" value="PHARMACY">Apoteka</option>
+      <option [value]="type" value="PHARMACIST">Farmaceut</option>
+      <option [value]="type" value="DERMATOLOGIST">Dermatolog</option>
+    </select>
+  </mat-form-field>
+  <p *ngIf="type==='PHARMACY'">Apoteka</p>
+  <mat-form-field *ngIf="type==='PHARMACY'" appearance="fill">
+    <mat-label>Apoteka</mat-label>
+    <select matNativeControl name="id">
+      <option *ngFor="let p of pharmacies" [value]="p.id">
+        {{p.name}}
+      </option>
+    </select>
+  </mat-form-field>
+  <p *ngIf="type==='PHARMACIST'">Farmaceut</p>
+  <mat-form-field *ngIf="type==='PHARMACIST'" appearance="fill">
+    <mat-label>Farmaceut</mat-label>
+    <select matNativeControl name="id">
+      <option *ngFor="let p of pharmacists" [value]="p.id">
+        {{p.forename}} {{p.surname}}
+      </option>
+    </select>
+  </mat-form-field>
+  <p *ngIf="type==='DERMATOLOGIST'">Dermatolog</p>
+  <mat-form-field *ngIf="type==='DERMATOLOGIST'" appearance="fill">
+    <mat-label>Dermatolog</mat-label>
+    <select matNativeControl name="id">
+      <option *ngFor="let d of dermatologists" [value]="d.id">
+        {{d.forename}} {{d.surname}}
+      </option>
+    </select>
+  </mat-form-field>
+
+<div mat-dialog-actions>
+  <button (click)="add()" class="add-button" mat-button mat-raised-button>ODGOVORI</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>

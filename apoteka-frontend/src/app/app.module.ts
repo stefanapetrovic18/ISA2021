@@ -151,6 +151,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { ComplaintAnswerComponent } from './components/business/complaint/complaint-answer/complaint-answer.component';
+import { ComplaintAddComponent } from './components/business/complaint/complaint-add/complaint-add.component';
+import { ComplaintTableViewComponent } from './components/business/complaint/complaint-table-view/complaint-table-view.component';
 
 @NgModule({
   declarations: [
@@ -298,6 +301,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     OfferViewComponent,
     VacationRequestAddComponent,
     VacationRequestTableViewComponent,
+    ComplaintAnswerComponent,
+    ComplaintAddComponent,
+    ComplaintTableViewComponent
   ],
   imports: [
     BrowserModule,
