@@ -1,0 +1,15 @@
+<p>
+  Tvoja ocena: {{rating}}
+</p>
+<mat-slider
+    class="example-margin"
+    [max]="5"
+    [min]="0"
+    [step]="1"
+    [thumbLabel]="true"
+    [tickInterval]="1"
+    [(ngModel)]="rating"
+    aria-labelledby="example-name-label">
+</mat-slider>
+<button mat-raised-button class="add-buton" (click)="rate()">POTVRDI</button>
+<button mat-raised-button class="delete-buton" (click)="close()">ZATVORI</button>

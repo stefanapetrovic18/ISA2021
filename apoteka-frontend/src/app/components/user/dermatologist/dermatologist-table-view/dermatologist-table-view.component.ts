@@ -12,6 +12,10 @@ import {DermatologistEditComponent} from '../dermatologist-edit/dermatologist-ed
 import {DermatologistViewComponent} from '../dermatologist-view/dermatologist-view.component';
 import {Consultation} from '../../../../model/business/consultation';
 import {ExaminationAddComponent} from '../../../business/examination/examination-add/examination-add.component';
+import { PatientService } from 'src/app/service/user/patient.service';
+import { Patient } from 'src/app/model/user/patient';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
+import { RatingAddComponent } from 'src/app/components/business/rating/rating-add/rating-add.component';
 
 @Component({
   selector: 'app-dermatologist-table-view',
@@ -26,12 +30,14 @@ export class DermatologistTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   data: Dermatologist[];
   date: Date;
+  patient: Patient;
   columns = ['username', 'forename', 'surname', 'rating'];
-  actions = ['view', 'edit', 'delete'];
+  actions = ['view', 'edit', 'delete', 'rate'];
   displayedColumns = [...this.columns, ...this.actions];
 
   constructor(private dermatologistService: DermatologistService, private router: Router, private dialog: MatDialog,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private patientService: PatientService,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -82,7 +88,9 @@ export class DermatologistTableViewComponent implements OnInit {
         }
       }
     );
-
+    if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
+      this.getPatient();
+    }
   }
 
   applyFilter(value: any) {
@@ -90,6 +98,17 @@ export class DermatologistTableViewComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getPatient() {
+    this.patientService.findAll().subscribe((data) => {
+      data.forEach((p) => {
+        if (p.username === this.tokenStorageService.getUsername()) {
+          this.patient = p;
+        }
+      });
+      // this.getPatient();
+    });
   }
 
   filter() {
@@ -138,8 +157,19 @@ export class DermatologistTableViewComponent implements OnInit {
       }
     );
   }
+
   reserve(input: Dermatologist) {
     this.dialog.open(ExaminationAddComponent);
+  }
+
+  rate(input: Dermatologist) {
+    this.dialog.open(RatingAddComponent, {
+      data: {
+        type: 'dermatologist',
+        id: input.id,
+        patient: this.patient
+      }
+    });
   }
 
 }

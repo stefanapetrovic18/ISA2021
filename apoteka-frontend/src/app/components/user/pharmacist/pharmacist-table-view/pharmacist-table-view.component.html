@@ -80,6 +80,15 @@
           </button>
         </mat-cell>
       </ng-container>
+      <ng-container *ngIf="patient !== undefined && patient !== null" [matColumnDef]="'rate'">
+        <mat-header-cell *matHeaderCellDef>Oceni</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button (click)="rate(element)" class="add-button" mat-raised-button>
+            OCENI
+            <mat-icon>grade</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

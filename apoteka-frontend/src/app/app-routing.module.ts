@@ -150,7 +150,7 @@ const routes: Routes = [
     component: PharmacistTableViewComponent,
     canActivate: [RoleGuardService],
     data: {
-      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PHARMACIST', 'ROLE_PHARMACIST']
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_PHARMACY_ADMIN', 'ROLE_PHARMACIST', 'ROLE_PATIENT']
     }
   },
   {

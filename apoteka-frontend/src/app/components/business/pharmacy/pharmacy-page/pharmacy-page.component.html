@@ -17,11 +17,27 @@
                 <mat-icon aria-hidden="false">grade</mat-icon> / 5.00
                 <mat-icon aria-hidden="false">grade</mat-icon>
           </p>
+          <p>
+            Tvoja ocena: {{rating}}
+            <mat-slider
+                class="example-margin"
+                [disabled]="!editRating"
+                [max]="5"
+                [min]="0"
+                [step]="1"
+                [thumbLabel]="true"
+                [tickInterval]="1"
+                [(ngModel)]="rating"
+                aria-labelledby="example-name-label">
+            </mat-slider>
+          </p>
         </mat-card-content>
         <mat-card-actions>
           <button mat-button *ngIf="!subscribed" (click)="subscribe()">PRETPLATI SE</button>
           <button mat-button *ngIf="subscribed" (click)="unsubscribe()">OTKAŽI PRETPLATU</button>
           <button mat-button (click)="reserveConsultation()">REZERVIŠI SAVETOVANJE</button>
+          <button mat-button *ngIf="!editRating" (click)="editRating = !editRating">OCENI/PROMENI OCENU</button>
+          <button mat-button *ngIf="editRating" (click)="ratePharmacy(rating)">POTVRDI</button>
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>

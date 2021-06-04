@@ -22,6 +22,8 @@ import { Examination } from 'src/app/model/business/examination';
 import { APP_BASE_HREF } from '@angular/common';
 import { ConsultationAddComponent } from '../../consultation/consultation-add/consultation-add.component';
 import { ReservationAddComponent } from '../../reservation/reservation-add/reservation-add.component';
+import { RatingService } from 'src/app/service/business/rating.service';
+import { Rating } from 'src/app/model/business/rating';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -60,6 +62,9 @@ export class PharmacyPageComponent implements OnInit, AfterViewInit {
   lon: number;
   patLat: number;
   patLon: number;
+  rating = 0;
+  yourRating: Rating;
+  editRating = false;
   dermatologistDisplayedColumns: string[] = ['dermatologistName', 'dermatologistRating'];
   pharmacistDisplayedColumns: string[] = ['pharmacistName', 'pharmacistRating'];
   medicineDisplayedColumns: string[] = ['medicineName', 'medicineRating', 'medicineReserve'];
@@ -75,6 +80,7 @@ export class PharmacyPageComponent implements OnInit, AfterViewInit {
     private reservationService: ReservationService,
     private medicineService: MedicineService,
     private examinationService: ExaminationService,
+    private ratingService: RatingService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -217,6 +223,7 @@ export class PharmacyPageComponent implements OnInit, AfterViewInit {
         if (p.username === this.tokenStorageService.getUsername()) {
           this.patient = p;
           this.checkSubscriptionStatus();
+          this.getRating();
           console.log(this.patient);
             this.pharmacyService.getCoordinatesFromAddress(this.patient.address + ', ' + this.patient.city).subscribe(
               data => {
@@ -238,6 +245,15 @@ export class PharmacyPageComponent implements OnInit, AfterViewInit {
         }
       });
       // this.getPatient();
+    });
+  }
+
+  getRating() {
+    this.pharmacy.ratings.forEach(r => {
+      if (r.patient.id === this.patient.id) {
+        this.yourRating = r;
+        this.rating = r.rating;
+      }
     });
   }
 
@@ -327,6 +343,24 @@ export class PharmacyPageComponent implements OnInit, AfterViewInit {
 
   reserveConsultation() {
     this.dialog.open(ConsultationAddComponent, {data: {pharmacyID: this.pharmacy.id}});
+  }
+
+  rate() {
+
+  }
+
+  ratePharmacy(rating: number) {
+    let r = new Rating();
+    r.rating = rating;
+    r.patient = this.patient;
+    this.ratingService.ratePharmacy(r, this.pharmacy.id).subscribe(
+      data => {
+        window.alert('Uspešno ocenjivanje!');
+        location.reload();
+      }, error => {
+        window.alert('Neuspešno ocenjivanje!');
+      }
+    )
   }
 
   reserveMedicine(medicine: Medicine) {

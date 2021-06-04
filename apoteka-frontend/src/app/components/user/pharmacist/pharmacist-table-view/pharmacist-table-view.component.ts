@@ -11,6 +11,10 @@ import {PharmacistDeleteComponent} from '../pharmacist-delete/pharmacist-delete.
 import {PharmacistEditComponent} from '../pharmacist-edit/pharmacist-edit.component';
 import {PharmacistViewComponent} from '../pharmacist-view/pharmacist-view.component';
 import {Consultation} from '../../../../model/business/consultation';
+import { Patient } from 'src/app/model/user/patient';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
+import { RatingAddComponent } from 'src/app/components/business/rating/rating-add/rating-add.component';
+import { PatientService } from 'src/app/service/user/patient.service';
 
 @Component({
   selector: 'app-pharmacist-table-view',
@@ -25,12 +29,14 @@ export class PharmacistTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   data: Pharmacist[];
   date: Date;
+  patient: Patient;
   columns = ['username', 'forename', 'surname', 'rating'];
-  actions = ['view', 'edit', 'delete'];
+  actions = ['view', 'edit', 'delete', 'rate'];
   displayedColumns = [...this.columns, ...this.actions];
 
   constructor(private pharmacistService: PharmacistService, private router: Router, private dialog: MatDialog,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private patientService: PatientService,
+              private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -81,7 +87,21 @@ export class PharmacistTableViewComponent implements OnInit {
         }
       }
     );
+    if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
+      this.getPatient();
+    }
 
+  }
+
+  getPatient() {
+    this.patientService.findAll().subscribe((data) => {
+      data.forEach((p) => {
+        if (p.username === this.tokenStorageService.getUsername()) {
+          this.patient = p;
+        }
+      });
+      // this.getPatient();
+    });
   }
 
   applyFilter(value: any) {
@@ -138,5 +158,15 @@ export class PharmacistTableViewComponent implements OnInit {
     );
   }
   reserve(input: Pharmacist) {}
+
+  rate(input: Pharmacist) {
+    this.dialog.open(RatingAddComponent, {
+      data: {
+        type: 'pharmacist',
+        id: input.id,
+        patient: this.patient
+      }
+    });
+  }
 
 }

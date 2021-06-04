@@ -4,8 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {ActivatedRoute, Router} from '@angular/router';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { Pharmacy } from 'src/app/model/business/pharmacy';
+import { Patient } from 'src/app/model/user/patient';
 import { PharmacyService } from 'src/app/service/business/pharmacy.service';
+import { PatientService } from 'src/app/service/user/patient.service';
+import { RatingAddComponent } from '../../rating/rating-add/rating-add.component';
 import { PharmacyAddComponent } from '../pharmacy-add/pharmacy-add.component';
 import { PharmacyDeleteComponent } from '../pharmacy-delete/pharmacy-delete.component';
 import { PharmacyEditComponent } from '../pharmacy-edit/pharmacy-edit.component';
@@ -24,11 +28,13 @@ export class PharmacyTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   data: Pharmacy[];
   date: Date;
+  patient: Patient;
   columns = ['name', 'address', 'rating'];
-  actions = ['view', 'edit', 'delete'];
+  actions = ['view', 'edit', 'delete', 'rate'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pharmacyService: PharmacyService, private router: Router, private dialog: MatDialog,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute, private patientService: PatientService,
+              private tokenStorageService: TokenStorageService) {}
   ngOnInit() {
     this.route.queryParamMap.subscribe(
       params => {
@@ -96,6 +102,9 @@ export class PharmacyTableViewComponent implements OnInit {
         }
       }
     );
+    if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
+      this.getPatient();
+    }
   }
 
   applyFilter(value: any) {
@@ -103,6 +112,17 @@ export class PharmacyTableViewComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getPatient() {
+    this.patientService.findAll().subscribe((data) => {
+      data.forEach((p) => {
+        if (p.username === this.tokenStorageService.getUsername()) {
+          this.patient = p;
+        }
+      });
+      // this.getPatient();
+    });
   }
 
   filter() {
@@ -153,6 +173,15 @@ export class PharmacyTableViewComponent implements OnInit {
   }
   reserve(input: Pharmacy) {
     this.router.navigateByUrl('farmaceut?pharmacyID=' + input.id + '&localDateTime=' + this.date);
+  }
+  rate(input: Pharmacy) {
+    this.dialog.open(RatingAddComponent, {
+      data: {
+        type: 'pharmacy',
+        id: input.id,
+        patient: this.patient
+      }
+    });
   }
 
 }

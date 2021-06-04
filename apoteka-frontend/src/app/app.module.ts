@@ -155,6 +155,9 @@ import { ComplaintAnswerComponent } from './components/business/complaint/compla
 import { ComplaintAddComponent } from './components/business/complaint/complaint-add/complaint-add.component';
 import { ComplaintTableViewComponent } from './components/business/complaint/complaint-table-view/complaint-table-view.component';
 import { PharmacyPageComponent } from './components/business/pharmacy/pharmacy-page/pharmacy-page.component';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatMenuModule} from '@angular/material/menu';
+import { RatingAddComponent } from './components/business/rating/rating-add/rating-add.component';
 
 @NgModule({
   declarations: [
@@ -305,7 +308,8 @@ import { PharmacyPageComponent } from './components/business/pharmacy/pharmacy-p
     ComplaintAnswerComponent,
     ComplaintAddComponent,
     ComplaintTableViewComponent,
-    PharmacyPageComponent
+    PharmacyPageComponent,
+    RatingAddComponent
   ],
   imports: [
     BrowserModule,
@@ -337,7 +341,9 @@ import { PharmacyPageComponent } from './components/business/pharmacy/pharmacy-p
     MatDatepickerModule,
     MatProgressBarModule,
     MatNativeDateModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSliderModule,
+    MatMenuModule
   ],
   providers: [
     {

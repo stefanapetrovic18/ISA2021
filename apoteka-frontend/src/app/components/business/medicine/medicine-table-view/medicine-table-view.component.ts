@@ -13,6 +13,10 @@ import { MedicineViewComponent } from '../medicine-view/medicine-view.component'
 import {ReservationService} from '../../../../service/business/reservation.service';
 import {Reservation} from '../../../../model/business/reservation';
 import {ReservationAddComponent} from '../../reservation/reservation-add/reservation-add.component';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
+import { Patient } from 'src/app/model/user/patient';
+import { PatientService } from 'src/app/service/user/patient.service';
+import { RatingAddComponent } from '../../rating/rating-add/rating-add.component';
 
 @Component({
   selector: 'app-medicine-table-view',
@@ -26,11 +30,13 @@ export class MedicineTableViewComponent implements OnInit {
   medicine: Medicine[];
   dataSource: MatTableDataSource<any>;
   @Input() data: Medicine[];
+  patient: Patient;
   columns = ['name', 'manufacturer', 'code', 'type', 'form', 'prescriptionNecessary', 'sideEffects', 'recommendedDose'];
-  actions = ['view', 'edit', 'delete', 'reserve'];
+  actions = ['view', 'edit', 'delete', 'reserve', 'rate'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private medicineService: MedicineService, private router: Router, private dialog: MatDialog,
-              private reservationService: ReservationService) {}
+              private reservationService: ReservationService, private patientService: PatientService,
+              private tokenStorageService: TokenStorageService) {}
   ngOnInit() {
     this.medicineService.findAll().subscribe(
       data => {
@@ -49,6 +55,9 @@ export class MedicineTableViewComponent implements OnInit {
         // this.router.navigateByUrl('');
       }
     );
+    if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
+      this.getPatient();
+    }
   }
 
   applyFilter(value: any) {
@@ -56,6 +65,17 @@ export class MedicineTableViewComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  getPatient() {
+    this.patientService.findAll().subscribe((data) => {
+      data.forEach((p) => {
+        if (p.username === this.tokenStorageService.getUsername()) {
+          this.patient = p;
+        }
+      });
+      // this.getPatient();
+    });
   }
 
   filter() {
@@ -113,6 +133,15 @@ export class MedicineTableViewComponent implements OnInit {
         }
       }
     );
+  }
+  rate(input: Medicine) {
+    this.dialog.open(RatingAddComponent, {
+      data: {
+        type: 'medicine',
+        id: input.id,
+        patient: this.patient
+      }
+    });
   }
 
 }
