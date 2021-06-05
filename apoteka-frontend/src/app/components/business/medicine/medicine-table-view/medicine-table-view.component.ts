@@ -31,7 +31,7 @@ export class MedicineTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   @Input() data: Medicine[];
   patient: Patient;
-  columns = ['name', 'manufacturer', 'code', 'type', 'form', 'prescriptionNecessary', 'sideEffects', 'recommendedDose'];
+  columns = ['name', 'manufacturer', 'code', 'type', 'form', 'prescriptionNecessary', 'sideEffects', 'recommendedDose', 'rating'];
   actions = ['view', 'edit', 'delete', 'reserve', 'rate'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private medicineService: MedicineService, private router: Router, private dialog: MatDialog,

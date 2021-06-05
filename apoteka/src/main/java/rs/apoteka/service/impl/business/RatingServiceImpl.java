@@ -132,6 +132,8 @@ public class RatingServiceImpl implements RatingService {
                 r.setRating(rating.getRating());
                 update(r);
                 updated.set(true);
+                medicine.setRating(calculatePharmacyRating(medicine.getId()));
+                medicineService.update(medicine);
             }
         });
         if (updated.get()) {
@@ -142,6 +144,11 @@ public class RatingServiceImpl implements RatingService {
             medicine.setRatings(new ArrayList<>());
         }
         medicine.getRatings().add(r);
+        if (medicine.getRating() != null && medicine.getRatings() != null && medicine.getRating() > 0) {
+            medicine.setRating((medicine.getRating() * (medicine.getRatings().size() - 1) + rating.getRating()) / medicine.getRatings().size());
+        } else {
+            medicine.setRating(Double.valueOf(rating.getRating()));
+        }
         medicineService.update(medicine);
         return r;
     }
@@ -166,6 +173,8 @@ public class RatingServiceImpl implements RatingService {
                 r.setRating(rating.getRating());
                 update(r);
                 updated.set(true);
+                pharmacist.setRating(calculatePharmacyRating(pharmacist.getId()));
+                pharmacistService.update(pharmacist);
             }
         });
         if (updated.get()) {
@@ -176,6 +185,11 @@ public class RatingServiceImpl implements RatingService {
             pharmacist.setRatings(new ArrayList<>());
         }
         pharmacist.getRatings().add(r);
+        if (pharmacist.getRating() != null && pharmacist.getRatings() != null && pharmacist.getRating() > 0) {
+            pharmacist.setRating((pharmacist.getRating() * (pharmacist.getRatings().size() - 1) + rating.getRating()) / pharmacist.getRatings().size());
+        } else {
+            pharmacist.setRating(Double.valueOf(rating.getRating()));
+        }
         pharmacistService.update(pharmacist);
         return r;
     }
@@ -200,6 +214,8 @@ public class RatingServiceImpl implements RatingService {
                 r.setRating(rating.getRating());
                 update(r);
                 updated.set(true);
+                dermatologist.setRating(calculatePharmacyRating(dermatologist.getId()));
+                dermatologistService.update(dermatologist);
             }
         });
         if (updated.get()) {
@@ -210,6 +226,11 @@ public class RatingServiceImpl implements RatingService {
             dermatologist.setRatings(new ArrayList<>());
         }
         dermatologist.getRatings().add(r);
+        if (dermatologist.getRating() != null && dermatologist.getRatings() != null && dermatologist.getRating() > 0) {
+            dermatologist.setRating((dermatologist.getRating() * (dermatologist.getRatings().size() - 1) + rating.getRating()) / dermatologist.getRatings().size());
+        } else {
+            dermatologist.setRating(Double.valueOf(rating.getRating()));
+        }
         dermatologistService.update(dermatologist);
         return r;
     }
@@ -234,6 +255,8 @@ public class RatingServiceImpl implements RatingService {
                 r.setRating(rating.getRating());
                 update(r);
                 updated.set(true);
+                pharmacy.setRating(calculatePharmacyRating(pharmacy.getId()));
+                pharmacyService.update(pharmacy);
             }
         });
         if (updated.get()) {
@@ -244,6 +267,15 @@ public class RatingServiceImpl implements RatingService {
             pharmacy.setRatings(new ArrayList<>());
         }
         pharmacy.getRatings().add(r);
+
+        System.out.println(pharmacy.getRating());
+        if (pharmacy.getRating() != null && pharmacy.getRatings() != null && pharmacy.getRating() > 0) {
+            pharmacy.setRating((pharmacy.getRating() * (pharmacy.getRatings().size() - 1) + rating.getRating()) / pharmacy.getRatings().size());
+        } else {
+            pharmacy.setRating(Double.valueOf(rating.getRating()));
+        }
+        System.out.println(pharmacy.getRating());
+
         pharmacyService.update(pharmacy);
         return r;
     }
