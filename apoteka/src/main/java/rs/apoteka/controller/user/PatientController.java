@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.service.intf.user.PatientService;
 
+import javax.validation.constraints.Email;
 import java.util.List;
 
 @CrossOrigin
@@ -38,6 +39,17 @@ public class PatientController {
     @GetMapping(value = "/search")
     public ResponseEntity<Patient> getOne(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(patientService.getOne(id), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/search-by-username")
+    public ResponseEntity<Patient> findByUsername(@RequestParam(value = "username") @Email String username) throws Exception {
+        try {
+            Patient patient = patientService.findByUsername(username);
+            System.out.println(patient.getAllergies().size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(patientService.findByUsername(username), HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")

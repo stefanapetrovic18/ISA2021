@@ -5,13 +5,16 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Promotion;
+import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.PromotionRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.PromotionService;
+import rs.apoteka.service.intf.user.PatientService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,14 +27,23 @@ public class PromotionServiceImpl implements PromotionService {
     private AuthenticationService authenticationService;
     @Autowired
     private PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    private PatientService patientService;
 
     @Override
     public List<Promotion> findAll() throws Exception {
         PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
-        if (admin == null) {
-            return promotionRepository.findAll();
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        if (admin != null) {
+            return admin.getPharmacy().getPromotions();
         }
-        return admin.getPharmacy().getPromotions();
+        if (patient != null) {
+            List<Promotion> promos = new ArrayList<>();
+            patient.getSubscriptions().forEach(s -> promos.addAll(s.getPromotions()));
+            return promos;
+        }
+
+        return promotionRepository.findAll();
     }
 
     @Override

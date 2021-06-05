@@ -1,5 +1,6 @@
 package rs.apoteka.entity.business;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import rs.apoteka.entity.user.Patient;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class Rating {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "patient", referencedColumnName = "id")
+    @JsonIgnore
     private Patient patient;
     @Column(nullable = false)
     @Min(1)

@@ -31,6 +31,7 @@ public class Patient extends User {
     private List<Medicine> allergies;
     @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Pharmacy.class)
     //@JsonView(Views.Internal.class)
+    @JsonIgnore
     private List<Pharmacy> subscriptions;
 
     public Patient() {

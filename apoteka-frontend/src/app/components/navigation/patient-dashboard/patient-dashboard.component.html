@@ -1,4 +1,31 @@
 <div class="navigation">
+  <mat-card class="navigation-card" *ngIf="patient !== undefined">
+    <mat-card-header>
+      <mat-card-title>Podaci</mat-card-title>
+      <mat-card-subtitle>Lični podaci</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Ime i prezime: {{patient.forename}} {{patient.surname}}
+      </p>
+      <p>
+        Email: {{patient.username}}
+      </p>
+      <p>
+        Adresa: {{patient.address}}, {{patient.city}}, {{patient.country}}
+      </p>
+      <p>
+        Broj telefona: {{patient.phone}}
+      </p>
+      <p>
+        Penali: {{patient.points}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="open('edit')">IZMENI PODATKE</button>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('change-password')">PROMENI LOZINKU</button>
+    </mat-card-actions>
+  </mat-card>
   <mat-card class="navigation-card">
     <mat-card-header>
       <mat-card-title>Apoteka</mat-card-title>
@@ -24,7 +51,7 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button mat-raised-button class="add-button" (click)="navigate('pregled')">PRISTUPI</button>
+      <button mat-button mat-raised-button class="add-button" (click)="navigate('pregled?patientID=' + patient.id)">PRISTUPI</button>
     </mat-card-actions>
   </mat-card>
   <mat-card class="navigation-card">
@@ -57,12 +84,12 @@
   </mat-card>
   <mat-card class="navigation-card">
     <mat-card-header>
-      <mat-card-title>Pretplacen</mat-card-title>
-      <mat-card-subtitle>Lista apoteka na koje je korisnik pretplacen</mat-card-subtitle>
+      <mat-card-title>Pretplate</mat-card-title>
+      <mat-card-subtitle>Lista apoteka na koje je korisnik pretplaćen</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <p>
-        Pristupite listi apoteka na koje ste pretplaceni.
+        Pristupite listi apoteka na koje ste pretplaćeni.
       </p>
     </mat-card-content>
     <mat-card-actions>
@@ -90,11 +117,11 @@
     </mat-card-header>
     <mat-card-content>
       <p>
-        Otvorite dijalog za zakazivanje pregleda.
+        Pristupi stranici za zakazivanje pregleda.
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button mat-raised-button class="edit-button" (click)="open('pregled')">OTVORI</button>
+      <button mat-button mat-raised-button class="edit-button" (click)="navigate('pregled')">PRISTUPI</button>
     </mat-card-actions>
   </mat-card>
   <mat-card class="navigation-card">
@@ -137,6 +164,20 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-button mat-raised-button class="add-button" (click)="navigate('change-password')">PRISTUPI</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="navigation-card">
+    <mat-card-header>
+      <mat-card-title>Podnesi žalbu</mat-card-title>
+      <mat-card-subtitle>Podnošenje žalbe</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Podnesi žalbu na rad apoteke, farmaceuta ili dermatologa.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-raised-button class="add-button" (click)="open('complaint')">OTVORI</button>
     </mat-card-actions>
   </mat-card>
 </div>

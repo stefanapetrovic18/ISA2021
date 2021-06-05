@@ -151,9 +151,7 @@ export class PharmacyTableViewComponent implements OnInit {
   }
 
   view(input: Pharmacy) {
-    this.dialog.open(PharmacyViewComponent, {
-      data: input
-    });
+    this.router.navigateByUrl('apoteka/prikaz?id=' + input.id);
   }
 
   edit(input: Pharmacy) {

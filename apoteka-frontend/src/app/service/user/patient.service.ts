@@ -27,6 +27,11 @@ export class PatientService {
     return this.http.get<Patient>(this.URL + 'search', {params});
   }
 
+  public findByUsername(username: string): Observable<Patient> {
+    const params = new HttpParams().set('username', username);
+    return this.http.get<Patient>(this.URL + 'search-by-username', {params});
+  }
+
   public create(patient: Patient): Observable<Patient> {
     return this.http.post<Patient>(this.URL + 'create', patient, httpOptions);
   }

@@ -54,6 +54,9 @@ export class RoleGuardService implements CanActivate {
             }
           });
         }
+        if ((expectedRole === undefined || expectedRole === null) && (expectedRoles === undefined || expectedRoles === null)) {
+          flag = true;
+        }
       });
       if (!flag) {
         window.alert('Nemate pravo pristupa ovoj stranici!');

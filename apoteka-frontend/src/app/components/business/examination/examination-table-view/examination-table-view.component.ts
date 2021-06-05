@@ -89,7 +89,7 @@ export class ExaminationTableViewComponent implements OnInit {
         } else if (params.get('patientID') !== null) {
           this.examinationService.findAllByPatient(Number.parseInt(params.get('patientID'))).subscribe(
             data => {
-              this.data = data;
+              this.data = data.filter(e => e.patient !== undefined && e.patient !== null);
               if (this.data !== undefined && this.data.length > 0) {
                 this.dataSource = new MatTableDataSource(this.data);
                 console.log(this.dataSource);
@@ -190,6 +190,7 @@ export class ExaminationTableViewComponent implements OnInit {
     this.examinationService.quickReserve(input).subscribe(
       data => {
         window.alert('Uspešna rezervacija! Molimo vas da proverite vaš email za potvrdu.');
+        location.reload();
       }, error => {
         window.alert('Neuspešna rezervacija!');
       }
@@ -200,6 +201,7 @@ export class ExaminationTableViewComponent implements OnInit {
     this.examinationService.cancel(input).subscribe(
       data => {
         window.alert('Uspešno otkazivanje!');
+        location.reload();
       }, error => {
         window.alert('Neuspešno otkazivanje!');
       }

@@ -1,11 +1,14 @@
 package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import rs.apoteka.entity.business.Medicine;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.repository.user.PatientRepository;
 import rs.apoteka.service.intf.user.PatientService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,7 +68,32 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient update(Patient patient) {
-        return patientRepository.save(patient);
+        Patient p = getOne(patient.getId());
+        if (p == null) {
+            return null;
+        }
+        p.setAllergies(patient.getAllergies());
+//        if (patient.getAllergies() != null && patient.getAllergies().size() > 0) {
+//            for (Medicine a : patient.getAllergies()) {
+//                boolean flag = true;
+//                if (p.getAllergies() != null && p.getAllergies().size() > 0) {
+//                    for (Medicine b : p.getAllergies()) {
+//                        if (b.getId().equals(a.getId())) {
+//                            flag = false;
+//                            break;
+//                        }
+//                    }
+//                } else {
+//                    p.setAllergies(new ArrayList<>());
+//                }
+//                if (flag) {
+//                    p.getAllergies().add(a);
+//                }
+//            }
+//        }
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        patient.setPassword(encoder.encode(patient.getPassword()));
+        return patientRepository.save(p);
     }
 
     @Override
