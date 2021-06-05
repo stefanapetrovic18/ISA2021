@@ -41,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
             if (patient == null) {
                 return null;
             }
-            return reservationRepository.findAll().stream().filter(r -> r.getPatient().getUsername().equals(authenticationService.getUsername())).collect(Collectors.toList());
+            return reservationRepository.findAll().stream().filter(r -> r.getPatient() != null && r.getPatient().getUsername().equals(authenticationService.getUsername())).collect(Collectors.toList());
         }
         return reservationRepository.findAll();
     }
@@ -147,10 +147,10 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation cancel(Reservation reservation) throws Exception {
-        if (reservation.getReservationDate().isBefore(LocalDateTime.now().plusHours(24))) {
+        if (reservation.getReservationDate().isBefore(LocalDateTime.now().plusHours(24)) || reservation.getCollected()) {
             throw new Exception("Nemoguće je otkazati rezervaciju leka manje od 24h pre preuzimanja istog.");
         }
-        reservation.getPatient().getExaminations().removeIf(e -> e.getId().equals(reservation.getId()));
+//        reservation.getPatient().getExaminations().removeIf(e -> e.getId().equals(reservation.getId()));
         reservation.getPharmacy().getStockpile().forEach(i -> {
             if (i.getMedicine().getId().equals(reservation.getMedicine().getId())) {
                 i.setQuantity(i.getQuantity() + 1);

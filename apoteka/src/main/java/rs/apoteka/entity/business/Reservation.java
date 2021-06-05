@@ -29,7 +29,7 @@ public class Reservation {
     @JoinColumn(name = "pharmacy", referencedColumnName = "id")
     //@JsonView(Views.Public.class)
     private Pharmacy pharmacy;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     @JoinColumn(name = "patient", referencedColumnName = "id")
     //@JsonView(Views.Public.class)
     private Patient patient;
