@@ -33,9 +33,9 @@ public class OfferController {
     public ResponseEntity<List<Offer>> findAllParametrized(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) Long orderID,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDateFrom,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDateUntil
+            @RequestParam (required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDate,
+            @RequestParam (required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDateFrom,
+            @RequestParam (required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime shippingDateUntil
     ) throws Exception {
         return new ResponseEntity<>(offerService.findAllParametrized(id, orderID, shippingDate, shippingDateFrom, shippingDateUntil), HttpStatus.OK);
     }

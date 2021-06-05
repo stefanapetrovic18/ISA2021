@@ -43,40 +43,27 @@
         <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
         <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>
       </ng-container>
+      <ng-container [matColumnDef]="'supplier'">
+        <mat-header-cell *matHeaderCellDef>Dobavljač</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object.supplier.forename }} {{object.supplier.surname}}</mat-cell>
+      </ng-container>
 
-      <ng-container [matColumnDef]="'view'">
-        <mat-header-cell *matHeaderCellDef>Info</mat-header-cell>
+      <ng-container [matColumnDef]="'accept'">
+        <mat-header-cell *matHeaderCellDef>Prihvati</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="info-button" mat-raised-button (click)="view(element)">
-            INFO
-            <mat-icon>info</mat-icon>
+          <button [disabled]="element.accepted !== null || checkDate(element)" class="info-button" mat-raised-button (click)="accept(element)">
+            PRIHVATI
+            <mat-icon>done_outline</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
-      <ng-container [matColumnDef]="'edit'">
-        <mat-header-cell *matHeaderCellDef>Izmeni</mat-header-cell>
+
+      <ng-container [matColumnDef]="'reject'">
+        <mat-header-cell *matHeaderCellDef>Odbij</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="edit-button" mat-raised-button (click)="edit(element)">
-            IZMENI
-            <mat-icon>edit</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <ng-container [matColumnDef]="'delete'">
-        <mat-header-cell *matHeaderCellDef>Ukloni</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button class="delete-button" mat-raised-button (click)="delete(element)">
-            UKLONI
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <ng-container [matColumnDef]="'medicine'">
-        <mat-header-cell *matHeaderCellDef>Lekovi</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button class="delete-button" mat-raised-button (click)="medicine(element)">
-            LEKOVI
-            <mat-icon>delete</mat-icon>
+          <button [disabled]="element.accepted !== null || checkDate(element)" class="delete-button" mat-raised-button (click)="reject(element)">
+            ODBIJ
+            <mat-icon>close</mat-icon>
           </button>
         </mat-cell>
       </ng-container>

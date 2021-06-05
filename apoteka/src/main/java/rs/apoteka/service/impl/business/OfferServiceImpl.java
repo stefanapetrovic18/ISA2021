@@ -78,6 +78,13 @@ public class OfferServiceImpl implements OfferService {
         }
         offer.setAccepted(true);
         sendAcceptedEmail(offer);
+        List<Offer> offers = findAllParametrized(null, offer.getOrder().getId(),
+                null, null, null);
+        for (Offer o : offers) {
+            if (!offer.getId().equals(o.getId())) {
+                reject(o);
+            }
+        }
         return update(offer);
     }
 
@@ -129,7 +136,7 @@ public class OfferServiceImpl implements OfferService {
             supplierService.findAll().forEach(
                     supplier -> {
                         Offer offer = new Offer();
-                        offer.setAccepted(false);
+//                        offer.setAccepted(false);
                         offer.setOrder(order);
                         offer.setPrice(Math.random()*100000);
                         offer.setSupplier(supplier);

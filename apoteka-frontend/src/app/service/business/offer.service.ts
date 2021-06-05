@@ -28,12 +28,25 @@ export class OfferService {
     return this.http.get<Offer>(this.URL + 'search', {params});
   }
 
+  public findByOrder(id: number): Observable<Offer[]> {
+    const params = new HttpParams().set('orderID', id.toString());
+    return this.http.get<Offer[]>(this.URL + 'filter', {params});
+  }
+
   public create(offer: Offer): Observable<Offer> {
     return this.http.post<Offer>(this.URL + 'create', offer, httpOptions);
   }
 
   public update(offer: Offer): Observable<Offer> {
     return this.http.post<Offer>(this.URL + 'update', offer, httpOptions);
+  }
+
+  public accept(offer: Offer): Observable<Offer> {
+    return this.http.post<Offer>(this.URL + 'accept', offer, httpOptions);
+  }
+
+  public reject(offer: Offer): Observable<Offer> {
+    return this.http.post<Offer>(this.URL + 'reject', offer, httpOptions);
   }
 
   public delete(id: number): Observable<boolean> {

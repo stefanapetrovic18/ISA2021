@@ -32,7 +32,7 @@ export class MedicineTableViewComponent implements OnInit {
   @Input() data: Medicine[];
   patient: Patient;
   columns = ['name', 'manufacturer', 'code', 'type', 'form', 'prescriptionNecessary', 'sideEffects', 'recommendedDose', 'rating'];
-  actions = ['view', 'edit', 'delete', 'reserve', 'rate'];
+  actions = [];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private medicineService: MedicineService, private router: Router, private dialog: MatDialog,
               private reservationService: ReservationService, private patientService: PatientService,
@@ -57,6 +57,10 @@ export class MedicineTableViewComponent implements OnInit {
     );
     if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
       this.getPatient();
+    } else if (this.tokenStorageService.getAuthorities().includes('ROLE_PHARMACY_ADMIN')) {
+      this.actions.push('edit');
+      this.actions.push('delete');
+      this.displayedColumns = [...this.columns, ...this.actions];
     }
   }
 
@@ -72,6 +76,9 @@ export class MedicineTableViewComponent implements OnInit {
       data.forEach((p) => {
         if (p.username === this.tokenStorageService.getUsername()) {
           this.patient = p;
+          this.actions.push('rate');
+          this.actions.push('reserve')
+          this.displayedColumns = [...this.columns, ...this.actions];
         }
       });
       // this.getPatient();

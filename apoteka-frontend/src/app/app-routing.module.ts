@@ -81,7 +81,7 @@ const routes: Routes = [
     component: OfferTableViewComponent,
     canActivate: [RoleGuardService],
     data: {
-      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_SUPPLIER', 'ROLE_PHARMACIST']
+      expectedRoles: ['ROLE_SYSTEM_ADMIN', 'ROLE_SUPPLIER', 'ROLE_PHARMACY_ADMIN']
     }
   },
   {

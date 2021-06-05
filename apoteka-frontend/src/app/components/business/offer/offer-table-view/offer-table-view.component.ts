@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Offer } from 'src/app/model/business/offer';
 import { OfferService } from 'src/app/service/business/offer.service';
 import { OfferAddComponent } from '../offer-add/offer-add.component';
@@ -23,28 +23,44 @@ export class OfferTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Offer[];
-  columns = ['expiryDate', 'y'];
-  actions = ['view', 'edit', 'delete', 'medicine'];
+  columns = ['shippingDate', 'price'];
+  actions = ['supplier', 'accept', 'reject'];
   displayedColumns = [...this.columns, ...this.actions];
-  constructor(private offerService: OfferService, private router: Router, private dialog: MatDialog) {}
+  constructor(private offerService: OfferService, private router: Router, private dialog: MatDialog, private route: ActivatedRoute) {}
   ngOnInit() {
-    this.offerService.findAll().subscribe(
-      data => {
-        this.data = data;
-        if (this.data !== undefined && this.data.length > 0) {
-          this.dataSource = new MatTableDataSource(this.data);
-          console.log(this.dataSource);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        } else {
-          window.alert('Podaci ne postoje!');
-        // this.router.navigateByUrl('');
-        }
-      }, error => {
-        window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-        this.router.navigateByUrl('');
+    this.route.queryParamMap.subscribe(params => {
+      if (params.get('orderID') !== undefined && params.get('orderID') !== null) {
+        this.offerService.findByOrder(Number(params.get('orderID'))).subscribe(
+          data => {
+            this.data = data;
+            this.dataSource = new MatTableDataSource(this.data);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }, error => {
+            window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+            this.router.navigateByUrl('');
+          }
+        );
+      } else {
+        this.offerService.findAll().subscribe(
+          data => {
+            this.data = data;
+            if (this.data !== undefined && this.data.length > 0) {
+              this.dataSource = new MatTableDataSource(this.data);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            } else {
+              window.alert('Podaci ne postoje!');
+            // this.router.navigateByUrl('');
+            }
+          }, error => {
+            window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
+            this.router.navigateByUrl('');
+          }
+        );
       }
-    );
+    });
+
   }
 
   applyFilter(value: any) {
@@ -87,8 +103,31 @@ export class OfferTableViewComponent implements OnInit {
       }
     );
   }
-  medicine(input: Offer) {
-    this.router.navigateByUrl('lekovi?offerID=' + input.id);
+
+  accept(input: Offer) {
+    this.offerService.accept(input).subscribe(
+      data => {
+        window.alert('Prihvaćeno!');
+        location.reload();
+      }, error => {
+        window.alert('Nije prihvaćeno!');
+      }
+    );
+  }
+
+  reject(input: Offer) {
+    this.offerService.reject(input).subscribe(
+      data => {
+        window.alert('Odbijeno!');
+        location.reload();
+      }, error => {
+        window.alert('Nije odbijeno!');
+      }
+    );
+  }
+
+  checkDate(input: Offer) {
+    return input.shippingDate < new Date();
   }
 
 }
