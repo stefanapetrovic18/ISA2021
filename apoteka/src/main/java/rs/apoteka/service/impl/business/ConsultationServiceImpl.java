@@ -188,9 +188,9 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public Consultation update(Consultation consultation) throws AppointmentBookingException {
-        if (!appointmentCheck(consultation)) {
-            throw new AppointmentBookingException();
-        }
+//        if (!appointmentCheck(consultation)) {
+//            throw new AppointmentBookingException();
+//        }
         return consultationRepository.save(consultation);
     }
 

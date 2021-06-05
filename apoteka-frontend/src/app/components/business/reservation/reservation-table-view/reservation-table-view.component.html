@@ -86,7 +86,7 @@
       <ng-container [matColumnDef]="'cancel'">
         <mat-header-cell *matHeaderCellDef>Otkaži</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="info-button" mat-raised-button (click)="cancel(element)" [disabled]="element.collected">
+          <button class="cancel-button" mat-raised-button (click)="cancel(element)" [disabled]="element.collected">
             OTKAŽI
             <mat-icon>remove_shopping_cart</mat-icon>
           </button>

@@ -152,7 +152,7 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public Examination create(Examination examination) throws AppointmentBookingException {
-        if (!appointmentCheck(examination)) {
+        if (!dermatologistCheck(examination)) {
             throw new AppointmentBookingException();
         }
         return examinationRepository.save(examination);
@@ -163,6 +163,9 @@ public class ExaminationServiceImpl implements ExaminationService {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
             return null;
+        }
+        if (!patientHasNoConsultation(examination, patient) || !patientHasNoExamination(examination, patient)) {
+            throw new AppointmentBookingException();
         }
         examination.setPatient(patient);
         Examination e = update(examination);
@@ -201,9 +204,9 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public Examination update(Examination examination) throws AppointmentBookingException {
-        if (!appointmentCheck(examination)) {
-            throw new AppointmentBookingException();
-        }
+//        if (!appointmentCheck(examination)) {
+//            throw new AppointmentBookingException();
+//        }
         return examinationRepository.save(examination);
     }
 
@@ -217,11 +220,15 @@ public class ExaminationServiceImpl implements ExaminationService {
         return true;
     }
 
-    private Boolean appointmentCheck(Examination examination) {
+    private Boolean appointmentCheck(Examination examination, Patient patient) {
         return duringWorkingHours(examination) &&
                 appointmentFree(examination) &&
-                patientHasNoConsultation(examination) &&
-                patientHasNoExamination(examination);
+                patientHasNoConsultation(examination, patient) &&
+                patientHasNoExamination(examination, patient);
+    }
+
+    private Boolean dermatologistCheck(Examination examination) {
+        return duringWorkingHours(examination) && appointmentFree(examination);
     }
 
     // Provera da li je pregled za vreme radnih sati dermatologa.
@@ -282,14 +289,15 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     // Provera da se termin pregleda ne poklapa sa pacijentovim prethodno zakazanim konsultacijama.
-    private Boolean patientHasNoConsultation(Examination examination) {
+    private Boolean patientHasNoConsultation(Examination examination, Patient patient) {
         System.out.println("Slobodan termin (savetovanje):");
         Boolean flag = false;
-        if (examination.getPatient().getConsultations() == null || examination.getPatient().getConsultations().isEmpty()) {
+        if (patient.getConsultations() == null || patient.getConsultations().isEmpty()) {
             System.out.println("C1: " + true);
             return true;
         }
-        for (Consultation cons : examination.getPatient().getConsultations()) {
+        System.out.println("SIZE: " + patient.getExaminations().size());
+        for (Consultation cons : patient.getConsultations()) {
             if ((examination.getExaminationDate().isBefore(cons.getConsultationDate()) &&
                     (examination.getExaminationDate().plusMinutes(examination.getDuration()).isBefore(
                             cons.getConsultationDate())
@@ -311,14 +319,15 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     // Provera da se termin pregleda ne poklapa sa pacijentovim prethodno zakazanim pregledima.
-    private Boolean patientHasNoExamination(Examination examination) {
+    private Boolean patientHasNoExamination(Examination examination, Patient patient) {
         System.out.println("Slobodan termin (pregled, pacijent):");
         Boolean flag = false;
-        if (examination.getPatient().getExaminations() == null || examination.getPatient().getExaminations().isEmpty()) {
+        if (patient.getExaminations() == null || patient.getExaminations().isEmpty()) {
             System.out.println("C1: " + true);
             return true;
         }
-        for (Examination exam : examination.getPatient().getExaminations()) {
+        System.out.println("SIZE: " + patient.getExaminations().size());
+        for (Examination exam : patient.getExaminations()) {
             if ((examination.getExaminationDate().isBefore(exam.getExaminationDate()) &&
                     (examination.getExaminationDate().plusMinutes(examination.getDuration()).isBefore(
                             exam.getExaminationDate())
