@@ -15,6 +15,7 @@ public class Order {
     @Column(nullable = false)
     private LocalDateTime expiryDate;
     @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
     private Pharmacy pharmacy;
 
     public Order() {

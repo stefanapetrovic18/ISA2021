@@ -23,7 +23,7 @@ public class Supplier extends User {
     @OneToOne
 
     private Inventory inventory;
-    @OneToMany
+    @OneToMany(mappedBy = "supplier")
     @JsonIgnore
     private List<Offer> offers;
 

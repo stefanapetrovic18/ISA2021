@@ -5,13 +5,16 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Offer;
+import rs.apoteka.entity.business.Order;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.OfferRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.OfferService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
+import rs.apoteka.service.intf.user.SupplierService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,8 @@ public class OfferServiceImpl implements OfferService {
     private PharmacyAdminService pharmacyAdminService;
     @Autowired
     private OfferRepository offerRepository;
+    @Autowired
+    private SupplierService supplierService;
 
     @Override
     public List<Offer> findAll() {
@@ -115,6 +120,25 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Offer create(Offer offer) {
         return offerRepository.save(offer);
+    }
+
+    @Override
+    public List<Offer> create(Order order) {
+        List<Offer> offers = new ArrayList<>();
+        if (supplierService.findAll() != null || !supplierService.findAll().isEmpty()) {
+            supplierService.findAll().forEach(
+                    supplier -> {
+                        Offer offer = new Offer();
+                        offer.setAccepted(false);
+                        offer.setOrder(order);
+                        offer.setPrice(Math.random()*100000);
+                        offer.setSupplier(supplier);
+                        offer.setShippingDate(LocalDateTime.now().plusDays(3));
+                        offers.add(create(offer));
+                    }
+            );
+        }
+        return offers;
     }
 
     @Override

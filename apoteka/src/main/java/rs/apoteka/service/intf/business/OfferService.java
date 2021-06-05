@@ -1,6 +1,7 @@
 package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Offer;
+import rs.apoteka.entity.business.Order;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +20,8 @@ public interface OfferService {
     Offer reject(Offer offer) throws Exception;
 
     Offer create(Offer offer);
+
+    List<Offer> create(Order order);
 
     Offer update(Offer offer);
 

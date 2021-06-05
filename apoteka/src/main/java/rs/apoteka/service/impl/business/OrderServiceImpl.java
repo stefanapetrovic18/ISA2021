@@ -2,10 +2,12 @@ package rs.apoteka.service.impl.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rs.apoteka.entity.business.Offer;
 import rs.apoteka.entity.business.Order;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.business.OrderRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
+import rs.apoteka.service.intf.business.OfferService;
 import rs.apoteka.service.intf.business.OrderItemService;
 import rs.apoteka.service.intf.business.OrderService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
@@ -24,6 +26,8 @@ public class OrderServiceImpl implements OrderService {
     private PharmacyAdminService pharmacyAdminService;
     @Autowired
     private OrderItemService orderItemService;
+    @Autowired
+    private OfferService offerService;
 
     @Override
     public List<Order> findAll() {
@@ -66,6 +70,11 @@ public class OrderServiceImpl implements OrderService {
             order.getItems().forEach(i -> orderItemService.create(i));
         }
         order.setPharmacy(admin.getPharmacy());
+        Order o = orderRepository.save(order);
+        List<Offer> offers = offerService.create(o);
+        if (offers == null || offers.isEmpty()) {
+            throw new Exception("Greška u kreiranju ponuda.");
+        }
         return orderRepository.save(order);
     }
 
