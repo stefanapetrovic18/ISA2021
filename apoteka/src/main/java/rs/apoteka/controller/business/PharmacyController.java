@@ -13,6 +13,8 @@ import rs.apoteka.service.intf.business.PharmacyService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @CrossOrigin
@@ -65,6 +67,12 @@ public class PharmacyController {
     @GetMapping(value = "/free")
     public ResponseEntity<List<Pharmacy>> findAllByPharmacistFreeAt(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime) throws Exception {
         return new ResponseEntity<>(pharmacyService.findAllByPharmacistFreeAt(localDateTime), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/free-term")
+    public ResponseEntity<List<Pharmacy>> findAllByPharmacistFreeTerm(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime,
+                                                                    @RequestParam Integer duration) throws Exception {
+        return new ResponseEntity<>(pharmacyService.findAllByPharmacistFreeAt(localDateTime, duration), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_PATIENT')")

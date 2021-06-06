@@ -70,8 +70,8 @@ export class ConsultationAddComponent implements OnInit {
     // this.dialogRef.close();
   }
   getPharmacies() {
-    // this.pharmacyService.findAllByPharmacistFreeAt(this.date).subscribe(
-    this.pharmacyService.findAll().subscribe(
+    this.pharmacyService.findAllByPharmacistFreeTerm(this.date, this.duration).subscribe(
+    // this.pharmacyService.findAll().subscribe(
       data => {
         this.pharmacies = data;
         if (this.pharmacies !== undefined && this.pharmacies.length > 0) {

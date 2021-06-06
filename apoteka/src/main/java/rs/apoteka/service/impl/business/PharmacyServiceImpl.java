@@ -19,13 +19,19 @@ import rs.apoteka.service.intf.user.PharmacistService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,6 +60,8 @@ public class PharmacyServiceImpl implements PharmacyService {
     private StockpileService stockpileService;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private WorkingHoursService workingHoursService;
 
     @Override
     public List<Pharmacy> findAll() {
@@ -153,7 +161,72 @@ public class PharmacyServiceImpl implements PharmacyService {
                 }
             }
         }
-        return pharmacies;
+        return pharmacies.stream().filter(distinctByKey(Pharmacy::getId)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Pharmacy> findAllByPharmacistFreeAt(LocalDateTime localDateTime, Integer duration) {
+        List<Pharmacy> pharmacies = new ArrayList<>();
+        for (Pharmacy p : findAll()) {
+            for (Pharmacist ph : p.getPharmacists()) {
+                if (ph.getConsultations() != null && !ph.getConsultations().isEmpty()) {
+                    for (Consultation c : ph.getConsultations()) {
+                        if (duringWorkingHours(localDateTime, duration, ph, p) &&
+                                appointmentFree(localDateTime, duration, ph, p)) {
+                            pharmacies.add(p);
+                        }
+                    }
+                }
+            }
+        }
+        return pharmacies.stream().filter(distinctByKey(Pharmacy::getId)).collect(Collectors.toList());
+    }
+
+    private Boolean duringWorkingHours(LocalDateTime localDateTime, Integer duration, Pharmacist pharmacist, Pharmacy pharmacy) {
+        Boolean flag = false;
+        DayOfWeek dayOfWeek = localDateTime.getDayOfWeek();
+        LocalTime localTimeStart = localDateTime.toLocalTime();
+        LocalTime localTimeEnd = localDateTime.plusMinutes(duration).toLocalTime();
+        for (WorkingHours workingHours : workingHoursService.findAllByEmployeeID(pharmacist.getId())) {
+            if (workingHours.getPharmacy().getId().equals(pharmacy.getId())) {
+                if (dayOfWeek == workingHours.getDayOfWeek()) {
+                    if (localTimeStart.isAfter(workingHours.getShiftStart()) && localTimeEnd.isBefore(workingHours.getShiftEnd())) {
+                        flag = true;
+                    }
+                } // else: continue
+            } // else: continue
+        }
+        return flag;
+    }
+
+    // Provera da se termini farmaceuta ne poklapaju sa njegovim prethodno zakazanim terminima.
+    private Boolean appointmentFree(LocalDateTime localDateTime, Integer duration, Pharmacist pharmacist, Pharmacy pharmacy) {
+        Boolean flag = false;
+        if (pharmacist.getConsultations() == null || pharmacist.getConsultations().isEmpty()) {
+            return true;
+        }
+        for (Consultation cons : pharmacist.getConsultations()) {
+            if ((localDateTime.isBefore(cons.getConsultationDate()) &&
+                    (localDateTime.plusMinutes(duration).isBefore(
+                            cons.getConsultationDate())
+                    ))
+                    ||
+                    (localDateTime.isAfter(cons.getConsultationDate()) &&
+                            (localDateTime.plusMinutes(duration)).isAfter(
+                                    cons.getConsultationDate()))) {
+                // Termini se ne poklapaju.
+                flag = true;
+            } else {
+                // Termini se poklapaju, greska.
+                return false;
+            }
+        }
+        return flag;
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 
     @Override

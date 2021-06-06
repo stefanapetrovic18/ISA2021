@@ -12,7 +12,9 @@ import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.exception.AppointmentBookingException;
+import rs.apoteka.exception.DataMismatchException;
 import rs.apoteka.exception.PatientPenalizedException;
+import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.business.ConsultationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ConsultationService;
@@ -142,10 +144,10 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation reserve(Consultation consultation) throws AppointmentBookingException, PatientPenalizedException {
+    public Consultation reserve(Consultation consultation) throws AppointmentBookingException, PatientPenalizedException, UserNotFoundException {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
-            return null;
+            throw new UserNotFoundException();
         }
         if (patient.getPoints() >= 3) {
             throw new PatientPenalizedException();
@@ -164,7 +166,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     public Consultation cancel(Consultation consultation) throws Exception {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
-            return null;
+            throw new UserNotFoundException();
         }
         if (consultation.getConsultationDate().isBefore(LocalDateTime.now().plusHours(24))) {
             throw new Exception("Nemoguće je otkazati konsultaciju manje od 24h pre početka istog.");
@@ -199,13 +201,14 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id) throws DataMismatchException {
         Consultation consultation = getOne(id);
-        if (!freeNow(consultation)) {
-            return false;
+        if (consultation.getPatient() == null && (consultation.getConsultationDate().isAfter(LocalDateTime.now()) ||
+                consultation.getConsultationDate().plusMinutes(consultation.getDuration()).isBefore(LocalDateTime.now()))) {
+            consultationRepository.deleteById(id);
+            return true;
         }
-        consultationRepository.deleteById(id);
-        return true;
+        throw new DataMismatchException("Pregled je u toku, ili je rezervisan.");
     }
 
     private Boolean appointmentCheck(Consultation consultation) {

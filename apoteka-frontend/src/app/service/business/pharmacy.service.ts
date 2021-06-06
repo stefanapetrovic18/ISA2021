@@ -50,9 +50,13 @@ export class PharmacyService {
   }
 
   public getBusinessReport(profitFrom: Date, profitUntil: Date, year: number): Observable<BusinessReport> {
+    let date = new Date(profitFrom);
+    let date2 = new Date(profitUntil);
+    let isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
+    let isoDateTime2 = new Date(date2.getTime() - (date2.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
     const params = new HttpParams()
-      .set('profitFrom', profitFrom.toISOString().substr(0, 10))
-      .append('profitUntil', profitUntil.toISOString().substr(0, 10))
+      .set('profitFrom', isoDateTime.substr(0, 10))
+      .append('profitUntil', isoDateTime2.substr(0, 10))
       .append('year', year.toString());
     return this.http.get<BusinessReport>(this.URL + 'business-report', {params});
   }
@@ -63,8 +67,18 @@ export class PharmacyService {
   }
 
   public findAllByPharmacistFreeAt(localDateTime: Date): Observable<Pharmacy[]> {
-    const params = new HttpParams().set('localDateTime', new Date(localDateTime).toISOString());
+    let date = new Date(localDateTime);
+    let isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
+    const params = new HttpParams().set('localDateTime', isoDateTime);
     return this.http.get<Pharmacy[]>(this.URL + 'free', {params});
+  }
+
+  public findAllByPharmacistFreeTerm(localDateTime: Date, duration: number): Observable<Pharmacy[]> {
+    let date = new Date(localDateTime);
+    let isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().slice(0, -1);
+    const params = new HttpParams().set('localDateTime', isoDateTime)
+    .append('duration', duration.toString());
+    return this.http.get<Pharmacy[]>(this.URL + 'free-term', {params});
   }
 
   public create(pharmacy: Pharmacy): Observable<Pharmacy> {

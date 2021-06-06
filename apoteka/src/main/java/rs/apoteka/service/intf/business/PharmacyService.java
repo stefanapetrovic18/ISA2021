@@ -24,6 +24,8 @@ public interface PharmacyService {
 
     List<Pharmacy> findAllByPharmacistFreeAt(LocalDateTime localDateTime);
 
+    List<Pharmacy> findAllByPharmacistFreeAt(LocalDateTime localDateTime, Integer duration);
+
     Boolean checkSubStatus(Long pharmacyID) throws Exception;
 
     Rating getRating(Long pharmacyID) throws Exception;

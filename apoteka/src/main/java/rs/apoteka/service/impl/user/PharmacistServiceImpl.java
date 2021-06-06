@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +59,14 @@ public class PharmacistServiceImpl implements PharmacistService {
                 }
             }
         }
-        return pharmacists;
+        pharmacists.forEach(pharmacist -> pharmacist.setPharmacy(null));
+        pharmacists.forEach(pharmacist -> pharmacist.setWorkingHours(null));
+        return pharmacists.stream().filter(distinctByKey(Pharmacist::getId)).collect(Collectors.toList());
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 
     @Override
