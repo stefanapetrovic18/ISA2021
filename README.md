@@ -9,8 +9,8 @@ Stefana Petrović - RA-114/2015
 ### Napomena 5: Dodeljivanje i resetovanje penala se vrši automatski, putem @Scheduled anotacije. Dodeljivanje se vrši svaki dan u 23:59, a resetovanje svakog prvog u mesecu u 00:00. Da biste testirali obe funkcionalnosti, potrebno je izmeniti `cron` parametar prosleđen anotaciji (primer: `cron = "0/15 * * * * ?"` znači da će se metoda izvršavati na svakih 15 sekundi, svakog minuta, svakog sata, svakog dana u mesecu, svakog meseca, svake godine). Za više informacija posetite sajt: [DZone - Scheduler](https://dzone.com/articles/running-on-time-with-springs-scheduled-tasks)
 
 ## Zahtevi
-- MySQL 8.0
-- Maven (korišćena je verzija 3.6.3) - dodati u Environment variables!
+- MySQL 8.0.25
+- Maven (korišćena je verzija 3.8.1) - dodati u Environment variables!
 - Java (JDK 11.0.11) - dodati u Environment variables!
 - Node.js (korišćena je verzija 14.17.0) - dodati u Environment variables!
 

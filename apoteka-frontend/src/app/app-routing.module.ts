@@ -71,7 +71,10 @@ const routes: Routes = [
   {
     path: 'stavka',
     component: ItemTableViewComponent,
-    canActivate: [RoleGuardService]
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRoles: ['ROLE_PHARMACY_ADMIN']
+    }
   },
   {
     path: 'lek',
