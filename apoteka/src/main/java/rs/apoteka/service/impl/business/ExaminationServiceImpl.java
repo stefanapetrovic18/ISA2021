@@ -12,6 +12,7 @@ import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.exception.AppointmentBookingException;
+import rs.apoteka.exception.DataMismatchException;
 import rs.apoteka.exception.PatientPenalizedException;
 import rs.apoteka.repository.business.ExaminationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
@@ -25,6 +26,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -153,10 +155,24 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public Examination create(Examination examination) throws AppointmentBookingException {
+//        if (!dermatologistCheck(examination)) {
+//            throw new AppointmentBookingException();
+//        }
+        Dermatologist dermatologist = dermatologistService.getOne(examination.getDermatologist().getId());
+        if (examination.getPrice() == null || examination.getPrice() == 0) {
+            examination.setPrice(examination.getPharmacy().getPricelist().getExaminationPrice() * examination.getDuration());
+        }
+        if (dermatologist.getAppointments() == null) {
+            dermatologist.setAppointments(new ArrayList<>());
+        }
+        examination.setDermatologist(dermatologist);
         if (!dermatologistCheck(examination)) {
             throw new AppointmentBookingException();
         }
-        return examinationRepository.save(examination);
+        Examination e = examinationRepository.save(examination);
+        dermatologist.getAppointments().add(e);
+        dermatologistService.update(dermatologist);
+        return e;
     }
 
     @Override
@@ -215,13 +231,14 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(Long id) throws DataMismatchException {
         Examination examination = getOne(id);
-        if (!patientFreeNow(examination) || !dermatologistFreeNow(examination)) {
-            return false;
+        if (examination.getPatient() == null && (examination.getExaminationDate().isAfter(LocalDateTime.now()) ||
+                examination.getExaminationDate().plusMinutes(examination.getDuration()).isBefore(LocalDateTime.now()))) {
+            examinationRepository.deleteById(id);
+            return true;
         }
-        examinationRepository.deleteById(id);
-        return true;
+        throw new DataMismatchException("Pregled je u toku, ili je rezervisan.");
     }
 
     private Boolean appointmentCheck(Examination examination, Patient patient) {
@@ -246,7 +263,7 @@ public class ExaminationServiceImpl implements ExaminationService {
         System.out.println(localTimeStart.toString());
         System.out.println(localTimeEnd.toString());
         for (WorkingHours workingHours : workingHoursService.findAllByEmployeeID(examination.getDermatologist().getId())) {
-            System.out.println(workingHours.getPharmacy().getId() + " ?= " + examination.getPharmacy());
+            System.out.println(workingHours.getPharmacy().getId() + " ?= " + examination.getPharmacy().getId());
             if (workingHours.getPharmacy().getId().equals(examination.getPharmacy().getId())) {
                 System.out.println("----------------");
                 System.out.println(workingHours.getDayOfWeek().toString());
@@ -356,6 +373,10 @@ public class ExaminationServiceImpl implements ExaminationService {
     private Boolean patientFreeNow(Examination examination) {
         System.out.println("Pregled u toku (pacijent):");
         Boolean flag = false;
+        if (examination.getPatient() == null) {
+            System.out.println("C1: " + true);
+            return true;
+        }
         for (Examination exam : examination.getPatient().getExaminations()) {
             if ((examination.getExaminationDate().isBefore(exam.getExaminationDate()) &&
                     (examination.getExaminationDate().plusMinutes(examination.getDuration()).isBefore(

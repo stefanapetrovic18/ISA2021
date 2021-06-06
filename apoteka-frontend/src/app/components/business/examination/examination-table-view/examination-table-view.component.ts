@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { Examination } from 'src/app/model/business/examination';
 import { ExaminationService } from 'src/app/service/business/examination.service';
 import { ExaminationAddComponent } from '../examination-add/examination-add.component';
@@ -20,14 +21,14 @@ export class ExaminationTableViewComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  admin = false;
   dataSource: MatTableDataSource<any>;
   @Input() data: Examination[];
   columns = ['examinationDate', 'duration', 'price'];
-  actions = [ 'dermatologist', 'pharmacy', 'view', 'edit', 'delete', 'reserve', 'cancel'];
+  actions = [ 'dermatologist', 'pharmacy'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private examinationService: ExaminationService, private router: Router, private dialog: MatDialog,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute, private tokenStorageService: TokenStorageService) {}
   ngOnInit() {
     this.route.queryParamMap.subscribe(
       params => {
@@ -143,6 +144,15 @@ export class ExaminationTableViewComponent implements OnInit {
         }
       }
     );
+    if (this.tokenStorageService.getAuthorities().includes('ROLE_PHARMACY_ADMIN')) {
+      this.admin = true;
+      this.actions.push('delete');
+      this.displayedColumns = [...this.columns, ...this.actions];
+    } else if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
+      this.actions.push('reserve');
+      this.actions.push('cancel');
+      this.displayedColumns = [...this.columns, ...this.actions];
+    }
   }
 
   applyFilter(value: any) {

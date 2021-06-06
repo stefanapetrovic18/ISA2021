@@ -2,6 +2,7 @@ package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.exception.AppointmentBookingException;
+import rs.apoteka.exception.DataMismatchException;
 import rs.apoteka.exception.PatientPenalizedException;
 
 import java.time.LocalDate;
@@ -31,5 +32,5 @@ public interface ExaminationService {
 
     Examination update(Examination examination) throws AppointmentBookingException;
 
-    Boolean delete(Long id);
+    Boolean delete(Long id) throws DataMismatchException;
 }

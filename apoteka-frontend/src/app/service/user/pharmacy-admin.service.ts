@@ -27,6 +27,11 @@ export class PharmacyAdminService {
     return this.http.get<PharmacyAdmin>(this.URL + 'search', {params});
   }
 
+  public findByUsername(username: string): Observable<PharmacyAdmin> {
+    const params = new HttpParams().set('username', username);
+    return this.http.get<PharmacyAdmin>(this.URL + 'find-by-username', {params});
+  }
+
   public create(pharmacyAdmin: PharmacyAdmin): Observable<PharmacyAdmin> {
     return this.http.post<PharmacyAdmin>(this.URL + 'create', pharmacyAdmin, httpOptions);
   }

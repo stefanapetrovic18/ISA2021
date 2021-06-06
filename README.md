@@ -3,14 +3,15 @@ Predmetni projekat iz predmeta "Internet softverske arhitekture" - E2 - 2020/202
 Stefana Petrović - RA-114/2015
 
 ### Napomena 1: Lozinke svih korisnika su "pasPas123".
-### Napomena 2: Zbog datuma (formata), kao i animacija i optimizacije, preporučuje se korišćenje Google Chrome pretraživača.
-### Napomena 3: Ukoliko želite da isprobate funkcionalnost slanja mejla, registrujte se sa vašim email nalogom, ili promenite u skripti (za pacijenta).
+### Napomena 2: Zbog datuma (formata i selektora), kao i animacija i optimizacije, preporučuje se korišćenje Google Chrome (ili Chromium-based: Opera, Edge) pretraživača.
+### Napomena 3: Ukoliko želite da isprobate funkcionalnost slanja mejla, registrujte se sa vašim email nalogom, ili promenite u skripti.
+### Napomena 4: Verzija Angulara je sada 12.0.3, tako da se preporučuje ponavljanje postupka pokretanja (uključujući `npm install` komandu).
 
 ## Zahtevi
 - MySQL 8.0
 - Maven (korišćena je verzija 3.6.3) - dodati u Environment variables!
-- Java (JDK 11.0.6) - dodati u Environment variables!
-- Node.js (korišćena je verzija 10.15.0) - dodati u Environment variables!
+- Java (JDK 11.0.11) - dodati u Environment variables!
+- Node.js (korišćena je verzija 14.17.0) - dodati u Environment variables!
 
 Preporučuje se praćenje zvanične dokumentacije za instalaciju, podešavanje i pokretanje.
 

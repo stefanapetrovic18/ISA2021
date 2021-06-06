@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
+import javax.validation.constraints.Email;
 import java.util.List;
 
 @CrossOrigin
@@ -33,6 +34,11 @@ public class PharmacyAdminController {
     @GetMapping(value = "/search")
     public ResponseEntity<PharmacyAdmin> getOne(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(pharmacyAdminService.getOne(id), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/find-by-username")
+    public ResponseEntity<PharmacyAdmin> findByUsername(@RequestParam(value = "username") @Email String username) throws Exception {
+        return new ResponseEntity<>(pharmacyAdminService.findByUsername(username), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
