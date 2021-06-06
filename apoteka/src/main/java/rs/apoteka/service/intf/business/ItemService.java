@@ -1,6 +1,7 @@
 package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Item;
+import rs.apoteka.exception.DataMismatchException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,7 +16,7 @@ public interface ItemService {
 
     Item getOne(Long id);
 
-    Item create(Item item);
+    Item create(Item item) throws DataMismatchException;
 
     Item update(Item item);
 

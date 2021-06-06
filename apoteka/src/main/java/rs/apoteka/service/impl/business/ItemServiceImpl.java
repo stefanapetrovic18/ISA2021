@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Item;
 import rs.apoteka.entity.business.Pricelist;
 import rs.apoteka.entity.user.PharmacyAdmin;
+import rs.apoteka.exception.DataMismatchException;
 import rs.apoteka.repository.business.ItemRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ItemService;
 import rs.apoteka.service.intf.user.PharmacyAdminService;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -79,17 +81,25 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item create(Item item) {
+    public Item create(Item item) throws DataMismatchException {
+        if (item.getValidFrom().isAfter(item.getValidUntil())) {
+            throw new DataMismatchException("Datumi se ne poklapaju!");
+        }
         PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
         Pricelist pricelist = admin.getPharmacy().getPricelist();
+        if (admin.getPharmacy() == null) {
+            throw new EntityNotFoundException("Apoteka ne postoji.");
+        }
         if (pricelist != null) {
             for (Item i : pricelist.getItems()) {
                 if (i.getMedicine().getId().equals(item.getMedicine().getId())) {
-                    i.setPrice(item.getPrice());
-                    return update(i);
+                    if(!(i.getValidFrom().isAfter(item.getValidUntil()) || i.getValidUntil().isBefore(item.getValidFrom()))) {
+                        throw new DataMismatchException("Već je definisan datum važenja cene u ovom periodu!");
+                    }
                 }
             }
         }
+        item.setPricelist(pricelist);
         return itemRepository.save(item);
     }
 

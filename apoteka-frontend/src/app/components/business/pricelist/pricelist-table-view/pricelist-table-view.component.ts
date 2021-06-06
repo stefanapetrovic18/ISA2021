@@ -24,7 +24,7 @@ export class PricelistTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   @Input() data: Pricelist[];
   columns = ['examinationPrice', 'consultationPrice'];
-  actions = ['view', 'edit', 'delete'];
+  actions = ['edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pricelistService: PricelistService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {
@@ -73,9 +73,7 @@ export class PricelistTableViewComponent implements OnInit {
   }
 
   edit(input: Pricelist) {
-    this.dialog.open(PricelistEditComponent, {
-      data: input
-    });
+    this.dialog.open(PricelistAddComponent);
   }
 
   delete(input: Pricelist) {

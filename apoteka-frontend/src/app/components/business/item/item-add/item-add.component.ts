@@ -4,6 +4,8 @@ import {MedicineService} from '../../../../service/business/medicine.service';
 import {Medicine} from '../../../../model/business/medicine';
 import {ItemService} from '../../../../service/business/item.service';
 import {Item} from '../../../../model/business/item';
+import { Stockpile } from 'src/app/model/business/stockpile';
+import { StockpileService } from 'src/app/service/business/stockpile.service';
 
 @Component({
   selector: 'app-item-add',
@@ -12,10 +14,11 @@ import {Item} from '../../../../model/business/item';
 })
 export class ItemAddComponent implements OnInit {
   data = new Item();
+  stockpile = new Stockpile();
   medicine: Medicine[];
 
   constructor(private dialogRef: MatDialogRef<ItemAddComponent>, private medicineService: MedicineService,
-              private itemService: ItemService) { }
+              private itemService: ItemService, private stockpileService: StockpileService) { }
 
   ngOnInit() {
     this.medicineService.findAll().subscribe(
@@ -27,7 +30,17 @@ export class ItemAddComponent implements OnInit {
   add() {
     this.itemService.create(this.data).subscribe(
       data => {
-        this.dialogRef.close({item: data});
+        let item = data;
+        this.stockpile.medicine = this.data.medicine;
+        this.stockpileService.create(this.stockpile).subscribe(
+          data => {
+            this.dialogRef.close({item: item});
+          }, error => {
+            window.alert('Dodavanje zaliha nije uspelo.');
+          }
+        )
+      }, error => {
+        window.alert('Dodavanje stavke u cenovnik nije uspelo.');
       }
     );
   }

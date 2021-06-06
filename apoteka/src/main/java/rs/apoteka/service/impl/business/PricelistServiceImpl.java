@@ -58,12 +58,24 @@ public class PricelistServiceImpl implements PricelistService {
         if (admin == null) {
             throw new Exception("Administrator apoteke nije ulogovan!");
         }
-        Pricelist p = pricelistRepository.save(pricelist);
+        Pricelist p;
+        if (admin.getPharmacy().getPricelist() != null) {
+            p = admin.getPharmacy().getPricelist();
+            if (pricelist.getConsultationPrice() != null) {
+                p.setConsultationPrice(pricelist.getConsultationPrice());
+            }
+            if (pricelist.getExaminationPrice() != null) {
+                p.setExaminationPrice(pricelist.getExaminationPrice());
+            }
+        } else {
+            p = pricelist;
+        }
+        Pricelist pl = pricelistRepository.save(p);
         if (admin.getPharmacy() != null) {
-            admin.getPharmacy().setPricelist(p);
+            admin.getPharmacy().setPricelist(pl);
             pharmacyService.update(admin.getPharmacy());
         }
-        return pricelistRepository.save(pricelist);
+        return pl;
     }
 
     @Override

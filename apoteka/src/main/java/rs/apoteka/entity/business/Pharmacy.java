@@ -59,7 +59,7 @@ public class Pharmacy {
     //@JsonView(Views.Internal.class)
     private List<Patient> subscriptions;
     // Inventar.
-    @OneToOne
+    @OneToOne(targetEntity = Pricelist.class)
     //@JsonView(Views.Public.class)
     private Pricelist pricelist;
     @OneToMany(mappedBy = "pharmacy")

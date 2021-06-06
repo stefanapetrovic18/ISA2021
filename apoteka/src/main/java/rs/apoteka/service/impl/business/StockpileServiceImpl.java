@@ -38,7 +38,7 @@ public class StockpileServiceImpl implements StockpileService {
             stockpileList.removeIf(s -> !s.getMedicine().getId().equals(medicineID));
         }
         if (pharmacyID != null) {
-            stockpileList.removeIf(s -> !s.getPharmacy().getId().equals(id));
+            stockpileList.removeIf(s -> !s.getPharmacy().getId().equals(pharmacyID));
         }
         if (quantity != null) {
             stockpileList.removeIf(s -> !s.getQuantity().equals(quantity));

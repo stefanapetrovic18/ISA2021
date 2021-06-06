@@ -6,8 +6,6 @@ import java.util.List;
 @Entity
 @Table
 public class Pricelist {
-    @OneToMany(mappedBy = "pricelist")
-    List<Item> items;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,6 +13,8 @@ public class Pricelist {
     private Double consultationPrice;
     @Column(nullable = false)
     private Double examinationPrice;
+    @OneToMany(mappedBy = "pricelist")
+    List<Item> items;
 
     public Pricelist() {
     }
