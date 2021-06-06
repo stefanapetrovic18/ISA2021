@@ -1,3 +1,4 @@
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -13,7 +14,14 @@ import { ComplaintAnswerComponent } from '../complaint-answer/complaint-answer.c
 @Component({
   selector: 'app-complaint-table-view',
   templateUrl: './complaint-table-view.component.html',
-  styleUrls: ['./complaint-table-view.component.scss']
+  styleUrls: ['./complaint-table-view.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ComplaintTableViewComponent implements OnInit {
 
@@ -22,8 +30,9 @@ export class ComplaintTableViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   @Input() data: Complaint[];
-  columns = ['id', 'patient', 'resolved'];
-  actions = ['delete', 'answer'];
+  columns = ['id'];
+  actions = ['patient', 'resolved', 'answer', 'expand'];
+  // actions = [];
   displayedColumns = [...this.columns, ...this.actions];
   expandedElement: string | null;
   constructor(private complaintService: ComplaintService, private router: Router, private dialog: MatDialog) {}
@@ -68,7 +77,7 @@ export class ComplaintTableViewComponent implements OnInit {
   }
 
   answer(input: Complaint) {
-    this.dialog.open(ComplaintAnswerComponent, {data: input});
+    this.dialog.open(ComplaintAnswerComponent, {data: input.id});
   }
 
   delete(input: Complaint) {

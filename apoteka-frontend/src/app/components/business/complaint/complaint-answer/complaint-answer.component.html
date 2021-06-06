@@ -3,7 +3,7 @@
   <p>Odgovor</p>
   <mat-form-field>
     <mat-label>Odgovor</mat-label>
-    <input [(ngModel)]="data.text" matInput placeholder="Odgovor" type="text"/>
+    <textarea [(ngModel)]="data.text" matInput placeholder="Odgovor" type="text"></textarea>
   </mat-form-field>
 <div mat-dialog-actions>
   <button (click)="answer()" class="add-button" mat-button mat-raised-button>ODGOVORI</button>

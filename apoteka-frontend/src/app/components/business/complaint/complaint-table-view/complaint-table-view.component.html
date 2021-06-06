@@ -14,18 +14,28 @@
           #input
         />
       </mat-form-field>
-      <div class="action-buttons">
+      <!-- <div class="action-buttons">
         <button class="add-button" mat-raised-button (click)="add()">
           DODAJ
           <mat-icon>add</mat-icon>
         </button>
-      </div>
+      </div> -->
     </div>
 
-    <mat-table *ngIf="dataSource" [dataSource]="dataSource" multiTemplateDataRows matSort>
-      <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+    <table mat-table *ngIf="dataSource" [dataSource]="dataSource" multiTemplateDataRows matSort>
+      <ng-container matColumnDef="{{column}}" *ngFor="let column of columns">
         <mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
         <mat-cell *matCellDef="let element">{{ element[column] }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="resolved">
+        <mat-header-cell *matHeaderCellDef>Odgovor poslat</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-checkbox [(ngModel)]="element.resolved" disabled></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="patient">
+        <mat-header-cell *matHeaderCellDef>Pacijent</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.patient.username }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="expandedDetail">
@@ -52,15 +62,25 @@
       <ng-container [matColumnDef]="'answer'">
         <mat-header-cell *matHeaderCellDef>Odgovori</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="cancel-button" mat-raised-button (click)="answer(element)">
+          <button [disabled]="element.resolved" class="cancel-button" mat-raised-button (click)="answer(element)">
             ODGOVORI
             <mat-icon>question_answer</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
+      <ng-container [matColumnDef]="'expand'">
+        <mat-header-cell *matHeaderCellDef>Detalji</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-flat-button>
+            PROŠIRI/SKUPI
+            <mat-icon *ngIf="expandedElement !== element">expand_more</mat-icon>
+            <mat-icon *ngIf="expandedElement === element">expand_less</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let element;; columns: displayedColumns"
+      <mat-row *matRowDef="let element; columns: displayedColumns"
         class="example-element-row"
         [class.example-expanded-row]="expandedElement === element"
         (click)="expandedElement = expandedElement === element ? null : element"
@@ -72,7 +92,7 @@
           >Nijedan podatak ne odgovara unetom parametru.</mat-cell
         >
       </mat-row>
-    </mat-table>
+    </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </mat-drawer-content>

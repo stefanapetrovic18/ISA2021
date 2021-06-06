@@ -264,10 +264,10 @@ const routes: Routes = [
   {
     path: 'zalba',
     component: ComplaintTableViewComponent,
-    // canActivate: [RoleGuardService],
-    // data: {
-    //   expectedRole: 'ROLE_PHARMACY_ADMIN'
-    // }
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_SYSTEM_ADMIN'
+    }
   },
   {
     path: 'apoteka/prikaz',
