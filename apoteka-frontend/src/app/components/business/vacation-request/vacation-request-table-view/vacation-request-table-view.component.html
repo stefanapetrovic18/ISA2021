@@ -51,7 +51,7 @@
       <ng-container [matColumnDef]="'accept'">
         <mat-header-cell *matHeaderCellDef>Prihvati</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="add-button" mat-raised-button (click)="accept(element)">
+          <button [disabled]="element.accepted === true || element.rejected === true" class="add-button" mat-raised-button (click)="accept(element)">
             PRIHVATI
             <mat-icon>info</mat-icon>
           </button>
@@ -60,7 +60,7 @@
       <ng-container [matColumnDef]="'reject'">
         <mat-header-cell *matHeaderCellDef>Odbij</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class="delete-button" mat-raised-button (click)="reject(element)">
+          <button [disabled]="element.accepted === true || element.rejected === true" class="delete-button" mat-raised-button (click)="reject(element)">
             ODBIJ
             <mat-icon>edit</mat-icon>
           </button>

@@ -158,6 +158,7 @@ import { PharmacyPageComponent } from './components/business/pharmacy/pharmacy-p
 import {MatSliderModule} from '@angular/material/slider';
 import {MatMenuModule} from '@angular/material/menu';
 import { RatingAddComponent } from './components/business/rating/rating-add/rating-add.component';
+import { VacationRequestRejectComponent } from './components/business/vacation-request/vacation-request-reject/vacation-request-reject.component';
 
 @NgModule({
   declarations: [
@@ -309,7 +310,8 @@ import { RatingAddComponent } from './components/business/rating/rating-add/rati
     ComplaintAddComponent,
     ComplaintTableViewComponent,
     PharmacyPageComponent,
-    RatingAddComponent
+    RatingAddComponent,
+    VacationRequestRejectComponent
   ],
   imports: [
     BrowserModule,

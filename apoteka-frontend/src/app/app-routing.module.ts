@@ -256,10 +256,10 @@ const routes: Routes = [
   {
     path: 'izvestaj',
     component: BusinessReportComponent,
-    // canActivate: [RoleGuardService],
-    // data: {
-    //   expectedRole: 'ROLE_PHARMACY_ADMIN'
-    // }
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_PHARMACY_ADMIN'
+    }
   },
   {
     path: 'zalba',

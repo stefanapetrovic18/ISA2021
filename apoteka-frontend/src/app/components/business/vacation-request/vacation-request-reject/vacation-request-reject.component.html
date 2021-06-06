@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Odbijanje zahteva</h1>
+<div mat-dialog-content>
+  <p>Razlog za odbijanje</p>
+  <mat-form-field>
+    <mat-label>razlog</mat-label>
+    <textarea matInput [(ngModel)]="rejectionReason"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button class="add-button" mat-button [mat-dialog-close]="rejectionReason" cdkFocusInitial>POTVRDI</button>
+  <button class="delete-button" mat-button (click)="close()">No Thanks</button>
+</div>

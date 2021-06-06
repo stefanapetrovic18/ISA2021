@@ -118,7 +118,7 @@ public class VacationRequestServiceImpl implements VacationRequestService {
     @Override
     public VacationRequest accept(VacationRequest vacationRequest) throws Exception {
         if (!checkDates(vacationRequest)) {
-            return null;
+            throw new Exception("Datumi se ne poklapaju!");
         }
         if (!authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACY_ADMIN"))) {
             throw new Exception("Jedino administrator apoteke prihvata zahteve za odmor/odsustvo!");
@@ -134,7 +134,7 @@ public class VacationRequestServiceImpl implements VacationRequestService {
     @Override
     public VacationRequest reject(VacationRequest vacationRequest) throws Exception {
         if (!checkDates(vacationRequest)) {
-            return null;
+            throw new Exception("Datumi se ne poklapaju!");
         }
         if (!authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACY_ADMIN"))) {
             throw new Exception("Jedino administrator apoteke prihvata zahteve za odmor/odsustvo!");
@@ -172,7 +172,7 @@ public class VacationRequestServiceImpl implements VacationRequestService {
     }
 
     private Boolean checkDates(VacationRequest vacationRequest) {
-        return vacationRequest.getVacationStart().isBefore(vacationRequest.getVacationEnd());
+        return vacationRequest.getVacationStart().isBefore(vacationRequest.getVacationEnd()) && vacationRequest.getVacationStart().isAfter(LocalDateTime.now());
     }
 
     @Override

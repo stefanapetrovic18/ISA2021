@@ -8,6 +8,7 @@ import { VacationRequest } from 'src/app/model/business/vacation-request';
 import { VacationRequestService } from 'src/app/service/business/vacation-request.service';
 import { VacationRequestAddComponent } from '../vacation-request-add/vacation-request-add.component';
 import {TokenStorageService} from '../../../../auth/token-storage.service';
+import { VacationRequestRejectComponent } from '../vacation-request-reject/vacation-request-reject.component';
 
 @Component({
   selector: 'app-vacation-request-table-view',
@@ -83,11 +84,17 @@ export class VacationRequestTableViewComponent implements OnInit {
   }
 
   reject(input: VacationRequest) {
-    this.vacationRequestService.reject(input).subscribe(
-      data => {
-        window.alert('Zahtev odbijen!');
-      }, error => {
-        window.alert('Zahtev nije odbijen!');
+    this.dialog.open(VacationRequestRejectComponent).afterClosed().subscribe(
+      result => {
+        input.rejectionReason = result;
+        console.log(result);
+        this.vacationRequestService.reject(input).subscribe(
+          data => {
+            window.alert('Zahtev odbijen!');
+          }, error => {
+            window.alert('Zahtev nije odbijen!');
+          }
+        );
       }
     );
   }
