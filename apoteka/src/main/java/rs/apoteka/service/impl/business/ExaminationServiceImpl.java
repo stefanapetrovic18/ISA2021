@@ -12,6 +12,7 @@ import rs.apoteka.entity.user.Dermatologist;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.exception.AppointmentBookingException;
+import rs.apoteka.exception.PatientPenalizedException;
 import rs.apoteka.repository.business.ExaminationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ExaminationService;
@@ -159,10 +160,13 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     @Override
-    public Examination quickReserve(Examination examination) throws AppointmentBookingException {
+    public Examination quickReserve(Examination examination) throws AppointmentBookingException, PatientPenalizedException {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
             return null;
+        }
+        if (patient.getPoints() >= 3) {
+            throw new PatientPenalizedException();
         }
         if (!patientHasNoConsultation(examination, patient) || !patientHasNoExamination(examination, patient)) {
             throw new AppointmentBookingException();

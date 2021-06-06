@@ -2,6 +2,7 @@ package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.exception.AppointmentBookingException;
+import rs.apoteka.exception.PatientPenalizedException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public interface ConsultationService {
 
     Consultation create(Consultation consultation) throws AppointmentBookingException;
 
-    Consultation reserve(Consultation consultation) throws AppointmentBookingException;
+    Consultation reserve(Consultation consultation) throws AppointmentBookingException, PatientPenalizedException;
 
     Consultation cancel(Consultation consultation) throws Exception;
 

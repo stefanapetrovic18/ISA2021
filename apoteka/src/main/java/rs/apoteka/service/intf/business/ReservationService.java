@@ -1,6 +1,7 @@
 package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Reservation;
+import rs.apoteka.exception.PatientPenalizedException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public interface ReservationService {
 
     Reservation create(Reservation reservation);
 
-    Reservation reserve(Reservation reservation);
+    Reservation reserve(Reservation reservation) throws PatientPenalizedException;
 
     Reservation cancel(Reservation reservation) throws Exception;
 

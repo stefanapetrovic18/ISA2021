@@ -148,34 +148,7 @@ public class UserServiceImpl implements UserService {
         if (!valid(user)) {
             return null;
         }
-        try {
-            penaltyCheck(user);
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
         return new JWTResponse(token, user.getUsername(), user.getAuthorities());
-    }
-
-    // Provera rezervacije leka koji nije preuzet i dodela penala.
-    private void penaltyCheck(UserDetails userDetails) throws UserNotFoundException {
-        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
-            Patient patient = patientService.findByUsername(userDetails.getUsername());
-            if (patient == null) {
-                throw new UserNotFoundException();
-            }
-            List<Reservation> reservations = reservationService.findAllParametrized(null, null, null,
-                    null, null, null, patient.getId(),
-                    false, null, true);
-            if (reservations != null && !reservations.isEmpty()) {
-                reservations.removeIf(Reservation::getPenalized);
-                patient.setPoints(patient.getPoints() + reservations.size());
-                patientService.update(patient);
-                reservations.forEach(reservation -> {
-                    reservation.setPenalized(true);
-                    reservationService.update(reservation);
-                });
-            }
-        }
     }
 
     @Override

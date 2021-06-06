@@ -20,6 +20,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
+    // Ukoliko je korisniku onemogucen pristup,
+    // redirektuj ga na stranicu koja prikazuje informaciju o gresci.
+    @ExceptionHandler(PatientPenalizedException.class)
+    public final ResponseEntity<JWTResponse> handlePatientPenalizedException() {
+        JWTResponse response = new JWTResponse();
+        response.setRedirectURL("penalized");
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
+
     // Ukoliko korisnik nije validirao registraciju,
     // redirektuj ga na stranicu koja prikazuje informaciju o gresci.
     @ExceptionHandler(UserNotValidatedException.class)

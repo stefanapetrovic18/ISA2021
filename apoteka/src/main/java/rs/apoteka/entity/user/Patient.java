@@ -1,6 +1,8 @@
 package rs.apoteka.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import rs.apoteka.entity.auth.RegistrationRequest;
 import rs.apoteka.entity.auth.Role;
@@ -26,7 +28,8 @@ public class Patient extends User {
     //@JsonView(Views.Internal.class)
     @JsonIgnore
     private List<Consultation> consultations;
-    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Medicine.class)
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Medicine.class, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     //@JsonView(Views.Internal.class)
     private List<Medicine> allergies;
     @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Pharmacy.class)

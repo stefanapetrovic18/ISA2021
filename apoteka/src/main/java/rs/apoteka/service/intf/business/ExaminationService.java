@@ -2,6 +2,7 @@ package rs.apoteka.service.intf.business;
 
 import rs.apoteka.entity.business.Examination;
 import rs.apoteka.exception.AppointmentBookingException;
+import rs.apoteka.exception.PatientPenalizedException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public interface ExaminationService {
 
     Examination create(Examination examination) throws AppointmentBookingException;
 
-    Examination quickReserve(Examination examination) throws AppointmentBookingException;
+    Examination quickReserve(Examination examination) throws AppointmentBookingException, PatientPenalizedException;
 
     Examination cancel(Examination examination) throws Exception;
 

@@ -12,6 +12,7 @@ import rs.apoteka.entity.user.Patient;
 import rs.apoteka.entity.user.Pharmacist;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.exception.AppointmentBookingException;
+import rs.apoteka.exception.PatientPenalizedException;
 import rs.apoteka.repository.business.ConsultationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.ConsultationService;
@@ -141,10 +142,13 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation reserve(Consultation consultation) throws AppointmentBookingException {
+    public Consultation reserve(Consultation consultation) throws AppointmentBookingException, PatientPenalizedException {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
             return null;
+        }
+        if (patient.getPoints() >= 3) {
+            throw new PatientPenalizedException();
         }
         consultation.setPatient(patient);
         consultation.setPrice(consultation.getPharmacy().getPricelist().getConsultationPrice());

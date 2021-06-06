@@ -1,11 +1,14 @@
 package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Medicine;
+import rs.apoteka.entity.business.Reservation;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.repository.user.PatientRepository;
+import rs.apoteka.service.intf.business.ReservationService;
 import rs.apoteka.service.intf.user.PatientService;
 
 import java.util.ArrayList;
@@ -16,6 +19,8 @@ import java.util.stream.Collectors;
 public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private ReservationService reservationService;
 
     @Override
     public List<Patient> findAll() {
@@ -66,12 +71,42 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.save(patient);
     }
 
+    // Metoda koja se izvrsava svaki dan u 23:59 i kaznjava korisnike za lekove koje su rezervisali, a nisu preuzeli.
+    @Scheduled(cron = "0 59 23 * * ?")
+    private void penalize() {
+        findAll().forEach(patient -> {
+            List<Reservation> reservations = reservationService.findAllParametrized(null, null, null,
+                    null, null, null, patient.getId(),
+                    false, null, true);
+            if (reservations != null && !reservations.isEmpty()) {
+                reservations.removeIf(Reservation::getPenalized);
+                patient.setPoints(patient.getPoints() + reservations.size());
+                System.out.println("Got " + patient.getPoints() + " points.");
+                update(patient);
+                reservations.forEach(reservation -> {
+                    reservation.setPenalized(true);
+                    reservationService.update(reservation);
+                });
+            }
+        });
+    }
+
+    // Metoda koja se izvrsava svaki prvi dan u mesecu i ponistava kazne korisnika za lekove koje su rezervisali, a nisu preuzeli.
+    @Scheduled(cron = "0 0 0 1 * ?")
+    private void depenalize() {
+        findAll().forEach(patient -> {
+            patient.setPoints(0);
+            update(patient);
+        });
+    }
+
     @Override
     public Patient update(Patient patient) {
         Patient p = getOne(patient.getId());
         if (p == null) {
             return null;
         }
+        p.setPoints(patient.getPoints());
         p.setAllergies(patient.getAllergies());
 //        if (patient.getAllergies() != null && patient.getAllergies().size() > 0) {
 //            for (Medicine a : patient.getAllergies()) {

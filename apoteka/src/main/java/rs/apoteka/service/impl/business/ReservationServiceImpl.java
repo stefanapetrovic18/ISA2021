@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Reservation;
 import rs.apoteka.entity.user.Patient;
 import rs.apoteka.exception.DataMismatchException;
+import rs.apoteka.exception.PatientPenalizedException;
 import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.business.ReservationRepository;
 import rs.apoteka.service.intf.auth.AuthenticationService;
@@ -36,7 +37,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> findAll() {
-        if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
+        if (authenticationService.getAuthentication() != null && authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PATIENT"))) {
             Patient patient = patientService.findByUsername(authenticationService.getUsername());
             if (patient == null) {
                 return null;
@@ -68,7 +69,7 @@ public class ReservationServiceImpl implements ReservationService {
             reservations.removeIf(p -> !p.getMedicine().getId().equals(medicineID));
         }
         if (patientID != null) {
-            reservations.removeIf(p -> !p.getPatient().getId().equals(patientID));
+            reservations.removeIf(p -> p.getPatient() == null || !p.getPatient().getId().equals(patientID));
         }
         if (reservationNumber != null) {
             reservations.removeIf(p -> !p.getReservationNumber().contains(reservationNumber));
@@ -114,10 +115,13 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation reserve(Reservation reservation) {
+    public Reservation reserve(Reservation reservation) throws PatientPenalizedException {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
             return null;
+        }
+        if (patient.getPoints() >= 3) {
+            throw new PatientPenalizedException();
         }
         reservation.setReservationNumber(String.valueOf(new Random().nextLong()));
         reservation.setPatient(patient);
