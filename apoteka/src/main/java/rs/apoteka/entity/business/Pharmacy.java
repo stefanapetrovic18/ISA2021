@@ -55,7 +55,7 @@ public class Pharmacy {
     //@JsonView(Views.Internal.class)
     private List<Order> orders;
     @JsonIgnore
-    @ElementCollection(targetClass = User.class)
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Patient.class)
     //@JsonView(Views.Internal.class)
     private List<Patient> subscriptions;
     // Inventar.
