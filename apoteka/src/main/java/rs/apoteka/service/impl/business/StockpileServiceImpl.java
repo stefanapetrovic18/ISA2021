@@ -25,6 +25,10 @@ public class StockpileServiceImpl implements StockpileService {
 
     @Override
     public List<Stockpile> findAll() {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin != null) {
+            return admin.getPharmacy().getStockpile();
+        }
         return stockpileRepository.findAll();
     }
 
@@ -93,7 +97,18 @@ public class StockpileServiceImpl implements StockpileService {
 
     @Override
     public Boolean delete(Long id) {
-        stockpileRepository.deleteById(id);
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin == null) {
+            return false;
+        }
+        if (admin.getPharmacy().getStockpile() == null) {
+            return false;
+        }
+        admin.getPharmacy().getStockpile().forEach(s -> {
+            if (s.getId().equals(id)) {
+                stockpileRepository.deleteById(id);
+            }
+        });
         return getOne(id) == null;
     }
 }

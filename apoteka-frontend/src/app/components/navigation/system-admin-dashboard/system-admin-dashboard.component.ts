@@ -5,6 +5,7 @@ import { MedicineAddComponent } from '../../business/medicine/medicine-add/medic
 import { PharmacyAddComponent } from '../../business/pharmacy/pharmacy-add/pharmacy-add.component';
 import { DermatologistAddComponent } from '../../user/dermatologist/dermatologist-add/dermatologist-add.component';
 import { PharmacyAdminAddComponent } from '../../user/pharmacy-admin/pharmacy-admin-add/pharmacy-admin-add.component';
+import { SystemAdminAddComponent } from '../../user/system-admin/system-admin-add/system-admin-add.component';
 
 @Component({
   selector: 'app-system-admin-dashboard',
@@ -29,6 +30,8 @@ export class SystemAdminDashboardComponent implements OnInit {
       this.dialog.open(MedicineAddComponent);
     } else if (component === 'add-dermatologist') {
       this.dialog.open(DermatologistAddComponent);
+    } else if (component === 'add-system-admin') {
+      this.dialog.open(SystemAdminAddComponent);
     }
   }
 }

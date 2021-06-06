@@ -27,7 +27,7 @@
         />
       </mat-form-field>
       <div class="action-buttons">
-        <button (click)="add()" class="add-button" mat-raised-button>
+        <button *ngIf="phadmin" (click)="add()" class="add-button" mat-raised-button>
           DODAJ
           <mat-icon>add</mat-icon>
         </button>
@@ -68,6 +68,15 @@
           <button (click)="delete(element)" class="delete-button" mat-raised-button>
             UKLONI
             <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container [matColumnDef]="'fire'">
+        <mat-header-cell *matHeaderCellDef>Otpusti</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button [disabled]="element.pharmacy === undefined || element.pharmacy === null" (click)="fire(element)" class="delete-button" mat-raised-button>
+            OTPUSTI
+            <mat-icon>eject</mat-icon>
           </button>
         </mat-cell>
       </ng-container>

@@ -55,10 +55,16 @@ public class DermatologistController {
         return new ResponseEntity<>(dermatologistService.getOne(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     @PostMapping(value = "/create")
     public ResponseEntity<Dermatologist> create(@RequestBody Dermatologist dermatologist) throws Exception {
         return new ResponseEntity<>(dermatologistService.create(dermatologist), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
+    @PostMapping(value = "/fire")
+    public ResponseEntity<Dermatologist> fire(@RequestBody Dermatologist dermatologist) throws Exception {
+        return new ResponseEntity<>(dermatologistService.fire(dermatologist), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")

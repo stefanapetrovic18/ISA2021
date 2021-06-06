@@ -35,6 +35,7 @@ import { BusinessReportComponent } from './components/business/pharmacy/business
 import { PharmacyViewComponent } from './components/business/pharmacy/pharmacy-view/pharmacy-view.component';
 import { ComplaintTableViewComponent } from './components/business/complaint/complaint-table-view/complaint-table-view.component';
 import { PharmacyPageComponent } from './components/business/pharmacy/pharmacy-page/pharmacy-page.component';
+import { StockpileTableViewComponent } from './components/business/stockpile/stockpile-table-view/stockpile-table-view.component';
 
 
 const routes: Routes = [
@@ -90,7 +91,8 @@ const routes: Routes = [
   },
   {
     path: 'apoteka/profil',
-    component: PharmacyViewComponent
+    component: PharmacyViewComponent,
+    canActivate: [RoleGuardService]
   },
   {
     path: 'recept',
@@ -262,6 +264,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'zaliha',
+    component: StockpileTableViewComponent,
+    canActivate: [RoleGuardService],
+    data: {
+      expectedRole: 'ROLE_PHARMACY_ADMIN'
+    }
+  },
+  {
     path: 'zalba',
     component: ComplaintTableViewComponent,
     canActivate: [RoleGuardService],
@@ -272,7 +282,7 @@ const routes: Routes = [
   {
     path: 'apoteka/prikaz',
     component: PharmacyPageComponent,
-    // canActivate: [RoleGuardService],
+    canActivate: [RoleGuardService]
     // data: {
     //   expectedRole: 'ROLE_PHARMACY_ADMIN'
     // }

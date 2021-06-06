@@ -93,6 +93,9 @@ export class DermatologistTableViewComponent implements OnInit {
     } else if (this.tokenStorageService.getAuthorities().includes('ROLE_SYSTEM_ADMIN')) {
       this.actions.push('edit', 'delete');
       this.displayedColumns = [...this.columns, ...this.actions];
+    } else if (this.tokenStorageService.getAuthorities().includes('ROLE_PHARMACY_ADMIN')) {
+      this.actions.push('fire');
+      this.displayedColumns = [...this.columns, ...this.actions];
     }
   }
 
@@ -114,6 +117,16 @@ export class DermatologistTableViewComponent implements OnInit {
       });
       // this.getPatient();
     });
+  }
+
+  fire(input: Dermatologist) {
+    this.dermatologistService.fire(input).subscribe(
+      data => {
+        window.alert('Dermatolog je uspešno otpušten.');
+      }, error => {
+        window.alert('Dermatolog nije otpušten.');
+      }
+    )
   }
 
   filter() {

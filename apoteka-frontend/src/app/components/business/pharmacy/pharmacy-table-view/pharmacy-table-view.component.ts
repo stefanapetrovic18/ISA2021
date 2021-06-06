@@ -28,9 +28,10 @@ export class PharmacyTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   data: Pharmacy[];
   date: Date;
+  guest = false;
   patient: Patient;
   columns = ['name', 'address', 'rating'];
-  actions = ['view', 'edit', 'delete', 'rate'];
+  actions = ['view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private pharmacyService: PharmacyService, private router: Router, private dialog: MatDialog,
               private route: ActivatedRoute, private patientService: PatientService,
@@ -104,6 +105,11 @@ export class PharmacyTableViewComponent implements OnInit {
     );
     if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
       this.getPatient();
+      this.actions.push('rate');
+      this.displayedColumns = [...this.columns, ...this.actions];
+    }
+    if (this.tokenStorageService.getAuthorities().length === 0) {
+      this.guest = true;
     }
   }
 

@@ -1,6 +1,7 @@
 package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.auth.Role;
@@ -9,10 +10,14 @@ import rs.apoteka.entity.auth.User;
 import rs.apoteka.entity.business.Consultation;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Pharmacist;
+import rs.apoteka.entity.user.PharmacyAdmin;
+import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.user.PharmacistRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.auth.UserService;
 import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.user.PharmacistService;
+import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,6 +37,10 @@ public class PharmacistServiceImpl implements PharmacistService {
     private UserService userService;
     @Autowired
     private PharmacyService pharmacyService;
+    @Autowired
+    private PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Override
     public List<Pharmacist> findAll() {
@@ -82,7 +91,7 @@ public class PharmacistServiceImpl implements PharmacistService {
             pharmacists.removeIf(p -> !p.getId().equals(id));
         }
         if (pharmacyID != null) {
-            pharmacists.removeIf(p -> !p.getPharmacy().getId().equals(pharmacyID));
+            pharmacists.removeIf(p -> p.getPharmacy() != null && !p.getPharmacy().getId().equals(pharmacyID));
         }
         if (consultationID != null) {
             pharmacists = pharmacists.stream().filter(d -> d.getConsultations().removeIf(ph -> !ph.getId().equals(consultationID))).collect(Collectors.toList());
@@ -114,6 +123,7 @@ public class PharmacistServiceImpl implements PharmacistService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     public Pharmacist create(Pharmacist pharmacist) throws Exception {
         User user = userService.findByUsername(pharmacist.getUsername());
         if (user != null) {
@@ -136,6 +146,27 @@ public class PharmacistServiceImpl implements PharmacistService {
         }
         return pharmacistRepository.save(pharmacist);
     }
+
+    @Override
+    public Pharmacist fire(Pharmacist pharmacist) throws UserNotFoundException {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin.getPharmacy() == null) {
+            throw new UserNotFoundException();
+        }
+        Pharmacist p = findByUsername(pharmacist.getUsername());
+        admin.getPharmacy().getPharmacists().removeIf(ph -> ph.getId().equals(p.getId()));
+        pharmacyService.update(admin.getPharmacy());
+        p.setPharmacy(null);
+        p.setRoles(null);
+        return pharmacistRepository.save(p);
+    }
+
+//    public Pharmacist hire(Pharmacist pharmacist) {
+//        Pharmacist p = findByUsername(pharmacist.getUsername());
+//        p.setPharmacy(null);
+//        p.setRoles(null);
+//        return pharmacistRepository.save(p);
+//    }
 
     @Override
     public Pharmacist update(Pharmacist pharmacist) {

@@ -1,14 +1,20 @@
 package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.business.Pharmacy;
 import rs.apoteka.entity.user.Dermatologist;
+import rs.apoteka.entity.user.Pharmacist;
+import rs.apoteka.entity.user.PharmacyAdmin;
+import rs.apoteka.exception.UserNotFoundException;
 import rs.apoteka.repository.user.DermatologistRepository;
+import rs.apoteka.service.intf.auth.AuthenticationService;
 import rs.apoteka.service.intf.business.PharmacyService;
 import rs.apoteka.service.intf.business.WorkingHoursService;
 import rs.apoteka.service.intf.user.DermatologistService;
+import rs.apoteka.service.intf.user.PharmacyAdminService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +28,10 @@ public class DermatologistServiceImpl implements DermatologistService {
     private PharmacyService pharmacyService;
     @Autowired
     private WorkingHoursService workingHoursService;
+    @Autowired
+    private PharmacyAdminService pharmacyAdminService;
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Override
     public List<Dermatologist> findAll() {
@@ -87,6 +97,7 @@ public class DermatologistServiceImpl implements DermatologistService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public Dermatologist create(Dermatologist dermatologist) {
         dermatologist.setEnabled(true);
         dermatologist.setPasswordChanged(false);
@@ -99,6 +110,26 @@ public class DermatologistServiceImpl implements DermatologistService {
             d.getWorkingHours().forEach(wh -> workingHoursService.update(wh));
         }
         return d;
+    }
+
+    @Override
+    public Dermatologist fire(Dermatologist dermatologist) throws UserNotFoundException {
+        PharmacyAdmin admin = pharmacyAdminService.findByUsername(authenticationService.getUsername());
+        if (admin.getPharmacy() == null) {
+            throw new UserNotFoundException();
+        }
+        Dermatologist d = findByUsername(dermatologist.getUsername());
+        d.getPharmacies().removeIf(p -> p.getId().equals(admin.getPharmacy().getId()));
+        d.getPharmacies().forEach(p -> {
+            if (p.getId().equals(admin.getPharmacy().getId())) {
+                admin.getPharmacy().getDermatologists().removeIf(dt -> dt.getId().equals(d.getId()));
+                pharmacyService.update(admin.getPharmacy());
+            }
+        });
+        if (d.getPharmacies().isEmpty()) {
+            d.setRoles(null);
+        }
+        return dermatologistRepository.save(d);
     }
 
     @Override

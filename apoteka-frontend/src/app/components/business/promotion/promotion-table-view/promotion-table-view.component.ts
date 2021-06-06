@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { Promotion } from 'src/app/model/business/promotion';
 import { PromotionService } from 'src/app/service/business/promotion.service';
 import { PromotionAddComponent } from '../promotion-add/promotion-add.component';
@@ -20,13 +21,14 @@ export class PromotionTableViewComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  admin = false;
   dataSource: MatTableDataSource<any>;
   @Input() data: Promotion[];
   columns = ['startDate', 'endDate', 'title', 'description'];
   actions = ['pharmacy', 'view', 'edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
-  constructor(private promotionService: PromotionService, private router: Router, private dialog: MatDialog) {}
+  constructor(private promotionService: PromotionService, private router: Router, private dialog: MatDialog,
+    private token: TokenStorageService) {}
   ngOnInit() {
     this.promotionService.findAll().subscribe(
       data => {
@@ -45,6 +47,9 @@ export class PromotionTableViewComponent implements OnInit {
         // this.router.navigateByUrl('');
       }
     );
+    if (this.token.getAuthorities().includes('ROLE_PHARMACY_ADMIN')) {
+      this.admin = true;
+    }
   }
 
   applyFilter(value: any) {

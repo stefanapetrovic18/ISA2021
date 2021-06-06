@@ -41,6 +41,10 @@ export class DermatologistService {
     return this.http.post<Dermatologist>(this.URL + 'create', dermatologist, httpOptions);
   }
 
+  public fire(dermatologist: Dermatologist): Observable<Dermatologist> {
+    return this.http.post<Dermatologist>(this.URL + 'fire', dermatologist, httpOptions);
+  }
+
   public update(dermatologist: Dermatologist): Observable<Dermatologist> {
     return this.http.post<Dermatologist>(this.URL + 'update', dermatologist, httpOptions);
   }

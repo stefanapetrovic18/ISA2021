@@ -1,6 +1,7 @@
 package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.user.SystemAdmin;
 import rs.apoteka.repository.user.SystemAdminRepository;
@@ -24,6 +25,7 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public SystemAdmin create(SystemAdmin systemAdmin) {
         return systemAdminRepository.save(systemAdmin);
     }

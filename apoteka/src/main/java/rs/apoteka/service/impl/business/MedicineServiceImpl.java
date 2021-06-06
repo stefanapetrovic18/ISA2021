@@ -89,7 +89,7 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public Medicine create(Medicine medicine) {
-        if (medicine.getSubstitutes().contains(medicine)) {
+        if (medicine.getSubstitutes() != null && medicine.getSubstitutes().contains(medicine)) {
             // Sadrzi sebe u listi zamenskih lekova.
             return null;
         }

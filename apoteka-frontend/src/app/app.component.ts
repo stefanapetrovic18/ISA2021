@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   type = '';
   constructor(private router: Router, private token: TokenStorageService, private dialog: MatDialog) {}
   ngOnInit() {
+    this.userCheck();
   }
   login() {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -58,7 +59,7 @@ export class AppComponent implements OnInit {
       this.user = true;
       this.router.navigateByUrl('dashboard/dobavljac');
     } else {
-      // this.router.navigateByUrl('dashboard/visitor');
+      this.router.navigateByUrl('dashboard/visitor');
     }
   }
   userCheckX() {
@@ -82,7 +83,7 @@ export class AppComponent implements OnInit {
       this.user = true;
       this.router.navigateByUrl('dashboard/dobavljac');
     } else {
-      // this.router.navigateByUrl('dashboard/visitor');
+      this.router.navigateByUrl('dashboard/visitor');
     }
   }
 }

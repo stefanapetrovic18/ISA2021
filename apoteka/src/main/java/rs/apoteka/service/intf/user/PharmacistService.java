@@ -1,6 +1,7 @@
 package rs.apoteka.service.intf.user;
 
 import rs.apoteka.entity.user.Pharmacist;
+import rs.apoteka.exception.UserNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +21,8 @@ public interface PharmacistService {
     Pharmacist getOne(Long id);
 
     Pharmacist create(Pharmacist pharmacist) throws Exception;
+
+    Pharmacist fire(Pharmacist pharmacist) throws UserNotFoundException;
 
     Pharmacist update(Pharmacist pharmacist);
 

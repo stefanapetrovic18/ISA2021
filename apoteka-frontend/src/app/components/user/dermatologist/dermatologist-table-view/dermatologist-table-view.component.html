@@ -80,6 +80,15 @@
           </button>
         </mat-cell>
       </ng-container>
+      <ng-container [matColumnDef]="'fire'">
+        <mat-header-cell *matHeaderCellDef>Ukloni</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button (click)="fire(element)" class="delete-button" mat-raised-button>
+            OTPUSTI
+            <mat-icon>eject</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
       <ng-container *ngIf="patient !== undefined && patient !== null" [matColumnDef]="'rate'">
         <mat-header-cell *matHeaderCellDef>Oceni</mat-header-cell>
         <mat-cell *matCellDef="let element">

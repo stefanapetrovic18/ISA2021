@@ -179,9 +179,9 @@ export class PharmacyPageComponent implements OnInit, AfterViewInit {
 
   getAllPharmacists() {
     this.pharmacistService.findAll().subscribe((data) => {
-      this.pharmacists = data.filter((p) => p.pharmacy.id === this.pharmacy.id);
 
       console.log(data);
+      this.pharmacists = data.filter((p) => p.pharmacy !== null && p.pharmacy.id === this.pharmacy.id);
     });
   }
 

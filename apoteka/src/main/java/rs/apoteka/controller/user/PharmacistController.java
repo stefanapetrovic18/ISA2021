@@ -62,6 +62,12 @@ public class PharmacistController {
     }
 
     @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
+    @PostMapping(value = "/fire")
+    public ResponseEntity<Pharmacist> fire(@RequestBody Pharmacist pharmacist) throws Exception {
+        return new ResponseEntity<>(pharmacistService.fire(pharmacist), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
     @PostMapping(value = "/update")
     public ResponseEntity<Pharmacist> update(@RequestBody Pharmacist pharmacist) throws Exception {
         return new ResponseEntity<>(pharmacistService.update(pharmacist), HttpStatus.OK);

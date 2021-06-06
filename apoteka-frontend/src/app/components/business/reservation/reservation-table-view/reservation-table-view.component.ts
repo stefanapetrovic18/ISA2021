@@ -24,7 +24,7 @@ export class ReservationTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   @Input() data: Reservation[];
   columns = ['reservationNumber', 'reservationDate', 'collectionDate', 'collected'];
-  actions = ['pharmacy', 'patient', 'medicine', 'view', 'edit', 'delete', 'cancel'];
+  actions = ['pharmacy', 'patient', 'medicine', 'cancel'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private reservationService: ReservationService, private router: Router, private dialog: MatDialog) {}
   ngOnInit() {

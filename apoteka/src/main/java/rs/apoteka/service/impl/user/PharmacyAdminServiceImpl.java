@@ -42,6 +42,9 @@ public class PharmacyAdminServiceImpl implements PharmacyAdminService {
 
     @Override
     public PharmacyAdmin create(PharmacyAdmin pharmacyAdmin) {
+        pharmacyAdmin.setEnabled(false);
+        pharmacyAdmin.setPasswordChanged(false);
+        pharmacyAdmin.setValidated(false);
         return pharmacyAdminRepository.save(pharmacyAdmin);
     }
 

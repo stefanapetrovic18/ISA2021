@@ -29,6 +29,7 @@ export class PharmacistTableViewComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   data: Pharmacist[];
   date: Date;
+  phadmin = false;
   patient: Patient;
   columns = ['username', 'forename', 'surname', 'rating'];
   actions = ['edit', 'delete'];
@@ -42,8 +43,8 @@ export class PharmacistTableViewComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap.subscribe(
       params => {
-        if (params.get('pharmacyID') !== undefined && params.get('localDateTime') !== undefined) {
-          this.actions = ['reservacija'];
+        if (params.get('pharmacyID') !== null && params.get('localDateTime') !== null) {
+          this.actions = ['rezervacija'];
           this.displayedColumns = [...this.columns, ...this.actions];
           const id = Number.parseInt(params.get('pharmacyID'));
           this.date = new Date(params.get('localDateTime'));
@@ -57,8 +58,8 @@ export class PharmacistTableViewComponent implements OnInit {
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
               } else {
-                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-                this.router.navigateByUrl('');
+                window.alert('Podaci ne postoje!');
+                // this.router.navigateByUrl('');
               }
             }, error => {
               window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
@@ -76,8 +77,8 @@ export class PharmacistTableViewComponent implements OnInit {
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
               } else {
-                window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
-                this.router.navigateByUrl('');
+                window.alert('Podaci ne postoje!');
+                // this.router.navigateByUrl('');
               }
             }, error => {
               window.alert('Podaci ne postoje! Povratak na pocetnu stranu...');
@@ -91,6 +92,10 @@ export class PharmacistTableViewComponent implements OnInit {
       this.getPatient();
     } else if (this.tokenStorageService.getAuthorities().includes('ROLE_SYSTEM_ADMIN')) {
       this.actions.push('edit', 'delete');
+      this.displayedColumns = [...this.columns, ...this.actions];
+    } else if (this.tokenStorageService.getAuthorities().includes('ROLE_PHARMACY_ADMIN')) {
+      this.phadmin = true;
+      this.actions.push('fire');
       this.displayedColumns = [...this.columns, ...this.actions];
     }
 
@@ -107,6 +112,16 @@ export class PharmacistTableViewComponent implements OnInit {
       });
       // this.getPatient();
     });
+  }
+
+  fire(input: Pharmacist) {
+    this.pharmacistService.fire(input).subscribe(
+      data => {
+        window.alert('Farmaceut je uspešno otpušten.');
+      }, error => {
+        window.alert('Farmaceut nije otpušten.');
+      }
+    );
   }
 
   applyFilter(value: any) {

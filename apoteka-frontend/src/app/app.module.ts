@@ -159,6 +159,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatMenuModule} from '@angular/material/menu';
 import { RatingAddComponent } from './components/business/rating/rating-add/rating-add.component';
 import { VacationRequestRejectComponent } from './components/business/vacation-request/vacation-request-reject/vacation-request-reject.component';
+import { StockpileTableViewComponent } from './components/business/stockpile/stockpile-table-view/stockpile-table-view.component';
 
 @NgModule({
   declarations: [
@@ -311,7 +312,8 @@ import { VacationRequestRejectComponent } from './components/business/vacation-r
     ComplaintTableViewComponent,
     PharmacyPageComponent,
     RatingAddComponent,
-    VacationRequestRejectComponent
+    VacationRequestRejectComponent,
+    StockpileTableViewComponent
   ],
   imports: [
     BrowserModule,

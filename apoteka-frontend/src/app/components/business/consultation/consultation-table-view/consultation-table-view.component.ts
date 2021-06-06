@@ -22,11 +22,11 @@ export class ConsultationTableViewComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  patient = false;
   dataSource: MatTableDataSource<any>;
   @Input() data: Consultation[];
   columns = ['consultationDate', 'duration', 'price'];
-  actions = ['patient', 'pharmacy', 'pharmacist', 'view', 'edit', 'delete'];
+  actions = ['patient', 'pharmacy', 'pharmacist', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
   constructor(private consultationService: ConsultationService, private router: Router, private dialog: MatDialog,
     private token: TokenStorageService, private route: ActivatedRoute) {}
@@ -75,6 +75,9 @@ export class ConsultationTableViewComponent implements OnInit {
           this.router.navigateByUrl('');
         }
       );
+    }
+    if (this.token.getAuthorities().includes('ROLE_PATIENT')) {
+      this.patient = true;
     }
   }
 

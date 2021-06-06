@@ -43,6 +43,10 @@ export class PharmacistService {
     return this.http.post<Pharmacist>(this.URL + 'create', pharmacist, httpOptions);
   }
 
+  public fire(pharmacist: Pharmacist): Observable<Pharmacist> {
+    return this.http.post<Pharmacist>(this.URL + 'fire', pharmacist, httpOptions);
+  }
+
   public update(pharmacist: Pharmacist): Observable<Pharmacist> {
     return this.http.post<Pharmacist>(this.URL + 'update', pharmacist, httpOptions);
   }

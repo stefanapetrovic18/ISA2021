@@ -27,7 +27,7 @@
         />
       </mat-form-field>
       <div class="action-buttons">
-        <button class="add-button" mat-raised-button (click)="add()">
+        <button disabled class="add-button" mat-raised-button (click)="add()">
           DODAJ
           <mat-icon>add</mat-icon>
         </button>
@@ -41,7 +41,7 @@
     <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="patient">
         <mat-header-cell *matHeaderCellDef>Patient</mat-header-cell>
-        <mat-cell *matCellDef="let object">{{ object.patient.forename }} {{object.patient.surname}}</mat-cell>
+        <mat-cell *matCellDef="let object"><p *ngIf="object.patient !== null">{{ object.patient.forename }} {{object.patient.surname}}</p></mat-cell>
       </ng-container>
       <ng-container matColumnDef="pharmacy">
         <mat-header-cell *matHeaderCellDef>Pharmacy</mat-header-cell>

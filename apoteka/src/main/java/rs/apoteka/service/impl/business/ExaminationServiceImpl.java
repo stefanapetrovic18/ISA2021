@@ -100,7 +100,7 @@ public class ExaminationServiceImpl implements ExaminationService {
             examinations.removeIf(e -> !e.getPharmacy().getId().equals(pharmacyID));
         }
         if (patientID != null) {
-            examinations.removeIf(e -> !e.getPatient().getId().equals(patientID));
+            examinations.removeIf(e -> e.getPatient() != null && !e.getPatient().getId().equals(patientID));
         }
         if (duration != null) {
             examinations.removeIf(e -> !e.getDuration().equals(duration));

@@ -1,3 +1,52 @@
-<p>
-  system-admin-add works!
-</p>
+<h1 mat-dialog-title>Dodaj farmaceuta</h1>
+<div mat-dialog-content>
+  <p>Email adresa</p>
+  <mat-form-field>
+    <mat-label>Email adresa</mat-label>
+    <input [(ngModel)]="data.username" matInput placeholder="Email adresa" type="email"/>
+  </mat-form-field>
+  <p>Šifra</p>
+  <mat-form-field>
+    <mat-label>Šifra</mat-label>
+    <input [(ngModel)]="data.password" matInput placeholder="Šifra" type="password"/>
+  </mat-form-field>
+  <p>Ponovi šifru</p>
+  <mat-form-field>
+    <mat-label>Ponovi šifru</mat-label>
+    <input [(ngModel)]="repeatPassword" matInput placeholder="Ponovi šifru" type="password"/>
+  </mat-form-field>
+  <p>Ime</p>
+  <mat-form-field>
+    <mat-label>Ime</mat-label>
+    <input [(ngModel)]="data.forename" matInput placeholder="Ime" type="text"/>
+  </mat-form-field>
+  <p>Prezime</p>
+  <mat-form-field>
+    <mat-label>Prezime</mat-label>
+    <input [(ngModel)]="data.surname" matInput placeholder="Prezime" type="text"/>
+  </mat-form-field>
+  <p>Adresa</p>
+  <mat-form-field>
+    <mat-label>Adresa</mat-label>
+    <input [(ngModel)]="data.address" matInput placeholder="Adresa" type="text"/>
+  </mat-form-field>
+  <p>Mesto</p>
+  <mat-form-field>
+    <mat-label>Mesto</mat-label>
+    <input [(ngModel)]="data.city" matInput placeholder="Mesto" type="text"/>
+  </mat-form-field>
+  <p>Država</p>
+  <mat-form-field>
+    <mat-label>Država</mat-label>
+    <input [(ngModel)]="data.country" matInput placeholder="Država" type="text"/>
+  </mat-form-field>
+  <p>Broj telefona</p>
+  <mat-form-field>
+    <mat-label>Broj telefona</mat-label>
+    <input [(ngModel)]="data.phone" matInput placeholder="Broj telefona" type="text"/>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button (click)="add()" class="add-button" mat-button mat-raised-button>DODAJ</button>
+  <button (click)="close()" cdkFocusInitial class="cancel-button" mat-button mat-raised-button>ZATVORI</button>
+</div>

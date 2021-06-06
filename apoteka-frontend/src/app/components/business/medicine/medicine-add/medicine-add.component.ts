@@ -27,6 +27,7 @@ export class MedicineAddComponent implements OnInit {
       }
     );
     this.data.ingredients = [];
+    this.data.prescriptionNecessary = false;
   }
   add() {
     this.medicineService.create(this.data).subscribe(

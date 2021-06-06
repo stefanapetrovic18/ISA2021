@@ -1,6 +1,7 @@
 package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.user.Supplier;
 import rs.apoteka.repository.user.SupplierRepository;
@@ -24,6 +25,7 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public Supplier create(Supplier supplier) {
         return supplierRepository.save(supplier);
     }

@@ -26,50 +26,22 @@
           #input
         />
       </mat-form-field>
-      <div class="action-buttons">
-        <button [disabled]="!admin" class="add-button" mat-raised-button (click)="add()">
-          DODAJ
-          <mat-icon>add</mat-icon>
-        </button>
-        <button class="filter-button" mat-raised-button (click)="drawer.toggle()">
-          FILTER
-          <mat-icon>filter_list</mat-icon>
-        </button>
-      </div>
     </div>
 
     <mat-table *ngIf="dataSource" [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="pharmacy">
-        <mat-header-cell *matHeaderCellDef>Pharmacy</mat-header-cell>
-        <mat-cell *matCellDef="let object">{{ object.pharmacy.name }}</mat-cell>
+      <ng-container matColumnDef="medicine">
+        <mat-header-cell *matHeaderCellDef>Medicine</mat-header-cell>
+        <mat-cell *matCellDef="let object">{{ object.medicine.name }}</mat-cell>
       </ng-container>
       <ng-container *ngFor="let column of columns" [matColumnDef]="column">
         <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
         <mat-cell *matCellDef="let object">{{ object[column] }}</mat-cell>
       </ng-container>
 
-      <ng-container [matColumnDef]="'view'">
-        <mat-header-cell *matHeaderCellDef>Info</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button class="info-button" mat-raised-button (click)="view(element)">
-            INFO
-            <mat-icon>info</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <ng-container [matColumnDef]="'edit'">
-        <mat-header-cell *matHeaderCellDef>Izmeni</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button class="edit-button" mat-raised-button (click)="edit(element)">
-            IZMENI
-            <mat-icon>edit</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
       <ng-container [matColumnDef]="'delete'">
         <mat-header-cell *matHeaderCellDef>Ukloni</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button [disabled]="!admin" class="delete-button" mat-raised-button (click)="delete(element)">
+          <button class="delete-button" mat-raised-button (click)="delete(element)">
             UKLONI
             <mat-icon>delete</mat-icon>
           </button>

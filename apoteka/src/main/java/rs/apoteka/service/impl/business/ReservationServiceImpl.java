@@ -151,7 +151,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation cancel(Reservation reservation) throws Exception {
-        if (reservation.getReservationDate().isBefore(LocalDateTime.now().plusHours(24)) || reservation.getCollected()) {
+        if (reservation.getCollectionDate().isBefore(LocalDateTime.now().plusHours(24)) || reservation.getCollected()) {
             throw new Exception("Nemoguće je otkazati rezervaciju leka manje od 24h pre preuzimanja istog.");
         }
 //        reservation.getPatient().getExaminations().removeIf(e -> e.getId().equals(reservation.getId()));

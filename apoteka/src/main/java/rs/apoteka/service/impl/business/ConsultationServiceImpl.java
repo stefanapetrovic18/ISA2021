@@ -60,7 +60,7 @@ public class ConsultationServiceImpl implements ConsultationService {
             }
         } else if (authenticationService.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_PHARMACIST"))) {
             Pharmacist pharmacist = pharmacistService.findByUsername(authenticationService.getUsername());
-            if (pharmacist != null) {
+            if (pharmacist != null && pharmacist.getPharmacy() != null) {
                 return pharmacist.getPharmacy().getConsultations();
             }
         }

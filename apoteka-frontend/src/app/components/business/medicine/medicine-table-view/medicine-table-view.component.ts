@@ -28,6 +28,7 @@ export class MedicineTableViewComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   medicine: Medicine[];
+  sysadmin = false;
   dataSource: MatTableDataSource<any>;
   @Input() data: Medicine[];
   patient: Patient;
@@ -59,6 +60,10 @@ export class MedicineTableViewComponent implements OnInit {
       this.getPatient();
     } else if (this.tokenStorageService.getAuthorities().includes('ROLE_PHARMACY_ADMIN')) {
       this.actions.push('edit');
+      this.actions.push('delete');
+      this.displayedColumns = [...this.columns, ...this.actions];
+    } else if (this.tokenStorageService.getAuthorities().includes('ROLE_SYSTEM_ADMIN')) {
+      this.sysadmin = true;
       this.actions.push('delete');
       this.displayedColumns = [...this.columns, ...this.actions];
     }
