@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.user = true;
-      // this.userCheck();
+      this.userCheck();
     });
   }
   logout() {

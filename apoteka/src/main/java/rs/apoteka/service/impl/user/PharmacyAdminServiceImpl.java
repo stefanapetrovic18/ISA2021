@@ -1,6 +1,7 @@
 package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.user.PharmacyAdmin;
 import rs.apoteka.repository.user.PharmacyAdminRepository;
@@ -45,6 +46,8 @@ public class PharmacyAdminServiceImpl implements PharmacyAdminService {
         pharmacyAdmin.setEnabled(false);
         pharmacyAdmin.setPasswordChanged(false);
         pharmacyAdmin.setValidated(false);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        pharmacyAdmin.setPassword(encoder.encode(pharmacyAdmin.getPassword()));
         return pharmacyAdminRepository.save(pharmacyAdmin);
     }
 

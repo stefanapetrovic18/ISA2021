@@ -2,6 +2,7 @@ package rs.apoteka.service.impl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.apoteka.entity.user.SystemAdmin;
 import rs.apoteka.repository.user.SystemAdminRepository;
@@ -27,6 +28,11 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     @Override
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMIN')")
     public SystemAdmin create(SystemAdmin systemAdmin) {
+        systemAdmin.setEnabled(false);
+        systemAdmin.setPasswordChanged(false);
+        systemAdmin.setValidated(false);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        systemAdmin.setPassword(encoder.encode(systemAdmin.getPassword()));
         return systemAdminRepository.save(systemAdmin);
     }
 
