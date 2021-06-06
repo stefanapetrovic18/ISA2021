@@ -32,7 +32,7 @@ export class DermatologistTableViewComponent implements OnInit {
   date: Date;
   patient: Patient;
   columns = ['username', 'forename', 'surname', 'rating'];
-  actions = ['view', 'edit', 'delete', 'rate'];
+  actions = [];
   displayedColumns = [...this.columns, ...this.actions];
 
   constructor(private dermatologistService: DermatologistService, private router: Router, private dialog: MatDialog,
@@ -90,6 +90,9 @@ export class DermatologistTableViewComponent implements OnInit {
     );
     if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
       this.getPatient();
+    } else if (this.tokenStorageService.getAuthorities().includes('ROLE_SYSTEM_ADMIN')) {
+      this.actions.push('edit', 'delete');
+      this.displayedColumns = [...this.columns, ...this.actions];
     }
   }
 
@@ -105,6 +108,8 @@ export class DermatologistTableViewComponent implements OnInit {
       data.forEach((p) => {
         if (p.username === this.tokenStorageService.getUsername()) {
           this.patient = p;
+          this.actions.push('rate');
+          this.displayedColumns = [...this.columns, ...this.actions];
         }
       });
       // this.getPatient();

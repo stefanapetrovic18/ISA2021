@@ -31,7 +31,7 @@ export class PharmacistTableViewComponent implements OnInit {
   date: Date;
   patient: Patient;
   columns = ['username', 'forename', 'surname', 'rating'];
-  actions = ['view', 'edit', 'delete', 'rate'];
+  actions = ['edit', 'delete'];
   displayedColumns = [...this.columns, ...this.actions];
 
   constructor(private pharmacistService: PharmacistService, private router: Router, private dialog: MatDialog,
@@ -89,6 +89,9 @@ export class PharmacistTableViewComponent implements OnInit {
     );
     if (this.tokenStorageService.getAuthorities().includes('ROLE_PATIENT')) {
       this.getPatient();
+    } else if (this.tokenStorageService.getAuthorities().includes('ROLE_SYSTEM_ADMIN')) {
+      this.actions.push('edit', 'delete');
+      this.displayedColumns = [...this.columns, ...this.actions];
     }
 
   }
@@ -98,6 +101,8 @@ export class PharmacistTableViewComponent implements OnInit {
       data.forEach((p) => {
         if (p.username === this.tokenStorageService.getUsername()) {
           this.patient = p;
+          this.actions.push('rate');
+          this.displayedColumns = [...this.columns, ...this.actions];
         }
       });
       // this.getPatient();
