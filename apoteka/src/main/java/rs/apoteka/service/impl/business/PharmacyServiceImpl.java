@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -156,6 +157,35 @@ public class PharmacyServiceImpl implements PharmacyService {
     }
 
     @Override
+    public Boolean checkSubStatus(Long pharmacyID) throws Exception {
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        if (patient == null) {
+            throw new Exception("Pacijent nije ulogovan!");
+        }
+        Pharmacy pharmacy = getOne(pharmacyID);
+        if (pharmacy == null) {
+            throw new Exception("Apoteka ne postoji!");
+        }
+        patient.getSubscriptions().forEach(s -> System.out.println(s.getId()));
+        pharmacy.getSubscriptions().forEach(s -> System.out.println(s.getId()));
+        return patient.getSubscriptions().stream().anyMatch(s -> s.getId().equals(pharmacy.getId())) ||
+                pharmacy.getSubscriptions().stream().anyMatch(s -> s.getId().equals(patient.getId()));
+    }
+
+    @Override
+    public Rating getRating(Long pharmacyID) throws Exception {
+        Patient patient = patientService.findByUsername(authenticationService.getUsername());
+        if (patient == null) {
+            throw new Exception("Pacijent nije ulogovan!");
+        }
+        Pharmacy pharmacy = getOne(pharmacyID);
+        if (pharmacy == null) {
+            throw new Exception("Apoteka ne postoji!");
+        }
+        return pharmacy.getRatings().stream().filter(r -> r.getPatient().getId().equals(patient.getId())).findFirst().orElse(null);
+    }
+
+    @Override
     public Boolean subscribe(Long id) throws Exception {
         Patient patient = patientService.findByUsername(authenticationService.getUsername());
         if (patient == null) {
@@ -181,7 +211,7 @@ public class PharmacyServiceImpl implements PharmacyService {
         }
         patient.getSubscriptions().add(pharmacy);
         pharmacy.getSubscriptions().add(patient);
-        patientService.update(patient);
+        patientService.updateSubs(patient);
         update(pharmacy);
         return true;
     }

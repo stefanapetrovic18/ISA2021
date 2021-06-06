@@ -249,12 +249,14 @@ export class PharmacyPageComponent implements OnInit, AfterViewInit {
   }
 
   getRating() {
-    this.pharmacy.ratings.forEach(r => {
-      if (r.patient.id === this.patient.id) {
-        this.yourRating = r;
-        this.rating = r.rating;
+    this.pharmacyService.getRating(this.pharmacy.id).subscribe(
+      data => {
+        this.yourRating = data;
+        this.rating = data.rating;
+      }, error => {
+        console.log(error.message);
       }
-    });
+    );
   }
 
   getAveragePharmacistRating() {
@@ -290,11 +292,14 @@ export class PharmacyPageComponent implements OnInit, AfterViewInit {
   }
 
   checkSubscriptionStatus() {
-    this.patient.subscriptions.forEach(s => {
-      if (s.id == this.pharmacy.id) {
-        this.subscribed = true;
+    this.pharmacyService.checkSubStatus(this.pharmacy.id).subscribe(
+      data => {
+        console.log(data);
+        this.subscribed = data;
+      }, error => {
+        console.log(error.message);
       }
-    });
+    )
   }
 
   subscribe() {

@@ -18,5 +18,7 @@ public interface PatientService {
 
     Patient update(Patient patient);
 
+    Patient updateSubs(Patient patient);
+
     Boolean delete(Long id);
 }

@@ -108,26 +108,16 @@ public class PatientServiceImpl implements PatientService {
         }
         p.setPoints(patient.getPoints());
         p.setAllergies(patient.getAllergies());
-//        if (patient.getAllergies() != null && patient.getAllergies().size() > 0) {
-//            for (Medicine a : patient.getAllergies()) {
-//                boolean flag = true;
-//                if (p.getAllergies() != null && p.getAllergies().size() > 0) {
-//                    for (Medicine b : p.getAllergies()) {
-//                        if (b.getId().equals(a.getId())) {
-//                            flag = false;
-//                            break;
-//                        }
-//                    }
-//                } else {
-//                    p.setAllergies(new ArrayList<>());
-//                }
-//                if (flag) {
-//                    p.getAllergies().add(a);
-//                }
-//            }
-//        }
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        patient.setPassword(encoder.encode(patient.getPassword()));
+        return patientRepository.save(p);
+    }
+
+    @Override
+    public Patient updateSubs(Patient patient) {
+        Patient p = getOne(patient.getId());
+        if (p == null) {
+            return null;
+        }
+        p.setSubscriptions(patient.getSubscriptions());
         return patientRepository.save(p);
     }
 

@@ -25,6 +25,14 @@ export class PharmacyService {
   public findSubs(): Observable<Pharmacy[]> {
     return this.http.get<Pharmacy[]>(this.URL + 'subs');
   }
+  public checkSubStatus(pharmacyID: number): Observable<any> {
+    const params = new HttpParams().set('pharmacyID', pharmacyID.toString());
+    return this.http.get<any>(this.URL + 'check-sub-status', {params});
+  }
+  public getRating(pharmacyID: number): Observable<any> {
+    const params = new HttpParams().set('pharmacyID', pharmacyID.toString());
+    return this.http.get<any>(this.URL + 'get-rating', {params});
+  }
 
   public subscribe(id: number): Observable<Pharmacy> {
     const params = new HttpParams().set('id', id.toString());

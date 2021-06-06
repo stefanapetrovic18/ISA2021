@@ -55,7 +55,7 @@ public class RatingServiceImpl implements RatingService {
             ratings.removeIf(r -> !r.getId().equals(id));
         }
         if (patientID != null) {
-            ratings.removeIf(r -> !r.getPatient().getId().equals(patientID));
+            ratings.removeIf(r -> r.getPatient() == null || !r.getPatient().getId().equals(patientID));
         }
         if (medicineID != null) {
 

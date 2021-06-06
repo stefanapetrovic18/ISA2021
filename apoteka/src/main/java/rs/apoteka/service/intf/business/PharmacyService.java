@@ -2,6 +2,7 @@ package rs.apoteka.service.intf.business;
 
 import rs.apoteka.dto.BusinessReport;
 import rs.apoteka.entity.business.Pharmacy;
+import rs.apoteka.entity.business.Rating;
 import rs.apoteka.exception.UserNotFoundException;
 
 import java.time.LocalDate;
@@ -22,6 +23,10 @@ public interface PharmacyService {
     List<Pharmacy> findAllContainingMedicine(Long medicineID);
 
     List<Pharmacy> findAllByPharmacistFreeAt(LocalDateTime localDateTime);
+
+    Boolean checkSubStatus(Long pharmacyID) throws Exception;
+
+    Rating getRating(Long pharmacyID) throws Exception;
 
     Boolean subscribe(Long id) throws Exception;
 

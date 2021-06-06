@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.apoteka.dto.BusinessReport;
 import rs.apoteka.entity.business.Pharmacy;
+import rs.apoteka.entity.business.Rating;
 import rs.apoteka.service.intf.business.PharmacyService;
 
 import java.time.LocalDate;
@@ -70,6 +71,18 @@ public class PharmacyController {
     @GetMapping(value = "/subscribe")
     public ResponseEntity<Boolean> subscribe(@RequestParam(value = "id") Long id) throws Exception {
         return new ResponseEntity<>(pharmacyService.subscribe(id), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
+    @GetMapping(value = "/check-sub-status")
+    public ResponseEntity<Boolean> checkSubStatus(@RequestParam(value = "pharmacyID") Long pharmacyID) throws Exception {
+        return new ResponseEntity<>(pharmacyService.checkSubStatus(pharmacyID), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PATIENT')")
+    @GetMapping(value = "/get-rating")
+    public ResponseEntity<Rating> getRating(@RequestParam(value = "pharmacyID") Long pharmacyID) throws Exception {
+        return new ResponseEntity<>(pharmacyService.getRating(pharmacyID), HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_PATIENT')")
